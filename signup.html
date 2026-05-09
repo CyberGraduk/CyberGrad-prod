@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — CyberGrad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#060B16;--bg-2:#0A1020;--teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);--text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;border-bottom:1px solid var(--border);background:rgba(8,13,24,0.92);position:sticky;top:0;z-index:10}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
+.nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
+.nav-right{font-size:14px;color:var(--text-2);text-decoration:none;transition:color .2s}
+.nav-right:hover{color:var(--text)}
+main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:48px 20px 80px;gap:48px;flex-wrap:wrap}
+
+/* LEFT — VALUE PROP */
+.left-col{max-width:360px;padding-top:8px}
+.left-tag{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+.left-col h1{font-family:var(--font-h);font-size:clamp(28px,3.5vw,38px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
+.hl{color:var(--teal)}
+.left-col p{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px}
+.unlock-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.unlock-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:10px}
+.unlock-icon{font-size:18px;flex-shrink:0}
+.unlock-icon-wrap{width:34px;height:34px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.unlock-text{font-size:13px;color:var(--text-2);line-height:1.5}
+.unlock-text strong{color:var(--text);font-weight:600;display:block;margin-bottom:2px}
+.counter-pill{display:inline-flex;align-items:center;gap:10px;background:var(--bg-2);border:1px solid var(--border);border-radius:100px;padding:8px 16px}
+.c-dot{width:7px;height:7px;background:var(--teal);border-radius:50%;flex-shrink:0;box-shadow:0 0 0 0 rgba(26,158,117,.4);animation:livepulse 2s ease-out infinite}
+@keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(26,158,117,.4)}70%{box-shadow:0 0 0 8px rgba(26,158,117,0)}100%{box-shadow:0 0 0 0 rgba(26,158,117,0)}}
+.c-num{font-family:var(--font-h);font-size:17px;font-weight:800;color:var(--teal);letter-spacing:-0.5px}
+.c-lbl{font-size:13px;color:var(--text-2)}
+
+/* RIGHT — FORM CARD */
+.form-card{width:100%;max-width:420px;background:var(--bg-2);border:1px solid var(--border);border-radius:20px;padding:36px 32px}
+.form-title{font-family:var(--font-h);font-size:22px;font-weight:800;letter-spacing:-0.8px;margin-bottom:5px}
+.form-sub{font-size:14px;color:var(--text-2);margin-bottom:28px;line-height:1.6}
+
+.step-section{display:none}
+.step-section.active{display:block}
+
+.fg{margin-bottom:16px}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:7px;letter-spacing:0.2px}
+label .req{color:var(--teal)}
+.fi,.fs{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-b);font-size:15px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+.fi::placeholder{color:var(--text-3)}
+.fi:focus,.fs:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)}
+.fs option{background:#1a2035}
+
+.btn-submit{width:100%;background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:14px;cursor:pointer;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s,transform .15s;letter-spacing:-0.2px}
+.btn-submit:hover{opacity:.88;transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.trust-note{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:12px;color:var(--text-3)}
+.form-footer{text-align:center;margin-top:18px;font-size:13px;color:var(--text-2)}
+.form-footer a{color:var(--teal);text-decoration:none}
+
+/* CHECK EMAIL STATE */
+.check-email{text-align:center;padding:8px 0}
+.email-icon{width:68px;height:68px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+.check-email h2{font-family:var(--font-h);font-size:22px;font-weight:800;margin-bottom:8px;letter-spacing:-0.6px}
+.check-email p{font-size:14px;color:var(--text-2);margin-bottom:6px;line-height:1.6}
+.email-pill{background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;padding:10px 16px;font-size:14px;color:var(--teal);text-align:center;margin:14px 0 22px;word-break:break-all;font-weight:500}
+.btn-demo{width:100%;background:rgba(26,158,117,0.12);color:var(--teal);border:1px solid var(--teal-b);border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:600;padding:13px;cursor:pointer;margin-top:4px;transition:background .2s}
+.btn-demo:hover{background:rgba(26,158,117,0.18)}
+.resend{text-align:center;margin-top:14px;font-size:13px;color:var(--text-2)}
+.resend button{background:none;border:none;color:var(--teal);font-family:var(--font-b);font-size:13px;cursor:pointer}
+
+@media(max-width:860px){main{flex-direction:column;align-items:center;padding:32px 20px 60px}.left-col{max-width:100%}}
+@media(max-width:480px){.form-card{padding:24px 18px}.fg-row{grid-template-columns:1fr}nav{padding:0 20px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo"><div class="nav-lm">CG</div><span class="nav-lt">CyberGrad</span></a>
+  <a href="login.html" class="nav-right">Already have an account? Log in →</a>
+</nav>
+<main>
+
+  <!-- LEFT: VALUE PROP -->
+  <div class="left-col">
+    <div class="left-tag">Free account</div>
+    <h1>Get the tools.<br>Fix your CV.<br><span class="hl">Land UK roles.</span></h1>
+    <p>Create your free account and access everything you need to understand the UK cybersecurity job market — instantly.</p>
+    <div class="unlock-list">
+      <div class="unlock-item">
+        <div class="unlock-icon-wrap">
+          <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <div class="unlock-text"><strong>CV Checker + PDF Report</strong>Score your CV out of 100. Get a full report emailed directly to you.</div>
+      </div>
+      <div class="unlock-item">
+        <div class="unlock-icon-wrap">
+          <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        </div>
+        <div class="unlock-text"><strong>UK CV Template</strong>ATS-ready, UK-formatted, editable. Built for cybersecurity roles.</div>
+      </div>
+      <div class="unlock-item">
+        <div class="unlock-icon-wrap">
+          <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div class="unlock-text"><strong>LinkedIn & Job Search Guides</strong>32-point checklist and a structured UK job search plan.</div>
+      </div>
+      <div class="unlock-item">
+        <div class="unlock-icon-wrap">
+          <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="unlock-text"><strong>WhatsApp Community</strong>Connect with other international students navigating the same journey.</div>
+      </div>
+    </div>
+    <div class="counter-pill">
+      <span class="c-dot"></span>
+      <span class="c-num" id="side-count">5</span>
+      <span class="c-lbl">students signed up and growing</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: FORM -->
+  <div class="form-card">
+
+    <!-- STEP 1: FORM -->
+    <div class="step-section active" id="step-form">
+      <div class="form-title">Create your free account</div>
+      <p class="form-sub">No password needed. We'll send a magic link to your email — click it and you're in.</p>
+      <form onsubmit="handleSignup(event)">
+        <div class="fg-row">
+          <div><label>First name <span class="req">*</span></label><input type="text" class="fi" id="sg-fname" placeholder="First name" required></div>
+          <div><label>Last name <span class="req">*</span></label><input type="text" class="fi" id="sg-lname" placeholder="Last name" required></div>
+        </div>
+        <div class="fg"><label>Email address <span class="req">*</span></label><input type="email" class="fi" id="sg-email" placeholder="you@email.com" required></div>
+        <div class="fg">
+          <label>University <span class="req">*</span></label>
+          <select class="fs" id="sg-uni" required>
+            <option value="" disabled selected>Select your university</option>
+            <option>University of Southampton</option><option>University of Manchester</option>
+            <option>University of Birmingham</option><option>University of Edinburgh</option>
+            <option>UCL</option><option>Coventry University</option>
+            <option>Heriot-Watt University</option><option>University of Leeds</option>
+            <option>University of Sheffield</option><option>University of Bristol</option>
+            <option>King's College London</option><option>University of Exeter</option>
+            <option>Other UK university</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Your status <span class="req">*</span></label>
+          <select class="fs" id="sg-status" required>
+            <option value="" disabled selected>Select your status</option>
+            <option>Currently studying</option><option>Final year</option>
+            <option>Recently graduated (0–6 months)</option>
+            <option>Graduated 6+ months ago</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit" id="sg-btn">
+          <span id="sg-btn-txt">Send my magic link</span>
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <div class="trust-note">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          No password · No spam · Free forever
+        </div>
+      </form>
+      <div class="form-footer">Already have an account? <a href="login.html">Log in</a></div>
+    </div>
+
+    <!-- STEP 2: CHECK EMAIL -->
+    <div class="step-section" id="step-email">
+      <div class="check-email">
+        <div class="email-icon">📬</div>
+        <h2>Check your inbox</h2>
+        <p>We sent a magic link to:</p>
+        <div class="email-pill" id="sent-email">you@email.com</div>
+        <p>Click the link to log in instantly. No password — ever. Link expires in 10 minutes.</p>
+        <p style="font-size:12px;color:var(--text-3);margin-top:8px">Can't find it? Check your spam folder.</p>
+        <!-- V1.1 — Demo mode removed. Dashboard only accessible after clicking magic link.
+        <button class="btn-demo" onclick="window.location.href='dashboard.html'">
+          ✨ Demo mode — go straight to dashboard
+        </button>
+        -->
+        <div class="resend">Didn't get it? <button onclick="resend()">Resend link</button></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ── SUPABASE INIT ── */
+const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ── COUNTER (from DB) ── */
+async function loadCount() {
+  const { count } = await sb.from('students').select('*', { count: 'exact', head: true });
+  const displayed = Math.max(count || 0, 5);
+  const el = document.getElementById('side-count');
+  if (el) el.textContent = displayed;
+}
+loadCount();
+
+/* ── SIGNUP ── */
+async function handleSignup(e) {
+  e.preventDefault();
+  const fname = document.getElementById('sg-fname').value.trim();
+  const lname = document.getElementById('sg-lname').value.trim();
+  const email = document.getElementById('sg-email').value.trim();
+  const uni   = document.getElementById('sg-uni').value;
+  const status= document.getElementById('sg-status').value;
+  if (!fname || !lname || !email || !uni || !status) return;
+
+  const btn = document.getElementById('sg-btn');
+  const txt = document.getElementById('sg-btn-txt');
+  btn.disabled = true;
+  txt.textContent = 'Sending magic link...';
+
+  try {
+    /* 1. Send magic link */
+    const { error: authError } = await sb.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: 'https://www.cyber-grad.co.uk/dashboard.html',
+        data: { first_name: fname, last_name: lname, university: uni, status }
+      }
+    });
+    if (authError) throw authError;
+
+    /* 2. Insert student row (ignore duplicate — they may already exist) */
+    await sb.from('students').upsert({
+      email,
+      first_name: fname,
+      last_name: lname,
+      university: uni,
+      status,
+      plan: 'free'
+    }, { onConflict: 'email', ignoreDuplicates: true });
+
+    /* 3. Save to localStorage for dashboard personalisation */
+    localStorage.setItem('cg_user', JSON.stringify({
+      name: fname + ' ' + lname,
+      firstName: fname,
+      email, uni, status, plan: 'free',
+      joined: new Date().toISOString()
+    }));
+
+    /* 4. Send welcome confirmation email via Resend */
+    fetch('/api/send-welcome', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: fname, email })
+    }).catch(err => console.log('Welcome email error:', err));
+
+    /* 5. Show check-email state */
+    document.getElementById('sent-email').textContent = email;
+    document.getElementById('step-form').classList.remove('active');
+    document.getElementById('step-email').classList.add('active');
+
+  } catch (err) {
+    console.error(err);
+    txt.textContent = 'Something went wrong — try again';
+    btn.disabled = false;
+  }
+}
+
+function resend() {
+  const btn = document.querySelector('.resend button');
+  btn.textContent = 'Sent ✓';
+  setTimeout(() => btn.textContent = 'Resend link', 3000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UK CV Checker — CyberGrad</title>
+<meta name="description" content="Free UK cybersecurity CV checker. Score your CV out of 100 and download a detailed PDF report.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+<!-- jsPDF for PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#060B16;--bg-2:#0A1020;--bg-3:#0F1829;
+  --teal:#00C896;--teal-l:#00DFA8;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);
+  --text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;
+  --border:#131D30;--green:#1A9E75;--amber:#D97706;--red:#DC2626;
+  --font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(8,13,24,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
+.nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
+.nav-tool{font-size:12px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:3px 10px;border-radius:4px;margin-left:6px;letter-spacing:.5px;text-transform:uppercase}
+.nav-back{font-size:14px;color:var(--text-2);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+
+.page{position:relative;z-index:1}
+
+/* HERO */
+.hero{padding:100px 5% 56px;text-align:center;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:600px;height:400px;background:radial-gradient(ellipse,rgba(26,158,117,0.09) 0%,transparent 65%);top:-60px;left:50%;transform:translateX(-50%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid var(--teal-b);border-radius:100px;font-size:13px;font-weight:500;color:var(--teal);background:var(--teal-dim);margin-bottom:22px}
+.tag-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:var(--font-h);font-size:clamp(34px,5vw,54px);font-weight:800;letter-spacing:-2px;line-height:1.08;margin-bottom:18px}
+.hl{color:var(--teal)}
+.hero-sub{font-size:18px;color:var(--text-2);max-width:520px;margin:0 auto 12px;line-height:1.65}
+.hero-note{font-size:14px;color:var(--text-3);margin-bottom:48px}
+
+/* CHECKER CARD */
+.checker-wrap{max-width:800px;margin:0 auto;padding:0 5% 80px}
+
+/* STEP 1 — INPUT */
+#step-input{}
+.input-card{background:var(--bg-2);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.input-top{padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px}
+.step-badge{width:30px;height:30px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.input-top h2{font-family:var(--font-h);font-size:17px;font-weight:700;margin-bottom:3px}
+.input-top p{font-size:13px;color:var(--text-2)}
+.textarea-wrap{padding:20px 28px}
+textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:var(--font-b);font-size:13px;line-height:1.7;padding:16px 18px;resize:vertical;min-height:420px;outline:none;transition:border-color .2s,box-shadow .2s}
+textarea::placeholder{color:var(--text-3);font-size:13px}
+textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)}
+.input-footer{padding:14px 28px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.word-count{font-size:13px;color:var(--text-3)}
+.word-count span{color:var(--text-2);font-weight:500}
+.btn-analyse{background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:13px 28px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity .2s,transform .15s}
+.btn-analyse:hover{opacity:.88;transform:translateY(-1px)}
+.btn-analyse:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.privacy-note{width:100%;font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:6px;padding-top:4px}
+
+/* STEP 2 — LOADING */
+#step-loading{display:none;text-align:center;padding:72px 20px}
+.loading-ring{width:56px;height:56px;margin:0 auto 24px;border:2px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{font-family:var(--font-h);font-size:22px;font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
+.loading-sub{font-size:14px;color:var(--text-2);margin-bottom:28px}
+.loading-steps{display:flex;flex-direction:column;gap:8px;align-items:center}
+.ls{font-size:13px;color:var(--text-3);display:flex;align-items:center;gap:8px;transition:color .4s}
+.ls.active{color:var(--teal)}
+.ls.done{color:var(--text-2)}
+.ls-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+/* STEP 3 — RESULTS */
+#step-results{display:none}
+
+/* SCORE HERO */
+.score-hero{background:var(--bg-2);border:1px solid var(--border);border-radius:20px;padding:36px 32px;margin-bottom:14px;display:flex;align-items:center;gap:40px;flex-wrap:wrap}
+.score-ring-wrap{flex-shrink:0;position:relative}
+.score-ring{width:120px;height:120px}
+.score-ring svg{width:120px;height:120px;transform:rotate(-90deg)}
+.ring-track{fill:none;stroke:var(--border);stroke-width:7}
+.ring-fill{fill:none;stroke-width:7;stroke-linecap:round;stroke-dasharray:302;stroke-dashoffset:302;transition:stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1)}
+.score-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-num{font-family:var(--font-h);font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1}
+.score-denom{font-size:13px;color:var(--text-2);margin-top:2px}
+.score-info{flex:1;min-width:200px}
+.score-band{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:5px 13px;border-radius:6px;margin-bottom:14px}
+.band-red{background:rgba(220,38,38,.12);color:#FCA5A5;border:1px solid rgba(220,38,38,.25)}
+.band-amber{background:rgba(217,119,6,.12);color:#FCD34D;border:1px solid rgba(217,119,6,.25)}
+.band-blue{background:rgba(59,130,246,.12);color:#93C5FD;border:1px solid rgba(59,130,246,.25)}
+.band-green{background:rgba(26,158,117,.12);color:#6EE7B7;border:1px solid rgba(26,158,117,.25)}
+.score-headline{font-family:var(--font-h);font-size:21px;font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
+.score-desc{font-size:14px;color:var(--text-2);line-height:1.65}
+
+/* PREVIEW GRID */
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.preview-cat{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative}
+.preview-cat-name{font-size:12px;color:var(--text-2);margin-bottom:8px;line-height:1.35}
+.preview-score-row{display:flex;align-items:baseline;gap:3px}
+.preview-score{font-family:var(--font-h);font-size:24px;font-weight:800;line-height:1}
+.preview-max{font-size:13px;color:var(--text-3)}
+.preview-bar{height:3px;background:var(--border);border-radius:2px;margin-top:10px;overflow:hidden}
+.preview-fill{height:100%;border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+/* GATE */
+.gate-card{background:var(--bg-2);border:1px solid var(--teal-b);border-radius:20px;padding:40px 36px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden}
+.gate-card::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:400px;height:300px;background:radial-gradient(ellipse,rgba(26,158,117,0.10) 0%,transparent 65%);pointer-events:none}
+.gate-icon{width:56px;height:56px;margin:0 auto 20px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;z-index:1}
+.gate-title{font-family:var(--font-h);font-size:26px;font-weight:800;margin-bottom:10px;letter-spacing:-0.8px;position:relative;z-index:1}
+.gate-sub{font-size:15px;color:var(--text-2);margin-bottom:24px;line-height:1.65;max-width:460px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
+.gate-pdf-preview{background:rgba(26,158,117,0.06);border:1px solid var(--teal-b);border-radius:12px;padding:16px 20px;margin-bottom:28px;display:flex;align-items:center;gap:14px;text-align:left;position:relative;z-index:1;max-width:440px;margin-left:auto;margin-right:auto}
+.gate-pdf-icon{font-size:28px;flex-shrink:0}
+.gate-pdf-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.gate-pdf-sub{font-size:12px;color:var(--text-2);line-height:1.5}
+.gate-unlocks{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;max-width:380px;margin-left:auto;margin-right:auto;text-align:left;position:relative;z-index:1}
+.gate-unlock{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-2)}
+.gate-unlock::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
+
+/* SIGNUP FORM */
+.signup-form{display:flex;flex-direction:column;gap:12px;max-width:400px;margin:0 auto;position:relative;z-index:1}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-input,.form-select{width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-b);font-size:14px;padding:11px 14px;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+.form-input::placeholder{color:var(--text-3)}
+.form-input:focus,.form-select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)}
+.form-select option{background:#1a2035}
+.btn-unlock{width:100%;background:var(--teal);color:#060B16;border:none;border-radius:10px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s,transform .15s}
+.btn-unlock:hover{opacity:.88;transform:translateY(-1px)}
+.btn-unlock:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.gate-trust{font-size:12px;color:var(--text-3);display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;position:relative;z-index:1}
+
+/* FULL REPORT */
+#full-report{display:none}
+
+.report-section{background:var(--bg-2);border:1px solid var(--border);border-radius:18px;padding:26px 28px;margin-bottom:12px}
+.report-section-head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.rs-num{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.rs-title{font-family:var(--font-h);font-size:16px;font-weight:700;flex:1;letter-spacing:-0.3px}
+.rs-score{font-family:var(--font-h);font-size:18px;font-weight:800}
+.report-items{display:flex;flex-direction:column;gap:10px}
+
+.ri{border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.ri.pass{border-color:rgba(26,158,117,.22);background:rgba(26,158,117,.04)}
+.ri.fail{border-color:rgba(220,38,38,.18);background:rgba(220,38,38,.03)}
+.ri.warn{border-color:rgba(217,119,6,.18);background:rgba(217,119,6,.03)}
+.ri-icon{width:22px;height:22px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:1px}
+.pass .ri-icon{background:rgba(26,158,117,.18);color:#6EE7B7}
+.fail .ri-icon{background:rgba(220,38,38,.18);color:#FCA5A5}
+.warn .ri-icon{background:rgba(217,119,6,.18);color:#FCD34D}
+.ri-body{flex:1}
+.ri-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:5px}
+.ri-desc{font-size:13px;color:var(--text-2);line-height:1.6}
+.ri-fix{font-size:12px;color:var(--teal);margin-top:8px;display:flex;align-items:flex-start;gap:5px;line-height:1.5;padding:8px 10px;background:rgba(26,158,117,.06);border-radius:6px;border-left:2px solid var(--teal)}
+.ri-pts{font-size:12px;color:var(--text-3);white-space:nowrap;padding-top:2px;flex-shrink:0;font-weight:500}
+
+/* AI SECTION */
+.ai-section{background:var(--bg-2);border:1px solid var(--teal-b);border-radius:18px;padding:26px 28px;margin-bottom:12px}
+.ai-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.ai-badge{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:3px 10px;border-radius:4px}
+.ai-title{font-family:var(--font-h);font-size:16px;font-weight:700;flex:1;letter-spacing:-0.3px}
+.ai-body{font-size:14px;color:var(--text-2);line-height:1.8}
+.ai-body p{margin-bottom:14px}
+.ai-body p:last-child{margin-bottom:0}
+.ai-loading{display:flex;align-items:center;gap:10px;color:var(--text-2);font-size:14px}
+.ai-spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+
+/* PRIORITY ACTION LIST */
+.priority-section{background:var(--bg-3);border:1px solid var(--border);border-radius:18px;padding:26px 28px;margin-bottom:12px}
+.priority-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.priority-icon{font-size:18px}
+.priority-title{font-family:var(--font-h);font-size:16px;font-weight:700;letter-spacing:-0.3px}
+.priority-list{display:flex;flex-direction:column;gap:10px}
+.priority-item{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--bg-2);border:1px solid var(--border);border-radius:10px}
+.priority-num{width:24px;height:24px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-top:1px}
+.priority-text{font-size:14px;color:var(--text-2);line-height:1.55}
+.priority-text strong{color:var(--text);font-weight:600}
+
+/* PDF DOWNLOAD BTN */
+.download-section{background:var(--bg-2);border:1px solid var(--teal-b);border-radius:18px;padding:28px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.download-text h3{font-family:var(--font-h);font-size:18px;font-weight:700;margin-bottom:6px;letter-spacing:-0.4px}
+.download-text p{font-size:14px;color:var(--text-2)}
+.btn-download{background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:13px 24px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity .2s;white-space:nowrap}
+.btn-download:hover{opacity:.88}
+
+/* CTA */
+.report-cta{background:linear-gradient(135deg,rgba(26,158,117,0.10),rgba(26,158,117,0.04));border:1px solid var(--teal-b);border-radius:18px;padding:32px 28px;text-align:center}
+.report-cta h3{font-family:var(--font-h);font-size:22px;font-weight:800;margin-bottom:10px;letter-spacing:-0.6px}
+.report-cta p{font-size:15px;color:var(--text-2);margin-bottom:24px;line-height:1.65}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta{background:var(--teal);color:#060B16;border:none;border-radius:8px;padding:13px 28px;font-family:var(--font-b);font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:opacity .2s}
+.btn-cta:hover{opacity:.88}
+.btn-cta-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border);border-radius:8px;padding:13px 22px;font-family:var(--font-b);font-size:14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,color .2s}
+.btn-cta-ghost:hover{border-color:rgba(255,255,255,.18);color:var(--text)}
+.btn-recheck{margin-top:16px;background:none;border:1px solid var(--border);color:var(--text-2);border-radius:8px;font-family:var(--font-b);font-size:13px;padding:9px 20px;cursor:pointer;transition:all .2s}
+.btn-recheck:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
+
+@media(max-width:768px){nav{padding:0 20px}.hero,.checker-wrap{padding-left:20px;padding-right:20px}.hero{padding-top:88px;padding-bottom:40px}.score-hero{flex-direction:column;gap:20px;padding:24px 20px}.preview-grid{grid-template-columns:1fr 1fr}.gate-card,.report-section,.ai-section,.priority-section,.download-section,.report-cta{padding:22px 18px}.form-row{grid-template-columns:1fr}.download-section{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-lm">CG</div>
+    <span class="nav-lt">CyberGrad</span>
+    <span class="nav-tool">CV Checker</span>
+  </a>
+  <a href="index.html" class="nav-back">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back to home
+  </a>
+</nav>
+
+<div class="page">
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-tag"><span class="tag-dot"></span>Free · No account needed to check</div>
+    <h1>Does your CV pass<br>the <span class="hl">UK cyber filter?</span></h1>
+    <p class="hero-sub">Paste your CV below. We score it against 24 rules UK ATS systems and employers use. Get your score instantly — full PDF report with your free account.</p>
+    <p class="hero-note">Built by Rakesh, who analysed hundreds of UK cybersecurity job postings so you don't have to.</p>
+  </div>
+
+  <div class="checker-wrap">
+
+    <!-- STEP 1 -->
+    <div id="step-input">
+      <div class="input-card">
+        <div class="input-top">
+          <div class="step-badge">1</div>
+          <div>
+            <h2>Paste your CV text</h2>
+            <p>Copy everything from your CV document and paste it here. Plain text works perfectly.</p>
+          </div>
+        </div>
+        <div class="textarea-wrap">
+          <textarea id="cv-input" oninput="updateWordCount(this)"
+            placeholder="Paste your full CV text here...
+
+Your Name
+Email Address | LinkedIn URL | City, UK
+
+Personal Statement
+Cybersecurity professional with experience in...
+
+Work Experience
+Job Title — Company Name (Jan 2023 – Present)
+• Implemented security monitoring across...
+• Reduced incident response time by...
+
+Education
+MSc Cybersecurity Engineering — University Name (2024)
+Distinction | Dissertation: Title Here
+
+Skills & Certifications
+CompTIA Security+, Python, SIEM, Splunk..."></textarea>
+        </div>
+        <div class="input-footer">
+          <div class="word-count"><span id="word-count">0</span> words · Aim for 400–900 (1–2 pages)</div>
+          <button class="btn-analyse" id="btn-analyse" onclick="runAnalysis()" disabled>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            Analyse my CV
+          </button>
+        </div>
+        <div style="padding:0 28px 20px">
+          <p class="privacy-note">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Your CV text is never stored without your consent. Analysis runs locally in your browser.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: LOADING -->
+    <div id="step-loading">
+      <div class="loading-ring"></div>
+      <div class="loading-title">Analysing your CV...</div>
+      <div class="loading-sub">Running 24 checks across 6 categories</div>
+      <div class="loading-steps">
+        <div class="ls active" id="ls-1"><span class="ls-dot"></span>Checking UK format and structure</div>
+        <div class="ls" id="ls-2"><span class="ls-dot"></span>Scanning ATS keyword coverage</div>
+        <div class="ls" id="ls-3"><span class="ls-dot"></span>Analysing impact language quality</div>
+        <div class="ls" id="ls-4"><span class="ls-dot"></span>Reviewing education and certifications</div>
+        <div class="ls" id="ls-5"><span class="ls-dot"></span>Checking experience and projects</div>
+        <div class="ls" id="ls-6"><span class="ls-dot"></span>Running final checks</div>
+      </div>
+    </div>
+
+    <!-- STEP 3: RESULTS -->
+    <div id="step-results">
+
+      <!-- SCORE HERO -->
+      <div class="score-hero">
+        <div class="score-ring-wrap">
+          <div class="score-ring">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-track" cx="60" cy="60" r="48"/>
+              <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="48"/>
+            </svg>
+            <div class="score-label">
+              <span class="score-num" id="score-num">0</span>
+              <span class="score-denom">/ 100</span>
+            </div>
+          </div>
+        </div>
+        <div class="score-info">
+          <div class="score-band" id="score-band">—</div>
+          <div class="score-headline" id="score-headline">—</div>
+          <div class="score-desc" id="score-desc">—</div>
+        </div>
+      </div>
+
+      <!-- PREVIEW GRID -->
+      <div class="preview-grid" id="preview-grid"></div>
+
+      <!-- GATE -->
+      <div class="gate-card" id="gate-card">
+        <div class="gate-icon">📄</div>
+        <h2 class="gate-title">Get your full report by email</h2>
+        <p class="gate-sub">Enter your details and we'll email you a complete branded PDF report — every specific fix, every missing keyword, AI language analysis, and your priority action list.</p>
+
+        <div class="gate-pdf-preview">
+          <span class="gate-pdf-icon">📧</span>
+          <div>
+            <div class="gate-pdf-title">CyberGrad CV Report — sent to your inbox</div>
+            <div class="gate-pdf-sub">Score summary · 6 category breakdowns · Every fix · Priority action list · cyber-grad.co.uk</div>
+          </div>
+        </div>
+
+        <div class="gate-unlocks">
+          <div class="gate-unlock">Full breakdown — every specific check, pass/warn/fail</div>
+          <div class="gate-unlock">Every fix written out clearly — not vague advice</div>
+          <div class="gate-unlock">Missing UK keywords for your target role</div>
+          <div class="gate-unlock">Priority action list — top 5 fixes ordered by impact</div>
+          <div class="gate-unlock">Delivered straight to your inbox — free</div>
+        </div>
+
+        <form class="signup-form" onsubmit="unlockReport(event)">
+          <div class="form-row">
+            <input type="text" class="form-input" id="sg-name" placeholder="Your full name" required>
+            <input type="email" class="form-input" id="sg-email" placeholder="Email address" required>
+          </div>
+          <select class="form-select" id="sg-status" required>
+            <option value="" disabled selected>Your current status</option>
+            <option>Currently studying</option>
+            <option>Final year</option>
+            <option>Recently graduated</option>
+            <option>Graduated 6+ months ago</option>
+          </select>
+          <select class="form-select" id="sg-uni" required>
+            <option value="" disabled selected>Your university</option>
+            <option>University of Southampton</option>
+            <option>University of Manchester</option>
+            <option>University of Birmingham</option>
+            <option>University of Edinburgh</option>
+            <option>UCL</option>
+            <option>Coventry University</option>
+            <option>Heriot-Watt University</option>
+            <option>University of Leeds</option>
+            <option>University of Sheffield</option>
+            <option>Other UK university</option>
+          </select>
+          <button type="submit" class="btn-unlock" id="unlock-btn">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+            <span id="unlock-text">Send my report to email — free</span>
+          </button>
+          <div class="gate-trust">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            No spam. No payment. Report arrives in under 60 seconds.
+          </div>
+        </form>
+      </div>
+
+      <!-- CHECK EMAIL SCREEN — shown after gate form submitted -->
+      <div id="check-email-screen" style="display:none;text-align:center;padding:48px 24px">
+        <div style="width:72px;height:72px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+          <svg width="32" height="32" fill="none" stroke="var(--teal)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h2 style="font-family:var(--font-h);font-size:26px;font-weight:800;letter-spacing:-0.8px;margin-bottom:12px">Check your inbox.</h2>
+        <p style="font-size:16px;color:var(--text-2);max-width:420px;margin:0 auto 8px;line-height:1.7">Your full CyberGrad CV report is on its way. It should arrive within 60 seconds.</p>
+        <p style="font-size:13px;color:var(--text-3);margin-bottom:32px">Can't find it? Check your spam folder.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="pricing.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#060B16;padding:13px 24px;border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:700;text-decoration:none">
+            See Foundation Plan
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <button onclick="resetTool()" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text-2);padding:13px 24px;border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:600;cursor:pointer">Check another CV</button>
+        </div>
+      </div>
+
+      <!-- FULL REPORT -->
+      <div id="full-report">
+
+        <!-- EMAIL SENT CONFIRMATION (top) -->
+        <div class="download-section" id="email-sent-banner" style="display:none">
+          <div class="download-text">
+            <h3>📬 Report sent to your inbox!</h3>
+            <p>Check your email — your full CyberGrad CV report is on its way. Should arrive within 60 seconds.</p>
+          </div>
+        </div>
+
+        <!-- PRIORITY ACTIONS -->
+        <div class="priority-section">
+          <div class="priority-head">
+            <span class="priority-icon">🎯</span>
+            <span class="priority-title">Your top 5 priority actions — highest impact first</span>
+          </div>
+          <div class="priority-list" id="priority-list"></div>
+        </div>
+
+        <!-- CATEGORY BREAKDOWNS -->
+        <div id="report-categories"></div>
+
+        <!-- AI ANALYSIS -->
+        <div class="ai-section">
+          <div class="ai-head">
+            <span class="ai-badge">AI Analysis</span>
+            <span class="ai-title">Language & impact quality</span>
+          </div>
+          <div class="ai-body" id="ai-body">
+            <div class="ai-loading">
+              <div class="ai-spinner"></div>
+              Analysing your writing quality and impact language...
+            </div>
+          </div>
+        </div>
+
+        <!-- V1.1 — BOTTOM DOWNLOAD REMOVED, EMAIL SENT ABOVE
+        <div class="download-section">
+          <div class="download-text">
+            <h3>Save your full report</h3>
+            <p>Fix the issues above and re-check.</p>
+          </div>
+          <button class="btn-download" onclick="downloadPDF()">Download PDF Report</button>
+        </div>
+        -->
+
+        <!-- CTA -->
+        <div class="report-cta">
+          <h3>Want a human expert to review this?</h3>
+          <p>Rakesh personally reviews every CV on the Foundation plan — live sessions, 1-to-1 coaching, and everything you need to land UK cyber roles.</p>
+          <div class="cta-btns">
+            <a href="checkout.html" class="btn-cta">
+              Join Foundation — £129
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="signup.html" class="btn-cta-ghost">Create free account</a>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:20px">
+          <button class="btn-recheck" onclick="resetTool()">← Check a different CV</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── SUPABASE ── */
+const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ══════════════════════════════════
+   SCORING ENGINE (full rules)
+══════════════════════════════════ */
+const CYBER_KEYWORDS=['siem','soc','penetration testing','pentest','vulnerability assessment','incident response','threat intelligence','firewall','ids','ips','owasp','devsecops','cissp','ceh','security+','comptia','iso 27001','nist','cloud security','aws','azure','gcp','zero trust','iam','encryption','python','splunk','wireshark','metasploit','nessus','burp suite','kali linux','threat hunting','malware analysis','digital forensics','risk assessment','vulnerability management'];
+const STRONG_VERBS=['implemented','developed','analysed','deployed','managed','led','reduced','improved','designed','configured','automated','monitored','investigated','remediated','built','created','established','delivered','engineered','optimised','secured','architected','conducted','identified','resolved','maintained','collaborated','presented','produced','achieved'];
+const WEAK_PHRASES=['responsible for','helped with','worked on','assisted in','involved in','participated in','tasked with','duties included'];
+const UK_CERT_LIST=['security+','ceh','oscp','cissp','cism','cysa+','pentest+','aws certified','azure security','google cloud','iso 27001','comptia','giac','ccsp'];
+
+function scoreCv(text){
+  const t=text.toLowerCase();
+  const words=text.trim().split(/\s+/).filter(w=>w.length>0);
+  const wc=words.length;
+  const lines=text.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+  const results={categories:[],total:0};
+
+  // CAT 1: UK FORMAT (20pts)
+  const cat1={name:'UK Format & Structure',max:20,score:0,items:[]};
+  const lenPts=wc>=300&&wc<=900?5:wc<300?2:2;
+  const lenStatus=wc>=300&&wc<=900?'pass':wc<200?'fail':'warn';
+  cat1.score+=lenPts;
+  cat1.items.push({status:lenStatus,title:'CV length',desc:wc>=300&&wc<=900?`Good length at ~${wc} words. UK CVs should be 1–2 pages (300–900 words).`:`Your CV is ${wc<300?'too short':'too long'} at ${wc} words. UK employers expect 1–2 pages maximum.`,fix:wc<300?'Expand your experience with detailed bullet points. Add relevant modules, projects, and a stronger personal statement.':wc>900?'Remove older or irrelevant experience. Every bullet point should add value. Cut generic filler sentences.':'',pts:lenPts,max:5});
+  const sections=['experience','education','skill','personal','summary','profile'];
+  const foundSec=sections.filter(s=>t.includes(s));
+  const secPts=Math.min(6,Math.round(foundSec.length*1.5));
+  cat1.score+=secPts;
+  cat1.items.push({status:secPts>=4?'pass':secPts>=2?'warn':'fail',title:'Required UK sections present',desc:secPts>=4?'Good structure — Personal Statement, Experience, Education, and Skills sections detected.':'Missing key sections. UK CVs need clear labelled sections.',fix:secPts<4?'Add clear section headers: Personal Statement, Work Experience, Education, Technical Skills, Certifications, Projects.':'',pts:secPts,max:6});
+  const personalFlags=['date of birth','nationality:','marital','photograph','dob:'];
+  const pFlagsFound=personalFlags.filter(f=>t.includes(f));
+  const pdPts=pFlagsFound.length===0?4:Math.max(0,4-pFlagsFound.length*2);
+  cat1.score+=pdPts;
+  cat1.items.push({status:pFlagsFound.length===0?'pass':'fail',title:'No inappropriate personal details',desc:pFlagsFound.length===0?'Correct — UK CVs do not include date of birth, nationality, or marital status.':'Found personal details that should NOT be on a UK CV: '+pFlagsFound.join(', ')+'. UK employers cannot legally ask for these.',fix:pFlagsFound.length>0?'Remove: date of birth, nationality, marital status, and photograph. These are never included on UK CVs.':'',pts:pdPts,max:4});
+  const hasEmail=/@/.test(text);const hasLinkedin=t.includes('linkedin');const hasLoc=/\b(london|manchester|birmingham|leeds|edinburgh|bristol|coventry|sheffield|liverpool|uk|england)\b/i.test(text);
+  const contactPts=(hasEmail?2:0)+(hasLinkedin?2:0)+(hasLoc?1:0);
+  const missingContact=[];if(!hasEmail)missingContact.push('email');if(!hasLinkedin)missingContact.push('LinkedIn URL');if(!hasLoc)missingContact.push('UK city/location');
+  cat1.score+=contactPts;
+  cat1.items.push({status:contactPts>=4?'pass':contactPts>=2?'warn':'fail',title:'Contact details',desc:contactPts>=4?'Email, LinkedIn, and location detected.':'Missing: '+missingContact.join(', ')+'. These are essential on a UK CV.',fix:missingContact.length?'Add '+missingContact.join(', ')+'. Use city only — not your full home address (outdated on UK CVs).':'',pts:contactPts,max:5});
+  cat1.score=Math.min(20,Math.round(cat1.score));
+  results.categories.push(cat1);
+
+  // CAT 2: ATS KEYWORDS (25pts)
+  const cat2={name:'ATS Keyword Coverage',max:25,score:0,items:[]};
+  const foundKws=CYBER_KEYWORDS.filter(kw=>t.includes(kw));
+  const kwPts=foundKws.length>=8?10:foundKws.length>=6?8:foundKws.length>=4?5:foundKws.length>=2?3:0;
+  const missingKws=CYBER_KEYWORDS.filter(kw=>!t.includes(kw)).slice(0,6);
+  cat2.score+=kwPts;
+  cat2.items.push({status:kwPts>=7?'pass':kwPts>=4?'warn':'fail',title:'Cybersecurity keyword coverage',desc:`Found ${foundKws.length} cybersecurity keywords. Keywords detected: ${foundKws.slice(0,6).join(', ')}${foundKws.length>6?'...':''}.`,fix:kwPts<8?`Add relevant keywords you have genuine experience with: ${missingKws.slice(0,5).join(', ')}.`:'',pts:kwPts,max:10});
+  const americanisms=['resume','honor roll','gpa','defense ','analyze','optimized','organized','summarize'];
+  const americanFound=americanisms.filter(a=>t.includes(a));
+  const ukPts=Math.max(0,8-americanFound.length*2);
+  cat2.score+=ukPts;
+  cat2.items.push({status:americanFound.length===0?'pass':americanFound.length===1?'warn':'fail',title:'UK vs American English',desc:americanFound.length===0?'No Americanisms detected. Good — UK employers notice "resume" vs "CV" immediately.':'Found American terms: "'+americanFound.join('", "')+'" — these flag non-UK CVs to employers.',fix:americanFound.length?'Use British spellings: CV (not resume), analyse, optimise, organised. Use "degree classification" not "GPA".':'',pts:ukPts,max:8});
+  const isAppSec=['appsec','sast','dast','sdlc','code review','application security'].some(k=>t.includes(k));
+  const isPentest=['penetration','pentest','exploitation','kali','metasploit','oscp','burp'].some(k=>t.includes(k));
+  const isSOC=['soc','siem','alert','triage','incident response','splunk'].some(k=>t.includes(k));
+  const roleMatches=[isAppSec,isPentest,isSOC].filter(Boolean).length;
+  const rolePts=roleMatches>=2?7:roleMatches===1?5:2;
+  cat2.score+=rolePts;
+  cat2.items.push({status:rolePts>=5?'pass':'warn',title:'Role specialisation',desc:roleMatches>=1?`Specialisation detected: ${[isAppSec&&'AppSec',isPentest&&'Pentesting',isSOC&&'SOC/Defensive'].filter(Boolean).join(', ')}. UK employers want clear focus.`:'No clear role specialisation. Generic cybersecurity CVs are harder to place.',fix:roleMatches===0?'Choose a direction. SOC: add SIEM, Splunk, alert triage. Pentest: add methodology, Kali, report writing. AppSec: add SAST/DAST, SDLC.':'',pts:rolePts,max:7});
+  cat2.score=Math.min(25,Math.round(cat2.score));
+  results.categories.push(cat2);
+
+  // CAT 3: IMPACT & LANGUAGE (20pts)
+  const cat3={name:'Impact & Language',max:20,score:0,items:[]};
+  const bulletLines=lines.filter(l=>/^[•\-\*]/.test(l)||/^[A-Z][a-z]/.test(l));
+  let strongCount=0,weakCount=0;
+  bulletLines.forEach(line=>{const lower=line.toLowerCase();if(STRONG_VERBS.some(v=>lower.startsWith(v)))strongCount++;if(WEAK_PHRASES.some(p=>lower.includes(p)))weakCount++;});
+  const verbRatio=bulletLines.length>0?strongCount/bulletLines.length:0;
+  const verbPts=weakCount>2?2:verbRatio>=0.7?8:verbRatio>=0.4?5:3;
+  cat3.score+=verbPts;
+  cat3.items.push({status:verbPts>=6?'pass':verbPts>=3?'warn':'fail',title:'Strong action verbs',desc:verbPts>=6?'Good use of action verbs in your bullet points.':weakCount>0?`Found ${weakCount} weak phrases like "responsible for" or "worked on". These waste CV space.`:'Consider starting more bullets with action verbs.',fix:verbPts<6?'Replace "responsible for X" with "Implemented X", "Developed X", "Managed X". Start every bullet with a past-tense action verb.':'',pts:verbPts,max:8});
+  const numMatches=(text.match(/\d+\s*(%|£|\$|percent|systems?|servers?|users?|applications?|vulnerabilit)/gi)||[]).length;
+  const quantPts=numMatches>=3?8:numMatches>=1?4:0;
+  cat3.score+=quantPts;
+  cat3.items.push({status:quantPts>=6?'pass':quantPts>=3?'warn':'fail',title:'Quantified achievements',desc:numMatches>=3?`Found ${numMatches} quantified achievements. Numbers make impact concrete and memorable.`:numMatches>=1?`Only ${numMatches} quantified achievement. UK employers want to see scale and impact.`:'No quantified achievements. This is the most common weakness on graduate CVs.',fix:quantPts<6?'Add numbers: "Reduced false positives by 40%", "Managed security across 200+ endpoints", "Identified 12 critical vulnerabilities".':'',pts:quantPts,max:8});
+  const hasPStatement=t.includes('personal')||t.includes('profile')||t.includes('summary');
+  const genericPhrases=['hardworking','team player','passionate about technology','seeking opportunity','quick learner','looking to grow'];
+  const genericFound=genericPhrases.filter(p=>t.includes(p));
+  const psPts=!hasPStatement?0:genericFound.length>1?1:genericFound.length===1?2:4;
+  cat3.score+=psPts;
+  cat3.items.push({status:psPts>=3?'pass':psPts>=1?'warn':'fail',title:'Personal statement quality',desc:!hasPStatement?'No personal statement found. UK CVs should open with 3–4 sentences for your target role.':genericFound.length>0?`Contains generic phrases: "${genericFound.join('", "')}". Every graduate uses these — they add zero value.`:'Personal statement appears role-focused. Good.',fix:psPts<4?'Write 3 sentences: [What you are + specific skills] + [Key achievement or specialisation] + [Target role and value you bring]. Remove all clichés.':'',pts:psPts,max:4});
+  cat3.score=Math.min(20,Math.round(cat3.score));
+  results.categories.push(cat3);
+
+  // CAT 4: EDUCATION & CERTS (15pts)
+  const cat4={name:'Education & Certifications',max:15,score:0,items:[]};
+  const hasMSc=/msc|master|m\.sc|postgraduate/i.test(text);
+  const hasGrade=/distinction|merit|pass|2:1|2:2|first class|upper second|lower second/i.test(text);
+  const degPts=hasMSc&&hasGrade?5:hasMSc?3:1;
+  cat4.score+=degPts;
+  cat4.items.push({status:degPts>=4?'pass':degPts>=2?'warn':'fail',title:'Degree and classification',desc:hasMSc&&hasGrade?'MSc listed with grade classification. Perfect.':hasMSc?'MSc detected but no grade classification found.':'No postgraduate degree detected.',fix:!hasGrade&&hasMSc?'Always include your grade: "MSc Cybersecurity Engineering — Distinction" or "Merit" or "Pass".':'',pts:degPts,max:5});
+  const foundCerts=UK_CERT_LIST.filter(c=>t.includes(c));
+  const certPts=foundCerts.length>=2?6:foundCerts.length===1?4:0;
+  cat4.score+=certPts;
+  cat4.items.push({status:certPts>=4?'pass':certPts>=2?'warn':'fail',title:'UK-relevant certifications',desc:foundCerts.length>0?`Certifications found: ${foundCerts.join(', ')}. Good — these are recognised by UK employers.`:'No industry certifications detected.',fix:certPts===0?'CompTIA Security+ is the most recognised entry point for UK cyber employers. Add "(in progress)" if not yet complete.':'',pts:certPts,max:6});
+  const hasModules=/module|dissertation|thesis|final.year.project|coursework/i.test(text);
+  const modPts=hasModules?4:0;
+  cat4.score+=modPts;
+  cat4.items.push({status:modPts===4?'pass':'warn',title:'Relevant modules or dissertation',desc:hasModules?'Dissertation or relevant modules mentioned. Valuable context for graduate applications.':'No mention of MSc modules, dissertation, or final project.',fix:!hasModules?'Add 4–6 relevant module names under Education. Include your dissertation title — it shows depth and sparks interview conversation.':'',pts:modPts,max:4});
+  cat4.score=Math.min(15,Math.round(cat4.score));
+  results.categories.push(cat4);
+
+  // CAT 5: EXPERIENCE & PROJECTS (12pts)
+  const cat5={name:'Experience & Projects',max:12,score:0,items:[]};
+  const practicalTerms=['ctf','capture the flag','hackthebox','tryhackme','github','home lab','bug bounty','placement','internship'];
+  const practFound=practicalTerms.filter(p=>t.includes(p));
+  const practPts=practFound.length>=2?6:practFound.length===1?3:0;
+  cat5.score+=practPts;
+  cat5.items.push({status:practPts>=4?'pass':practPts>=2?'warn':'fail',title:'Practical security experience',desc:practFound.length>0?`Practical experience found: ${practFound.slice(0,3).join(', ')}. UK employers value demonstrated hands-on skills.`:'No practical security experience detected (CTF, HackTheBox, GitHub, home lab, placement).',fix:practPts===0?'Add a Projects section. Sign up for TryHackMe — free, and UK employers recognise it. Even your dissertation security work counts.':'',pts:practPts,max:6});
+  const hasGithub=t.includes('github')||t.includes('tryhackme')||t.includes('hackthebox')||t.includes('portfolio');
+  cat5.score+=hasGithub?3:0;
+  cat5.items.push({status:hasGithub?'pass':'warn',title:'GitHub or practical profile link',desc:hasGithub?'GitHub or practical platform profile found. UK cyber employers check these.':'No GitHub, portfolio, or practical platform link.',fix:!hasGithub?'Add your GitHub URL even with 2–3 clean repos. Add READMEs and link prominently in your contact section.':'',pts:hasGithub?3:0,max:3});
+  const years=(text.match(/20\d{2}/g)||[]);
+  const datePts=years.length>=2?3:1;
+  cat5.score+=datePts;
+  cat5.items.push({status:datePts>=2?'pass':'warn',title:'Employment dates',desc:years.length>=2?`Employment dates found: ${[...new Set(years)].join(', ')}. Ensure all roles have start and end dates.`:'Limited date information found.',fix:datePts<2?'Add dates to all entries: "Month Year – Month Year". UK employers flag unexplained gaps.':'',pts:datePts,max:3});
+  cat5.score=Math.min(12,Math.round(cat5.score));
+  results.categories.push(cat5);
+
+  // CAT 6: RED FLAGS (8pts)
+  const cat6={name:'Red Flags',max:8,score:0,items:[]};
+  const hasRef=/references (available|on request|upon request)/i.test(text);
+  cat6.score+=hasRef?0:2;
+  cat6.items.push({status:hasRef?'fail':'pass',title:'"References available on request"',desc:hasRef?'Found "references available on request" — this is outdated and wastes valuable CV space.':'No outdated references line. Good use of space.',fix:hasRef?'Delete this line entirely. UK employers assume references are available.':'',pts:hasRef?0:2,max:2});
+  const firstPerson=['i am looking','i want to','i am seeking','i hope to'].some(p=>t.includes(p));
+  cat6.score+=firstPerson?0:2;
+  cat6.items.push({status:firstPerson?'fail':'pass',title:'First-person wish statements',desc:firstPerson?'Found "I am looking for" style language. UK CVs use a professional third-person summary.':'No first-person wish statements. Professional tone maintained.',fix:firstPerson?'Rewrite as: "MSc Cybersecurity graduate with 2 years experience in..." not "I am looking for..."':'',pts:firstPerson?0:2,max:2});
+  const spellingErrors=['recieved','occured','expereince','enviroment','securty','vulnerabilty','managment'];
+  const spellFound=spellingErrors.filter(e=>t.includes(e));
+  cat6.score+=spellFound.length===0?2:0;
+  cat6.items.push({status:spellFound.length===0?'pass':'fail',title:'Spelling check',desc:spellFound.length===0?'No common spelling errors detected in key terms.':'Possible spelling errors: '+spellFound.join(', ')+'. Typos signal carelessness — serious in security roles.',fix:spellFound.length?'Run a full spellcheck. Ask a native English speaker to proofread before submitting.':'',pts:spellFound.length===0?2:0,max:2});
+  const emailMatch=text.match(/[\w.\-]+@[\w.\-]+\.\w+/);
+  let emailPts=2,emailDesc='Email address looks professional.',emailFix='';
+  if(emailMatch){const em=emailMatch[0].toLowerCase();if(/\d{3,}/.test(em.split('@')[0])||/cool|hacker|ninja|wizard|master/.test(em)){emailPts=0;emailDesc=`Email "${em}" looks unprofessional.`;emailFix='Use firstname.lastname@gmail.com format.';}else if(/\.ac\.uk$/.test(em)){emailPts=1;emailDesc=`University email (${em}) — fine while studying, switch once graduated.`;emailFix='Switch to personal Gmail or Outlook after graduation.';}}
+  cat6.score+=emailPts;
+  cat6.items.push({status:emailPts===2?'pass':emailPts===1?'warn':'fail',title:'Professional email address',desc:emailDesc,fix:emailFix,pts:emailPts,max:2});
+  cat6.score=Math.min(8,Math.round(cat6.score));
+  results.categories.push(cat6);
+
+  results.total=results.categories.reduce((s,c)=>s+c.score,0);
+  return results;
+}
+
+function getBand(score){
+  if(score<=39)return{cls:'band-red',label:'Needs Major Work',headline:'Your CV is likely filtered before a human reads it.',desc:'This is fixable. Most international graduates score here — the problems are specific and solvable.'};
+  if(score<=59)return{cls:'band-amber',label:'Getting There',headline:'Solid foundations, but gaps UK employers will notice.',desc:'You\'re in the better half. Targeted fixes will move you significantly.'};
+  if(score<=79)return{cls:'band-blue',label:'Solid Base',headline:'A good CV, missing some UK-specific elements.',desc:'Strong position. The remaining wins come from tailoring per application.'};
+  return{cls:'band-green',label:'Strong CV',headline:'Well-structured and UK-ready.',desc:'Focus now on tailoring per role and building your network.'};
+}
+function catColour(s,m){const p=s/m;return p>=0.75?'#1A9E75':p>=0.5?'#D97706':'#DC2626';}
+function updateWordCount(ta){const w=ta.value.trim().split(/\s+/).filter(x=>x.length>0).length;document.getElementById('word-count').textContent=w;document.getElementById('btn-analyse').disabled=w<50;}
+
+let cvResults=null,userData=null;
+
+async function runAnalysis(){
+  const cvText=document.getElementById('cv-input').value.trim();
+  if(cvText.length<100)return;
+  document.getElementById('step-input').style.display='none';
+  document.getElementById('step-loading').style.display='block';
+  const steps=['ls-1','ls-2','ls-3','ls-4','ls-5','ls-6'];
+  for(let i=0;i<steps.length;i++){await delay(500+i*380);if(i>0)document.getElementById(steps[i-1]).className='ls done';document.getElementById(steps[i]).className='ls active';}
+  await delay(500);
+  cvResults=scoreCv(cvText);
+  document.getElementById('step-loading').style.display='none';
+  document.getElementById('step-results').style.display='block';
+  renderResults(cvResults);
+  setTimeout(()=>document.getElementById('step-results').scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+function renderResults(r){
+  const band=getBand(r.total);
+  document.getElementById('score-band').className='score-band '+band.cls;
+  document.getElementById('score-band').textContent=band.label;
+  document.getElementById('score-headline').textContent=band.headline;
+  document.getElementById('score-desc').textContent=band.desc;
+  const arc=document.getElementById('ring-fill');
+  arc.style.stroke=r.total>=80?'#1A9E75':r.total>=60?'#3B82F6':r.total>=40?'#D97706':'#DC2626';
+  setTimeout(()=>{let c=0;const iv=setInterval(()=>{c=Math.min(c+2,r.total);document.getElementById('score-num').textContent=c;arc.style.strokeDashoffset=302-(302*c/100);if(c>=r.total)clearInterval(iv);},20);},200);
+  document.getElementById('preview-grid').innerHTML=r.categories.map(cat=>{const pct=Math.round(cat.score/cat.max*100);const col=catColour(cat.score,cat.max);return`<div class="preview-cat"><div class="preview-cat-name">${cat.name}</div><div class="preview-score-row"><span class="preview-score" style="color:${col}">${cat.score}</span><span class="preview-max">/${cat.max}</span></div><div class="preview-bar"><div class="preview-fill" style="background:${col}" data-w="${pct}"></div></div></div>`;}).join('');
+  setTimeout(()=>document.querySelectorAll('.preview-fill').forEach(b=>b.style.width=b.dataset.w+'%'),300);
+}
+
+async function unlockReport(e){
+  e.preventDefault();
+  const name=document.getElementById('sg-name').value.trim();
+  const email=document.getElementById('sg-email').value.trim();
+  const status=document.getElementById('sg-status').value;
+  const uni=document.getElementById('sg-uni').value;
+  if(!name||!email||!status||!uni)return;
+  userData={name,email,status,uni};
+  const btn=document.getElementById('unlock-btn');
+  const txt=document.getElementById('unlock-text');
+  btn.disabled=true;
+  txt.textContent='Sending your report...';
+
+  // Save to localStorage
+  localStorage.setItem('cg_cv_score',cvResults.total);
+  localStorage.setItem('cg_user',JSON.stringify({
+    name,firstName:name.split(' ')[0],email,uni,status,plan:'free'
+  }));
+
+  // Save to Supabase
+  const firstName=name.split(' ')[0];
+  const lastName=name.split(' ').slice(1).join(' ');
+  sb.from('students').upsert({
+    email,first_name:firstName,last_name:lastName,
+    university:uni,status,plan:'free',cv_score:cvResults.total
+  },{onConflict:'email',ignoreDuplicates:false});
+
+  // Show report immediately
+  document.getElementById('gate-card').style.display='none';
+
+  // V1.2 — Show "check your email" screen instead of full report on screen
+  const checkEmailDiv = document.getElementById('check-email-screen');
+  if (checkEmailDiv) {
+    checkEmailDiv.style.display = 'block';
+    checkEmailDiv.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  // Full report is generated in background for the email only
+  // V1.2 — Don't show full report on screen
+  // document.getElementById('full-report').style.display='block';
+  // renderFullReport(cvResults,userData);
+  // runAiAnalysis(document.getElementById('cv-input').value,cvResults.total);
+
+  // Build data for email
+  const allFails=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
+  const allWarns=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='warn'&&i.fix));
+  const priorities=[...allFails,...allWarns].slice(0,5);
+  const band=getBand(cvResults.total).label;
+
+  // Call send-report API
+  try {
+    const res=await fetch('/api/send-report',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name,email,university:uni,status,
+        score:cvResults.total,band,
+        categories:cvResults.categories.map(c=>({name:c.name,score:c.score,max:c.max})),
+        priorities
+      })
+    });
+    const data=await res.json();
+    if(data.success){
+      const banner=document.getElementById('email-sent-banner');
+      if(banner)banner.style.display='flex';
+    }
+  } catch(err){
+    console.error('Email send failed:',err);
+    // Report still shows — silent fail
+  }
+}
+
+function renderFullReport(r,user){
+  // PRIORITY LIST
+  const allFails=r.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
+  const allWarns=r.categories.flatMap(c=>c.items.filter(i=>i.status==='warn'&&i.fix));
+  const priorities=[...allFails,...allWarns].slice(0,5);
+  document.getElementById('priority-list').innerHTML=priorities.map((item,i)=>`
+    <div class="priority-item">
+      <div class="priority-num">${i+1}</div>
+      <div class="priority-text"><strong>${item.title}:</strong> ${item.fix}</div>
+    </div>`).join('');
+  if(priorities.length===0)document.getElementById('priority-list').innerHTML='<div class="priority-item"><div class="priority-num">✓</div><div class="priority-text"><strong>Excellent CV!</strong> Focus on tailoring each application to the specific job description and building your UK professional network.</div></div>';
+
+  // CATEGORIES
+  const catColors=['#1A9E75','#3B82F6','#D97706','#8B5CF6','#EC4899','#DC2626'];
+  const catBgs=['rgba(26,158,117,.12)','rgba(59,130,246,.12)','rgba(217,119,6,.12)','rgba(139,92,246,.12)','rgba(236,72,153,.12)','rgba(220,38,38,.12)'];
+  document.getElementById('report-categories').innerHTML=r.categories.map((cat,ci)=>`
+    <div class="report-section">
+      <div class="report-section-head">
+        <div class="rs-num" style="background:${catBgs[ci]};color:${catColors[ci]}">0${ci+1}</div>
+        <div class="rs-title">${cat.name}</div>
+        <div class="rs-score" style="color:${catColour(cat.score,cat.max)}">${cat.score}<span style="font-size:14px;font-weight:400;color:var(--text-3)">/${cat.max}</span></div>
+      </div>
+      <div class="report-items">
+        ${cat.items.map(item=>`
+          <div class="ri ${item.status}">
+            <div class="ri-icon">${item.status==='pass'?'✓':item.status==='warn'?'!':'✗'}</div>
+            <div class="ri-body">
+              <div class="ri-title">${item.title}</div>
+              <div class="ri-desc">${item.desc}</div>
+              ${item.fix?`<div class="ri-fix">→ ${item.fix}</div>`:''}
+            </div>
+            <div class="ri-pts">${item.pts}/${item.max}</div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+async function runAiAnalysis(cvText,score){
+  const aiBody=document.getElementById('ai-body');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`You are a UK cybersecurity careers expert reviewing a graduate's CV. The CV scored ${score}/100 on automated checks (format, keywords, certs, experience all covered separately). Your job is to analyse the WRITING QUALITY ONLY — not keywords or format.\n\nLook at: (1) Whether bullet points show real impact or just list duties, (2) Whether the personal statement is compelling or generic, (3) Overall professional tone for UK cyber roles, (4) One specific weak sentence with a suggested rewrite.\n\nCV text:\n${cvText.substring(0,2500)}\n\nWrite 3–4 short paragraphs. Be honest and direct. The student needs real feedback. End with one specific rewrite example if you spotted a weak sentence. No preamble.`}]})});
+    const data=await res.json();
+    const text=data.content?.[0]?.text||'';
+    if(text){aiBody.innerHTML=text.split('\n\n').filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join('');}
+    else{aiBody.innerHTML='<p>For personalised language feedback, Rakesh reviews every CV on the Career Accelerator plan.</p>';}
+  }catch(err){aiBody.innerHTML='<p>The detailed scoring above covers your full breakdown. For personalised language feedback, Rakesh reviews every CV on the Career Accelerator plan — written feedback on your actual document.</p>';}
+}
+
+/* PDF GENERATION */
+function downloadPDF(){
+  if(!cvResults||!userData){alert('Please complete the analysis first.');return;}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const W=210,PX=16,teal=[26,158,117],dark=[8,13,24],text=[30,40,60],muted=[100,120,150];
+  let y=0;
+
+  // COVER
+  doc.setFillColor(...dark);doc.rect(0,0,W,297,'F');
+  doc.setFillColor(...teal);doc.rect(0,0,W,2,'F');
+  doc.setTextColor(...teal);doc.setFontSize(10);doc.setFont('helvetica','bold');
+  doc.text('CYBERGRAD',PX,20);
+  doc.setTextColor(240,244,255);doc.setFontSize(22);doc.setFont('helvetica','bold');
+  doc.text('UK Cybersecurity CV Report',PX,36);
+  doc.setFontSize(13);doc.setFont('helvetica','normal');
+  doc.setTextColor(...muted);
+  doc.text(`Prepared for: ${userData.name}`,PX,48);
+  doc.text(`Email: ${userData.email}`,PX,56);
+  doc.text(`University: ${userData.uni}`,PX,63);
+  doc.text(`Generated: ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}`,PX,70);
+
+  // SCORE CIRCLE (text approximation)
+  const band=getBand(cvResults.total);
+  doc.setFillColor(26,158,117,30);doc.roundedRect(PX,82,W-PX*2,36,3,3,'F');
+  doc.setTextColor(...teal);doc.setFontSize(32);doc.setFont('helvetica','bold');
+  doc.text(`${cvResults.total}/100`,PX+8,104);
+  doc.setTextColor(240,244,255);doc.setFontSize(14);doc.setFont('helvetica','bold');
+  doc.text(band.label,PX+55,100);
+  doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(...muted);
+  const descLines=doc.splitTextToSize(band.headline,100);
+  doc.text(descLines,PX+55,107);
+
+  // CATEGORY SCORES
+  y=130;
+  doc.setTextColor(...teal);doc.setFontSize(9);doc.setFont('helvetica','bold');
+  doc.text('SCORE BREAKDOWN',PX,y);y+=7;
+  doc.setFillColor(26,40,60);doc.rect(PX,y,W-PX*2,1,'F');y+=5;
+  cvResults.categories.forEach(cat=>{
+    const pct=cat.score/cat.max;
+    doc.setTextColor(...text);doc.setFontSize(9);doc.setFont('helvetica','normal');
+    doc.text(cat.name,PX,y);
+    doc.setTextColor(...teal);doc.setFont('helvetica','bold');
+    doc.text(`${cat.score}/${cat.max}`,W-PX-12,y,'right');
+    const barX=PX+60,barW=W-PX*2-70,barH=3;
+    doc.setFillColor(26,40,60);doc.roundedRect(barX,y-3.5,barW,barH,1,1,'F');
+    const fc=pct>=0.75?[26,158,117]:pct>=0.5?[217,119,6]:[220,38,38];
+    doc.setFillColor(...fc);doc.roundedRect(barX,y-3.5,barW*pct,barH,1,1,'F');
+    y+=10;
+  });
+
+  // NEW PAGE: DETAILED REPORT
+  doc.addPage();
+  doc.setFillColor(...dark);doc.rect(0,0,210,297,'F');
+  y=16;
+
+  // PRIORITY ACTIONS
+  doc.setFillColor(...teal);doc.rect(PX,y,W-PX*2,7,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(9);doc.setFont('helvetica','bold');
+  doc.text('TOP 5 PRIORITY ACTIONS',PX+3,y+5);y+=14;
+  const allFails=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
+  const allWarns=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='warn'&&i.fix));
+  const priorities=[...allFails,...allWarns].slice(0,5);
+  priorities.forEach((item,i)=>{
+    doc.setFillColor(15,22,40);doc.roundedRect(PX,y,W-PX*2,18,2,2,'F');
+    doc.setFillColor(...teal);doc.circle(PX+6,y+9,4,'F');
+    doc.setTextColor(255,255,255);doc.setFontSize(8);doc.setFont('helvetica','bold');
+    doc.text(`${i+1}`,PX+4.5,y+9.7);
+    doc.setTextColor(240,244,255);doc.setFont('helvetica','bold');doc.setFontSize(8);
+    doc.text(item.title,PX+13,y+6);
+    doc.setFont('helvetica','normal');doc.setTextColor(...muted);
+    const fixLines=doc.splitTextToSize(item.fix,W-PX*2-16);
+    doc.text(fixLines[0],PX+13,y+11);
+    y+=22;
+  });
+
+  // DETAILED CATEGORIES
+  y+=4;
+  cvResults.categories.forEach(cat=>{
+    if(y>250){doc.addPage();doc.setFillColor(...dark);doc.rect(0,0,210,297,'F');y=16;}
+    doc.setFillColor(15,22,40);doc.roundedRect(PX,y,W-PX*2,8,'F');
+    doc.setTextColor(...teal);doc.setFontSize(9);doc.setFont('helvetica','bold');
+    doc.text(`${cat.name.toUpperCase()} — ${cat.score}/${cat.max}`,PX+3,y+5.5);
+    y+=12;
+    cat.items.forEach(item=>{
+      if(y>265){doc.addPage();doc.setFillColor(...dark);doc.rect(0,0,210,297,'F');y=16;}
+      const ic=item.status==='pass'?[26,158,117]:item.status==='warn'?[217,119,6]:[220,38,38];
+      const sym=item.status==='pass'?'✓':item.status==='warn'?'!':'✗';
+      doc.setFillColor(...ic);doc.circle(PX+3,y+3,2.5,'F');
+      doc.setTextColor(255,255,255);doc.setFontSize(7);doc.setFont('helvetica','bold');
+      doc.text(sym,PX+1.5,y+3.8);
+      doc.setTextColor(240,244,255);doc.setFont('helvetica','bold');doc.setFontSize(8);
+      doc.text(item.title,PX+8,y+3.5);
+      doc.setTextColor(...muted);doc.setFont('helvetica','normal');doc.setFontSize(7.5);
+      const descLines=doc.splitTextToSize(item.desc,W-PX*2-10);
+      doc.text(descLines[0],PX+8,y+8.5);
+      y+=14;
+      if(item.fix&&item.status!=='pass'){
+        doc.setFillColor(26,158,117,15);doc.roundedRect(PX+8,y-2,W-PX*2-12,8,1,1,'F');
+        doc.setTextColor(...teal);doc.setFont('helvetica','bold');doc.setFontSize(7);
+        doc.text('→',PX+10,y+3.2);
+        doc.setFont('helvetica','normal');
+        const fixLines=doc.splitTextToSize(item.fix,W-PX*2-20);
+        doc.text(fixLines[0],PX+14,y+3.2);
+        y+=10;
+      }
+    });
+    y+=6;
+  });
+
+  // FOOTER PAGE
+  doc.addPage();
+  doc.setFillColor(...dark);doc.rect(0,0,210,297,'F');
+  doc.setFillColor(...teal);doc.rect(0,0,210,2,'F');
+  doc.setTextColor(...teal);doc.setFontSize(14);doc.setFont('helvetica','bold');
+  doc.text('Want a human expert to review this?',PX,40);
+  doc.setTextColor(240,244,255);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(...muted);
+  const ctaText='Rakesh personally reviews every CV on the Career Accelerator plan — written feedback on your actual document, a 1-to-1 LinkedIn review, a recorded mock interview, and more.';
+  const ctaLines=doc.splitTextToSize(ctaText,W-PX*2);
+  doc.text(ctaLines,PX,52);
+  doc.setFillColor(...teal);doc.roundedRect(PX,70,90,12,3,3,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(10);doc.setFont('helvetica','bold');
+  doc.text('See Career Accelerator Plans',PX+5,77.5);
+  doc.setTextColor(...muted);doc.setFontSize(8);doc.setFont('helvetica','normal');
+  doc.text('cyber-grad.co.uk/pricing | cybergraduk@gmail.com',PX,92);
+  doc.setFillColor(26,40,60);doc.rect(0,280,210,17,'F');
+  doc.setTextColor(...muted);doc.setFontSize(7);
+  doc.text(`© 2026 CyberGrad · Generated for ${userData.name} · ${new Date().toLocaleDateString('en-GB')} · cybergraduk@gmail.com`,PX,289);
+
+  doc.save(`CyberGrad-CV-Report-${userData.name.replace(/\s+/g,'-')}.pdf`);
+}
+
+function resetTool(){
+  document.getElementById('cv-input').value='';document.getElementById('word-count').textContent='0';
+  document.getElementById('btn-analyse').disabled=true;
+  document.getElementById('step-results').style.display='none';
+  document.getElementById('full-report').style.display='none';
+  document.getElementById('gate-card').style.display='block';
+  document.getElementById('step-input').style.display='block';
+  cvResults=null;userData=null;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function delay(ms){return new Promise(r=>setTimeout(r,ms));}
+</script>
+</body>
+</html>

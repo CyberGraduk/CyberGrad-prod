@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberBridge Marketplace — CyberGrad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#060B16;--bg-2:#0A1020;--bg-3:#0F1829;--teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);--blue:#3B82F6;--blue-dim:rgba(59,130,246,0.10);--blue-b:rgba(59,130,246,0.22);--text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(8,13,24,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
+.nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-2);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--teal)!important;color:#060B16!important;padding:9px 22px;border-radius:8px;font-weight:700!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text);border-radius:1px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 5% 80px;text-align:center;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:700px;height:500px;background:radial-gradient(ellipse,rgba(59,130,246,0.08) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:740px;margin:0 auto}
+.coming-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid var(--blue-b);border-radius:100px;font-size:13px;font-weight:500;color:var(--blue);background:var(--blue-dim);margin-bottom:24px}
+.bd{width:6px;height:6px;background:var(--blue);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.mp-logo-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:24px}
+.mp-lm{font-family:var(--font-h);font-size:16px;font-weight:800;color:#fff;background:var(--blue);padding:6px 12px;border-radius:8px}
+.mp-name{font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--text);letter-spacing:-1px}
+h1{font-family:var(--font-h);font-size:clamp(38px,5.5vw,60px);font-weight:800;letter-spacing:-2.5px;line-height:1.05;margin-bottom:18px}
+.hl-blue{color:var(--blue)}
+.hero-sub{font-size:18px;color:var(--text-2);line-height:1.7;max-width:520px;margin:0 auto 36px}
+.wl-form{display:flex;gap:10px;max-width:440px;margin:0 auto 16px}
+.wl-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-b);font-size:15px;padding:13px 16px;outline:none;transition:border-color .2s}
+.wl-input::placeholder{color:var(--text-3)}
+.wl-input:focus{border-color:var(--blue-b)}
+.btn-wl{background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:13px 22px;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+.btn-wl:hover{opacity:.88}
+.wl-count{font-size:14px;color:var(--text-2)}.wl-count strong{color:var(--blue)}
+
+/* FEATURES */
+.section{padding:80px 5%;position:relative;z-index:1}
+.section-alt{background:var(--bg-2)}
+.section-tag{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+h2{font-family:var(--font-h);font-size:clamp(28px,3.5vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
+.section-sub{font-size:17px;color:var(--text-2);max-width:520px;margin-bottom:48px;line-height:1.7}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.feat{background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:16px;padding:24px;transition:border-color .2s,background .2s}
+.feat:hover{border-color:var(--blue-b);background:var(--blue-dim)}
+.feat-icon{font-size:22px;margin-bottom:12px}
+.feat h3{font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px}
+.feat p{font-size:13px;color:var(--text-2);line-height:1.6}
+.feat-tag{display:inline-block;margin-top:12px;font-size:10px;font-weight:600;color:var(--blue);background:var(--blue-dim);border:1px solid var(--blue-b);padding:2px 8px;border-radius:4px;letter-spacing:.5px}
+
+/* PROFILE MOCKUP */
+.mockup{max-width:640px;margin:0 auto;background:var(--bg-2);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.mockup-header{padding:24px;border-bottom:1px solid var(--border);background:rgba(59,130,246,0.04)}
+.m-av{width:52px;height:52px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:18px;font-weight:800;color:#fff;margin-bottom:10px}
+.m-name{font-family:var(--font-h);font-size:17px;font-weight:700;margin-bottom:3px}
+.m-role{font-size:12px;color:var(--text-2);margin-bottom:12px}
+.m-tags{display:flex;gap:6px;flex-wrap:wrap}
+.m-tag{font-size:11px;font-weight:500;color:var(--blue);background:var(--blue-dim);border:1px solid var(--blue-b);padding:2px 9px;border-radius:4px}
+.m-tag.green{color:var(--teal);background:var(--teal-dim);border-color:var(--teal-b)}
+.mockup-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.m-stat{padding:16px;border-right:1px solid var(--border);text-align:center}
+.m-stat:last-child{border-right:none}
+.m-stat-num{font-family:var(--font-h);font-size:20px;font-weight:800;color:var(--blue);margin-bottom:3px}
+.m-stat-lbl{font-size:11px;color:var(--text-2)}
+.m-blur{filter:blur(5px);opacity:.3;user-select:none}
+.mockup-note{text-align:center;font-size:13px;color:var(--text-3);margin-top:14px}
+
+/* FOOTER */
+footer{padding:40px 5% 32px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-3)}
+.footer-right{font-style:italic}
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.fade-up.vis{opacity:1;transform:translateY(0)}
+@media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}.hero,.section{padding-left:20px;padding-right:20px}.hero{padding-top:90px;padding-bottom:56px}.wl-form{flex-direction:column}.mockup-stats{grid-template-columns:1fr 1fr}.m-stat{border-right:none;border-bottom:1px solid var(--border)}.m-stat:nth-child(2n){border-right:none}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo"><div class="nav-lm">CG</div><span class="nav-lt">CyberGrad</span></a>
+  <ul class="nav-links">
+    <li><a href="cv-checker.html">CV Checker</a></li>
+    <li><a href="marketplace.html" style="color:var(--blue)">Marketplace</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="signup.html" class="nav-cta">Get started free</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="coming-badge"><span class="bd"></span>Building now · Join the waitlist</div>
+    <div class="mp-logo-row">
+      <span class="mp-lm">CB</span>
+      <span class="mp-name">CyberBridge</span>
+    </div>
+    <h1>LinkedIn for Cyber.<br><span class="hl-blue">Built for UK talent.</span></h1>
+    <p class="hero-sub">A dedicated marketplace connecting international cybersecurity students and graduates with UK employers. Build your profile. Get discovered. No more applying blindly.</p>
+    <form class="wl-form" onsubmit="joinWaitlist(event)">
+      <input class="wl-input" type="email" id="wl-email" placeholder="your@email.com" required>
+      <button type="submit" class="btn-wl" id="wl-btn">Join waitlist</button>
+    </form>
+    <p class="wl-count"><strong id="wl-count">183</strong> people already waiting</p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="section-tag fade-up">What's coming</div>
+  <h2 class="fade-up">Everything LinkedIn<br>doesn't do for cyber.</h2>
+  <div class="feats">
+    <div class="feat fade-up"><div class="feat-icon">🔐</div><h3>Cyber-specific profile</h3><p>Showcase skills, certs, CTF scores, GitHub, TryHackMe rank — fields LinkedIn doesn't have.</p><span class="feat-tag">COMING SOON</span></div>
+    <div class="feat fade-up" style="transition-delay:.07s"><div class="feat-icon">🏢</div><h3>UK employer discovery</h3><p>Get found by verified UK employers actively hiring. They come to you based on your profile.</p><span class="feat-tag">COMING SOON</span></div>
+    <div class="feat fade-up" style="transition-delay:.14s"><div class="feat-icon">✅</div><h3>Verified credentials</h3><p>Skills and certifications verified by the platform. Employers see proof, not just claims.</p><span class="feat-tag">COMING SOON</span></div>
+    <div class="feat fade-up" style="transition-delay:.21s"><div class="feat-icon">🎓</div><h3>CyberGrad badge</h3><p>CyberGrad alumni get a verified badge. A trust signal UK employers will recognise.</p><span class="feat-tag">COMING SOON</span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-tag fade-up">Profile preview</div>
+  <h2 class="fade-up" style="margin-bottom:12px">What your profile looks like.</h2>
+  <p style="font-size:16px;color:var(--text-2);margin-bottom:36px" class="fade-up">Purpose-built for cybersecurity professionals. Not a generic CV upload.</p>
+  <div class="mockup fade-up">
+    <div class="mockup-header">
+      <div class="m-av">RE</div>
+      <div class="m-name">Rakesh E.</div>
+      <div class="m-role">MSc Cybersecurity Engineering · University of Southampton · Graduate Visa · UK</div>
+      <div class="m-tags">
+        <span class="m-tag">AppSec</span>
+        <span class="m-tag">DevSecOps</span>
+        <span class="m-tag">Python</span>
+        <span class="m-tag">OWASP</span>
+        <span class="m-tag">AWS Security</span>
+        <span class="m-tag green">CyberGrad ✓</span>
+      </div>
+    </div>
+    <div class="mockup-stats">
+      <div class="m-stat"><div class="m-stat-num">89</div><div class="m-stat-lbl">CV Score</div></div>
+      <div class="m-stat"><div class="m-stat-num">14</div><div class="m-stat-lbl">Profile views</div></div>
+      <div class="m-stat m-blur"><div class="m-stat-num">3</div><div class="m-stat-lbl">Enquiries</div></div>
+      <div class="m-stat m-blur"><div class="m-stat-num">Top 8%</div><div class="m-stat-lbl">Specialisation</div></div>
+    </div>
+  </div>
+  <p class="mockup-note fade-up">Blurred sections unlock at launch · Join the waitlist to get early access</p>
+</section>
+
+<footer>
+  <span>© 2026 CyberGrad · cybergraduk@gmail.com</span>
+  <span class="footer-right">"Guidance, not guarantees."</span>
+</footer>
+
+<script>
+let wlCount=parseInt(localStorage.getItem('cg_wl_count')||'183');
+document.getElementById('wl-count').textContent=wlCount;
+function joinWaitlist(e){e.preventDefault();const em=document.getElementById('wl-email').value.trim();if(!em)return;wlCount++;localStorage.setItem('cg_wl_count',wlCount);document.getElementById('wl-count').textContent=wlCount;document.getElementById('wl-email').value='';const btn=document.getElementById('wl-btn');btn.textContent="You're in ✓";btn.style.background='var(--teal)';setTimeout(()=>{btn.textContent='Join waitlist';btn.style.background='';},3000);}
+function toggleNav(){const ul=document.querySelector('.nav-links');const open=ul.style.display==='flex';ul.style.cssText=open?'':'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#080D18;padding:24px 20px;gap:18px;border-bottom:1px solid #1C2539;z-index:99';}
+const obs=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('vis')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in — CyberGrad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#060B16;--bg-2:#0A1020;--teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);--text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
+.nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
+.nav-right{font-size:14px;color:var(--text-2);text-decoration:none;transition:color .2s}
+.nav-right:hover{color:var(--text)}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 20px}
+.card{width:100%;max-width:420px;background:var(--bg-2);border:1px solid var(--border);border-radius:20px;padding:40px 36px}
+.step{display:none}.step.active{display:block}
+.card-icon{width:52px;height:52px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px}
+.card-title{font-family:var(--font-h);font-size:24px;font-weight:800;letter-spacing:-0.8px;margin-bottom:6px}
+.card-sub{font-size:14px;color:var(--text-2);margin-bottom:28px;line-height:1.6}
+.fg{margin-bottom:16px}
+label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:7px}
+.fi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-b);font-size:15px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s}
+.fi::placeholder{color:var(--text-3)}
+.fi:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)}
+.btn-submit{width:100%;background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:14px;cursor:pointer;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s,transform .15s}
+.btn-submit:hover{opacity:.88;transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.trust-note{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:12px;color:var(--text-3)}
+.card-footer{text-align:center;margin-top:18px;font-size:13px;color:var(--text-2)}
+.card-footer a{color:var(--teal);text-decoration:none}
+.email-icon{width:68px;height:68px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+.email-pill{background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;padding:10px 16px;font-size:14px;color:var(--teal);text-align:center;margin:14px 0 22px;word-break:break-all;font-weight:500}
+.btn-demo{width:100%;background:rgba(26,158,117,0.12);color:var(--teal);border:1px solid var(--teal-b);border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:600;padding:13px;cursor:pointer;margin-top:4px;transition:background .2s}
+.btn-demo:hover{background:rgba(26,158,117,0.18)}
+.resend{text-align:center;margin-top:14px;font-size:13px;color:var(--text-2)}
+.resend button{background:none;border:none;color:var(--teal);font-family:var(--font-b);font-size:13px;cursor:pointer}
+@media(max-width:480px){.card{padding:28px 20px}nav{padding:0 20px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo"><div class="nav-lm">CG</div><span class="nav-lt">CyberGrad</span></a>
+  <a href="signup.html" class="nav-right">No account? Sign up free →</a>
+</nav>
+<main>
+  <div class="card">
+    <div class="step active" id="step-form">
+      <div class="card-icon">🔑</div>
+      <h1 class="card-title">Welcome back</h1>
+      <p class="card-sub">Enter your email and we'll send a magic link. Click it to log in instantly — no password ever needed.</p>
+      <form onsubmit="handleLogin(event)">
+        <div class="fg">
+          <label>Email address</label>
+          <input type="email" class="fi" id="login-email" placeholder="you@email.com" required autofocus>
+        </div>
+        <button type="submit" class="btn-submit" id="login-btn">
+          <span id="login-btn-txt">Send magic link</span>
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <div class="trust-note">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          No password needed · Secure magic link
+        </div>
+      </form>
+      <div class="card-footer">Don't have an account? <a href="signup.html">Sign up free</a></div>
+    </div>
+    <div class="step" id="step-email" style="text-align:center">
+      <div class="email-icon">📬</div>
+      <h2 class="card-title">Check your inbox</h2>
+      <p class="card-sub">Magic link sent to:</p>
+      <div class="email-pill" id="sent-email">you@email.com</div>
+      <p style="font-size:14px;color:var(--text-2);margin-bottom:20px;line-height:1.6">Click the link to log in instantly. Expires in 10 minutes.</p>
+      <!-- V1.1 — Demo mode removed. Access only via magic link.
+      <button class="btn-demo" onclick="window.location.href='dashboard.html'">✨ Demo mode — go to dashboard</button>
+      -->
+      <div class="resend">Didn't get it? <button onclick="resend()">Resend link</button></div>
+    </div>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const btn = document.getElementById('login-btn');
+  const txt = document.getElementById('login-btn-txt');
+  btn.disabled = true;
+  txt.textContent = 'Sending...';
+
+  try {
+    const { error } = await sb.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: 'https://www.cyber-grad.co.uk/dashboard.html' }
+    });
+    if (error) throw error;
+    document.getElementById('sent-email').textContent = email;
+    document.getElementById('step-form').classList.remove('active');
+    document.getElementById('step-email').classList.add('active');
+  } catch (err) {
+    txt.textContent = 'Something went wrong — try again';
+    btn.disabled = false;
+  }
+}
+
+function resend() {
+  const btn = document.querySelector('.resend button');
+  btn.textContent = 'Sent ✓';
+  setTimeout(() => btn.textContent = 'Resend link', 3000);
+}
+</script>
+</body>
+</html>

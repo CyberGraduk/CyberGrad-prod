@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — CyberGrad</title>
+<meta name="description" content="Simple, one-time pricing. No subscriptions. Free, Foundation £129, Job Ready £299.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#060B16;--bg-2:#0A1020;--bg-3:#0F1829;
+  --teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);
+  --text:#F0F6FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;
+  --font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(6,11,22,0.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#060B16}
+.nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-2);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--teal)!important;color:#060B16!important;padding:9px 22px;border-radius:8px;font-weight:700!important;transition:opacity .2s!important}
+.nav-cta:hover{opacity:.88!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text);border-radius:1px}
+
+/* HERO */
+.hero{padding:108px 5% 56px;text-align:center;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,200,150,0.07) 0%,transparent 65%);top:0;left:50%;transform:translateX(-50%);pointer-events:none}
+.hero-inner{position:relative;z-index:1}
+.section-tag{font-family:var(--font-b);font-size:12px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+h1{font-family:var(--font-h);font-size:clamp(32px,4.5vw,52px);font-weight:800;letter-spacing:-1.8px;line-height:1.08;margin-bottom:16px}
+.hero-sub{font-size:17px;color:var(--text-2);max-width:440px;margin:0 auto;line-height:1.65}
+h2{font-family:var(--font-h);font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-1px;margin-bottom:10px}
+
+/* CARDS — centered */
+.cards-wrap{padding:0 5%;max-width:960px;margin:0 auto}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;justify-items:center}
+
+.plan-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:30px 26px;display:flex;flex-direction:column;position:relative;transition:border-color .2s}
+.plan-card.featured{border-color:var(--teal-b);background:rgba(0,200,150,0.03)}
+.featured-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--teal);color:#060B16;font-family:var(--font-b);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 16px;border-radius:100px;white-space:nowrap}
+
+.card-tier{font-family:var(--font-b);font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.card-name{font-family:var(--font-h);font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:2px}
+.card-price{font-family:var(--font-h);font-size:52px;font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:14px}
+.featured .card-price{color:var(--teal)}
+.card-price sup{font-size:24px;font-weight:700;vertical-align:super}
+.card-desc{font-size:14px;color:var(--text-2);line-height:1.6;margin-bottom:22px;min-height:60px}
+
+.feat-list{list-style:none;flex:1;margin-bottom:24px}
+.feat-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-2);padding:9px 0;border-bottom:1px solid var(--border);line-height:1.5}
+.feat-list li:last-child{border-bottom:none}
+.feat-check{color:var(--teal);font-weight:700;flex-shrink:0;font-size:14px;margin-top:1px}
+.soon-pill{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:1px 7px;border-radius:4px;margin-left:5px;vertical-align:middle;white-space:nowrap}
+
+.card-btn{display:block;width:100%;text-align:center;padding:14px;border-radius:9px;font-family:var(--font-b);font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;letter-spacing:-0.2px}
+.card-btn.ghost{background:rgba(255,255,255,0.05);color:var(--text);border:1px solid rgba(255,255,255,.08)}
+.card-btn.ghost:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.16)}
+.card-btn.primary{background:var(--teal);color:#060B16}
+.card-btn.primary:hover{opacity:.88;transform:translateY(-1px)}
+
+/* TRUST BAR */
+.trust-bar{text-align:center;padding:28px 5%;font-family:var(--font-b);font-size:13px;color:var(--text-3);display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.trust-sep{width:3px;height:3px;border-radius:50%;background:var(--text-3);display:inline-block}
+
+
+
+/* TABLE */
+.table-section{padding:0 5% 80px;max-width:1000px;margin:0 auto}
+.table-header{text-align:center;margin-bottom:32px}
+.compare-sub{font-size:16px;color:var(--text-2);margin-top:8px}
+.table-wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;min-width:520px}
+thead th{padding:14px 20px;font-family:var(--font-b);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;background:var(--bg-2);border-bottom:1px solid var(--border);text-align:left;color:var(--text-2)}
+thead th:not(:first-child){text-align:center}
+.th-free{color:var(--text-2)!important}
+.th-found{color:var(--text)!important}
+.th-job{color:var(--teal)!important}
+tbody tr{border-bottom:1px solid var(--border);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.015)}
+tbody td{padding:12px 20px;font-size:14px;color:var(--text-2);vertical-align:middle;font-family:var(--font-b)}
+tbody td:not(:first-child){text-align:center}
+.cat-row td{background:rgba(0,200,150,0.05);color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 20px}
+.feat-name{color:var(--text);font-weight:500}
+.check-y{color:var(--teal);font-size:16px;font-weight:700}
+.dash{color:var(--text-3);font-size:16px}
+.txt-teal{font-size:12px;color:var(--teal);font-weight:600}
+.txt-muted{font-size:12px;color:var(--text-2)}
+.col-free{background:rgba(255,255,255,.006)}
+.col-found{background:rgba(255,255,255,.01)}
+.col-job{background:rgba(0,200,150,.022)}
+
+/* FOOTER */
+footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--font-b);font-size:13px;color:var(--text-3)}
+
+@media(max-width:900px){.cards-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto}.plan-card.featured{margin-top:12px}}
+@media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}.hero,.cards-wrap,.table-section{padding-left:20px;padding-right:20px}.hero{padding-top:90px;padding-bottom:40px}}
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-lm">CG</div>
+    <span class="nav-lt">CyberGrad</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="cv-checker.html">CV Checker</a></li>
+    <!--  V1.1 — removed, marketplace hidden -->
+    <li><a href="pricing.html" style="color:var(--teal)">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="login.html">Log in</a></li>
+    <li><a href="signup.html" class="nav-cta">Get started free</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="section-tag">Pricing</div>
+    <h1>Simple, one-time pricing.</h1>
+    <p class="hero-sub">No subscriptions. No recurring charges. Pay once, get everything you need.</p>
+  </div>
+</div>
+
+<!-- 3 CARDS -->
+<div class="cards-wrap">
+  <div class="cards-grid">
+
+    <!-- FREE -->
+    <div class="plan-card fade-up">
+      <div class="card-tier">Start here — always free</div>
+      <div class="card-name">Free Account</div>
+      <div class="card-price"><sup>£</sup>0</div>
+      <p class="card-desc">Instant access to career tools built specifically for international cyber graduates in the UK.</p>
+      <ul class="feat-list">
+        <li><span class="feat-check">✓</span>CV Checker + PDF Report</li>
+        <li><span class="feat-check">✓</span>RoadMap Clarity Quiz — provided by YourCyberBuddy</li>
+        <li><span class="feat-check">✓</span>No credit card required</li>
+      </ul>
+      <a href="signup.html" class="card-btn ghost">Create free account</a>
+    </div>
+
+    <!-- FOUNDATION -->
+    <div class="plan-card fade-up" style="transition-delay:.08s">
+      <div class="card-tier">One-time payment</div>
+      <div class="card-name">Foundation</div>
+      <div class="card-price"><sup>£</sup>129</div>
+      <p class="card-desc">Everything you need to build a solid foundation for your UK cybersecurity job search.</p>
+      <ul class="feat-list">
+        <li><span class="feat-check">✓</span>4× live group sessions (45 mins each)</li>
+        <li><span class="feat-check">✓</span>2× personal 1-to-1 sessions</li>
+        <li><span class="feat-check">✓</span>UK Sponsorship Radar (50+ verified companies)</li>
+        <li><span class="feat-check">✓</span>WhatsApp community access</li>
+        <li><span class="feat-check">✓</span>UK-focused CV template (editable)</li>
+        <li><span class="feat-check">✓</span>LinkedIn optimisation checklist</li>
+        <li><span class="feat-check">✓</span>Job search strategy guide</li>
+        <li><span class="feat-check">✓</span>Q&A support for 4 weeks</li>
+        <li><span class="feat-check">✓</span>Cohort peer group (10–20 students)</li>
+        <li><span class="feat-check">✓</span>Be a Campus Ambassador</li>
+      </ul>
+      <a href="checkout.html" class="card-btn ghost">Get started</a>
+    </div>
+
+    <!-- JOB READY -->
+    <div class="plan-card featured fade-up" style="transition-delay:.16s">
+      <div class="featured-badge">Coming Soon</div>
+      <div class="card-tier">One-time payment</div>
+      <div class="card-name">Job Ready</div>
+      <div class="card-price"><sup>£</sup>299</div>
+      <p class="card-desc">Full hands-on support including personalised reviews, mock interview, and real UK pentesting content.</p>
+      <!-- FEATURES HIDDEN — COMING SOON
+        <ul class="feat-list">
+          <li><span class="feat-check">✓</span>Everything in Foundation</li>
+          <li><span class="feat-check">✓</span>1-to-1 CV review (written feedback)</li>
+          <li><span class="feat-check">✓</span>1-to-1 LinkedIn profile review</li>
+          <li><span class="feat-check">✓</span>1× mock interview (45 mins, recorded)</li>
+          <li><span class="feat-check">✓</span>Job application strategy session</li>
+          <li><span class="feat-check">✓</span>Real UK pentesting workflow & case study</li>
+          <li><span class="feat-check">✓</span>1× UK industry speaker session</li>
+          <li><span class="feat-check">✓</span>Priority Q&A response</li>
+          <li><span class="feat-check">✓</span>Certificate of completion</li>
+          <li><span class="feat-check">✓</span>Access to Security Companies</li>
+          <li><span class="feat-check">✓</span>How to Submit CFP in Conference</li>
+          <li><span class="feat-check">✓</span>Building a Portfolio</li>
+        </ul>
+      -->
+      <div style="text-align:center;padding:24px 0 8px;flex:1;display:flex;flex-direction:column;align-items:center">
+        <div style="font-size:32px;margin-bottom:12px">🚀</div>
+        <div style="font-size:14px;color:var(--text-2);line-height:1.65">Full details dropping soon.<br>Join the waitlist to be notified first.</div>
+        <a href="signup.html" class="card-btn primary" style="margin-top:20px">Join waitlist</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span>🔒 Secure payment via Stripe</span>
+  <span class="trust-sep"></span>
+  <span>One-time payment</span>
+  <span class="trust-sep"></span>
+  <span>No subscription</span>
+</div>
+
+
+
+<!-- V1.1 — FULL COMPARISON TABLE COMMENTED OUT, DO NOT DELETE
+<div class="table-section">
+  <div class="table-header fade-up">
+    <div class="section-tag">Full comparison</div>
+    <h2>Everything, side by side.</h2>
+    <p class="compare-sub">Every feature across all three plans.</p>
+  </div>
+  <div class="table-wrap fade-up">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:40%">Feature</th>
+          <th class="th-free col-free" style="width:20%">Free<br><span style="font-size:11px;font-weight:400;color:var(--text-3)">£0</span></th>
+          <th class="th-found col-found" style="width:20%">Foundation<br><span style="font-size:11px;font-weight:400;color:var(--text-3)">£129</span></th>
+          <th class="th-job col-job" style="width:20%">Job Ready<br><span style="font-size:11px;font-weight:400;color:var(--teal);opacity:.8">£299</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="cat-row"><td colspan="4">Core tools</td></tr>
+        <tr><td class="feat-name">CV Checker + PDF Report</td><td class="col-free"><span class="check-y">✓</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">CV Scorecard (ATS & UK format)</td><td class="col-free"><span class="check-y">✓</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">Cert Clarity Quiz</td><td class="col-free"><span class="txt-teal">Soon</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">UK Sponsorship Radar</td><td class="col-free"><span class="txt-teal">Soon</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">Monthly free webinar</td><td class="col-free"><span class="txt-teal">Soon</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr class="cat-row"><td colspan="4">Sessions & community</td></tr>
+        <tr><td class="feat-name">Live group sessions</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="txt-muted">2× group (45 mins)</span></td><td class="col-job"><span class="txt-teal">Everything in Foundation</span></td></tr>
+        <tr><td class="feat-name">WhatsApp community</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="txt-teal">Priority access</span></td></tr>
+        <tr><td class="feat-name">Q&A support</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="txt-muted">4 weeks</span></td><td class="col-job"><span class="txt-teal">Priority Q&A</span></td></tr>
+        <tr><td class="feat-name">Cohort peer group</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="txt-muted">10–20 students</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr class="cat-row"><td colspan="4">Resources</td></tr>
+        <tr><td class="feat-name">UK CV template (editable)</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">LinkedIn optimisation guide</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">Job search strategy guide</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">Application tracker template</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr class="cat-row"><td colspan="4">Job Ready exclusives</td></tr>
+        <tr><td class="feat-name">1-to-1 CV review</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="txt-teal">Written feedback</span></td></tr>
+        <tr><td class="feat-name">1-to-1 LinkedIn review</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="txt-teal">Written feedback</span></td></tr>
+        <tr><td class="feat-name">Mock interview (45 mins)</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="txt-teal">Included, recorded</span></td></tr>
+        <tr><td class="feat-name">Job application strategy session</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">UK pentesting workflow + case study</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">UK industry speaker session</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">Certificate of completion</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">Campus Ambassador programme</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="check-y">✓</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">Access to Security Companies</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">How to Submit CFP in Conference</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+        <tr><td class="feat-name">Building a Portfolio</td><td class="col-free"><span class="dash">–</span></td><td class="col-found"><span class="dash">–</span></td><td class="col-job"><span class="check-y">✓</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+-->
+
+<footer>
+  <span>© 2026 CyberGrad · Built 2026 · cybergraduk@gmail.com</span>
+  <span style="font-style:italic">"Guidance, not guarantees."</span>
+</footer>
+
+<script>
+function toggleNav(){const ul=document.querySelector('.nav-links');const open=ul.style.display==='flex';ul.style.cssText=open?'':'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#060B16;padding:24px 20px;gap:18px;border-bottom:1px solid #131D30;z-index:99'}
+const obs=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('vis')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

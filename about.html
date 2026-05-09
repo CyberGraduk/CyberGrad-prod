@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — CyberGrad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#060B16;--bg-2:#0A1020;--bg-3:#0F1829;--teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);--text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(8,13,24,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
+.nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-2);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--teal)!important;color:#060B16!important;padding:9px 22px;border-radius:8px;font-weight:700!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text);border-radius:1px}
+
+/* HERO */
+.about-hero{padding:110px 5% 72px;position:relative;overflow:hidden;text-align:center}
+.hero-glow{position:absolute;width:600px;height:400px;background:radial-gradient(ellipse,rgba(26,158,117,0.08) 0%,transparent 65%);top:0;left:50%;transform:translateX(-50%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:720px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid var(--teal-b);border-radius:100px;font-size:13px;font-weight:500;color:var(--teal);background:var(--teal-dim);margin-bottom:22px}
+.tag-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:var(--font-h);font-size:clamp(38px,5vw,56px);font-weight:800;letter-spacing:-2px;line-height:1.08;margin-bottom:20px}
+.hl{color:var(--teal)}
+.hero-sub{font-size:18px;color:var(--text-2);line-height:1.7;max-width:560px;margin:0 auto}
+
+/* AVATAR */
+.avatar-section{display:flex;justify-content:center;padding:48px 5% 0;position:relative;z-index:1}
+.avatar-wrap{position:relative;display:inline-flex}
+.avatar{width:96px;height:96px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:32px;font-weight:800;color:#fff;border:3px solid rgba(26,158,117,0.35)}
+.avatar-ring{position:absolute;inset:-8px;border-radius:50%;border:1px solid var(--teal-b);animation:spin 10s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* CONTENT */
+.content{max-width:760px;margin:0 auto;padding:64px 5% 80px}
+.content-block{margin-bottom:60px}
+.section-tag{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+h2{font-family:var(--font-h);font-size:clamp(26px,3.5vw,36px);font-weight:700;letter-spacing:-1.2px;line-height:1.15;margin-bottom:20px}
+.prose{font-size:16px;color:var(--text-2);line-height:1.8}
+.prose p{margin-bottom:18px}
+.prose p:last-child{margin-bottom:0}
+.prose strong{color:var(--text);font-weight:600}
+.pullquote{border-left:3px solid var(--teal);padding:18px 24px;margin:28px 0;background:var(--teal-dim);border-radius:0 12px 12px 0}
+.pullquote p{font-size:18px;font-weight:600;color:var(--text);line-height:1.55;font-style:italic;letter-spacing:-0.3px}
+.pullquote cite{font-size:13px;color:var(--text-3);font-style:normal;margin-top:8px;display:block}
+
+/* CREDS */
+.creds-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.cred-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:20px;transition:border-color .2s}
+.cred-card:hover{border-color:var(--teal-b)}
+.cred-icon{font-size:20px;margin-bottom:10px}
+.cred-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.cred-sub{font-size:13px;color:var(--text-2);line-height:1.5}
+
+/* TIMELINE */
+.timeline{margin-top:24px;display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:18px;padding-bottom:28px}
+.tl-item:last-child{padding-bottom:0}
+.tl-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.tl-dot{width:12px;height:12px;border-radius:50%;background:var(--teal);border:2px solid var(--teal-b);margin-top:3px}
+.tl-line{width:1px;flex:1;background:var(--border);margin-top:6px}
+.tl-item:last-child .tl-line{display:none}
+.tl-year{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.tl-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px}
+.tl-desc{font-size:13px;color:var(--text-2);line-height:1.6}
+
+/* TRUST */
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.trust-item{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;gap:12px;align-items:flex-start}
+.ti-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:5px}
+.ti-text{font-size:13px;color:var(--text-2);line-height:1.55}
+.ti-text strong{color:var(--text);font-weight:600}
+
+/* CTA BAND */
+.cta-band{background:linear-gradient(135deg,rgba(26,158,117,0.10),rgba(26,158,117,0.04));border:1px solid var(--teal-b);border-radius:20px;padding:48px;text-align:center;margin-top:64px}
+.cta-band h2{margin-bottom:14px}
+.cta-band p{font-size:16px;color:var(--text-2);margin-bottom:28px;line-height:1.65}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:14px 28px;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .15s}
+.btn-p:hover{opacity:.88;transform:translateY(-1px)}
+.btn-s{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:600;padding:14px 22px;cursor:pointer;text-decoration:none;transition:border-color .2s}
+.btn-s:hover{border-color:rgba(255,255,255,.18)}
+
+/* FOOTER */
+/* TOPMATE BAND */
+.topmate-band{background:var(--bg-2,#0A1020);border-top:1px solid var(--border,#131D30);border-bottom:1px solid var(--border,#131D30);padding:64px 5%;margin-top:0}
+.topmate-inner{display:grid;grid-template-columns:1fr 340px;gap:56px;max-width:960px;margin:0 auto;align-items:center}
+.topmate-left h2{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.topmate-left p{font-size:15px;color:var(--text-2,#8896B3);line-height:1.7;margin-bottom:20px}
+.topmate-list{list-style:none;margin-bottom:24px}
+.topmate-list li{font-size:14px;color:var(--text-2,#8896B3);padding:6px 0;display:flex;align-items:center;gap:10px}
+.topmate-list li::before{content:'✓';color:var(--teal,#00C896);font-weight:700;flex-shrink:0}
+.btn-topmate{display:inline-flex;align-items:center;gap:8px;background:var(--teal,#00C896);color:#060B16;padding:13px 22px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:opacity .2s;margin-bottom:10px}
+.btn-topmate:hover{opacity:.88}
+.topmate-note{font-size:12px;color:var(--text-3,#4A5775)}
+.topmate-card{background:var(--bg-3,#0F1829);border:1px solid var(--teal-b,rgba(0,200,150,0.22));border-radius:16px;padding:28px;text-align:center}
+.tc-avatar{width:64px;height:64px;border-radius:50%;background:var(--teal,#00C896);color:#060B16;font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.tc-name{font-weight:700;font-size:16px;margin-bottom:4px}
+.tc-role{font-size:12px;color:var(--text-2,#8896B3);margin-bottom:16px;line-height:1.5}
+.tc-divider{border:none;border-top:1px solid var(--border,#131D30);margin-bottom:16px}
+.tc-detail{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--text-2,#8896B3);margin-bottom:8px}
+@media(max-width:768px){.topmate-inner{grid-template-columns:1fr}.topmate-right{display:none}}
+
+footer{padding:40px 5% 32px;border-top:1px solid var(--border,#131D30);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-3,#4A5775)}
+.footer-right{font-style:italic}
+
+@media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}.about-hero,.content{padding-left:20px;padding-right:20px}.about-hero{padding-top:90px;padding-bottom:48px}.creds-grid,.trust-grid{grid-template-columns:1fr}.cta-band{padding:32px 24px}}
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo"><div class="nav-lm">CG</div><span class="nav-lt">CyberGrad</span></a>
+  <ul class="nav-links">
+    <li><a href="cv-checker.html">CV Checker</a></li>
+    <!-- V1.2 — Marketplace removed -->
+    <!-- <li><a href="marketplace.html">Marketplace</a></li> -->
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html" style="color:var(--teal)">About</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="signup.html" class="nav-cta">Get started free</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="about-hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="tag-dot"></span>Founder</div>
+    <h1>Built by someone<br>who <span class="hl">lived through it.</span></h1>
+    <p class="hero-sub">CyberGrad exists because this guidance didn't exist when Rakesh needed it. This is the resource he wishes had existed.</p>
+  </div>
+</div>
+
+<div class="avatar-section">
+  <div class="avatar-wrap">
+    <div class="avatar">RE</div>
+    <div class="avatar-ring"></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="content-block fade-up">
+    <div class="section-tag">The story</div>
+    <h2>I was you.</h2>
+    <div class="prose">
+      <p>I came to the UK as an international student to complete an MSc in Cybersecurity Engineering. I had the technical background, the degree, and the drive. What I didn't have was any understanding of how the UK job market actually works for someone like me.</p>
+      <p>I did what everyone does. I applied on LinkedIn. Hundreds of applications. Carefully tailored — or so I thought. I heard almost nothing back. Not because I wasn't qualified. <strong>But because I didn't know the rules. The unwritten ones nobody puts in a job description.</strong></p>
+      <p>How UK CVs are formatted differently. What employers actually filter for in ATS systems. Which certifications UK hiring managers care about. How to build a professional network from scratch as an outsider. How to handle visa questions without signalling anxiety.</p>
+    </div>
+
+    <div class="pullquote">
+      <p>"I figured it out eventually. But I wasted months learning things nobody should have to learn by trial and error alone."</p>
+      <cite>— Rakesh Elamaran, Founder, CyberGrad</cite>
+    </div>
+
+    <div class="prose">
+      <p>CyberGrad is the resource I wish had existed. Not a bootcamp. Not a course platform. Not a job board. <strong>A structured, honest, practical guide — from someone who has been exactly where you are right now.</strong></p>
+      <p>The programme is deliberately small. Every cohort is 10–20 students maximum. Because this is not about scale for its own sake — it is about giving each student the attention that actually moves the needle on their job search.</p>
+    </div>
+  </div>
+
+  <div class="content-block fade-up">
+    <div class="section-tag">Background</div>
+    <h2>Experience & credentials.</h2>
+    <p style="font-size:16px;color:var(--text-2);margin-bottom:0;line-height:1.7">The knowledge behind CyberGrad is built from real experience — not theory.</p>
+    <div class="creds-grid">
+      <div class="cred-card"><div class="cred-icon">🎓</div><div class="cred-title">MSc Cybersecurity Engineering</div><div class="cred-sub">Completed in the UK as an international student</div></div>
+      <div class="cred-card"><div class="cred-icon">🔐</div><div class="cred-title">~5 years AppSec & DevSecOps</div><div class="cred-sub">Hands-on application security and DevSecOps experience</div></div>
+      <div class="cred-card"><div class="cred-icon">🇬🇧</div><div class="cred-title">UK Graduate Visa holder</div><div class="cred-sub">Navigated the exact pressures your students face</div></div>
+      <div class="cred-card"><div class="cred-icon">🏗️</div><div class="cred-title">Built CyberGrad in 2026</div><div class="cred-sub">Product, curriculum, and platform — built from scratch</div></div>
+    </div>
+  </div>
+
+  <div class="content-block fade-up">
+    <div class="section-tag">Timeline</div>
+    <h2>How we got here.</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><div class="tl-year">Before UK</div><div class="tl-title">~5 years AppSec & DevSecOps</div><div class="tl-desc">Building real security engineering experience — application security, DevSecOps pipelines, vulnerability management — before making the move to the UK.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><div class="tl-year">UK MSc</div><div class="tl-title">MSc Cybersecurity Engineering — UK</div><div class="tl-desc">Completed a full Master's degree as an international student. Strong technical foundation. Zero understanding of the UK job market at the time.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><div class="tl-year">The reality</div><div class="tl-title">The UK job search — the real version</div><div class="tl-desc">Navigated the UK market as an international graduate. Learned through experience what actually works — and what costs you months of wasted applications.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><div class="tl-year">2026</div><div class="tl-title">CyberGrad — built and launched</div><div class="tl-desc">Built the programme that didn't exist. Launching Cohort 1 with a small group of students. The goal: give them in 4 weeks what took months to figure out alone.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block fade-up">
+    <div class="section-tag">Why trust CyberGrad</div>
+    <h2>What makes this different.</h2>
+    <div class="trust-grid">
+      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>Built by someone who did it</strong> — not a training company, not a recruiter. Someone who went through exactly what you're facing.</div></div>
+      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>Honest by design</strong> — "Guidance, not guarantees." No job promises. No inflated claims. That's not what CyberGrad is.</div></div>
+      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>Small cohorts always</strong> — 10 to 20 students maximum. You are not a number. Every student gets real attention.</div></div>
+      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>UK-specific</strong> — everything is built for the UK market. Not recycled generic career advice with a British flag on it.</div></div>
+      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>Open to students and graduates</strong> — whether you're in your final year or six months post-graduation, this is built for your situation.</div></div>
+      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>One-time pricing</strong> — no subscriptions, no surprise charges. Pay once, get everything in your plan.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-band fade-up">
+    <div class="section-tag" style="text-align:center">Ready?</div>
+    <h2>Start with the free session.</h2>
+    <p>30 minutes on Zoom. No payment. No commitment. See if CyberGrad is the right fit for where you are right now.</p>
+    <div class="cta-btns">
+      <a href="signup.html" class="btn-p">Create free account <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="pricing.html" class="btn-s">See plans</a>
+    </div>
+  </div>
+
+  <!-- TOPMATE CALL SECTION -->
+  <div class="topmate-band fade-up">
+    <div class="topmate-inner">
+      <div class="topmate-left">
+        <div class="section-tag">1-to-1 with Rakesh</div>
+        <h2>Not sure if CyberGrad is for you?</h2>
+        <p>Book a free 10-minute call. No sales pitch — just a straight conversation about where you are, what you're struggling with, and whether this programme makes sense for your situation.</p>
+        <ul class="topmate-list">
+          <li>Where you are in your job search</li>
+          <li>What's stopping you from getting interviews</li>
+          <li>Whether Foundation is the right next step</li>
+        </ul>
+        <a href="https://topmate.io/rakeshelamaran" target="_blank" class="btn-topmate">
+          Book 10-min call — free
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <p class="topmate-note">Hosted on Topmate · topmate.io/rakeshelamaran</p>
+      </div>
+      <div class="topmate-right">
+        <div class="topmate-card">
+          <div class="tc-avatar">RE</div>
+          <div class="tc-name">Rakesh Elamaran</div>
+          <div class="tc-role">Founder, CyberGrad · MSc Cybersecurity Engineering</div>
+          <div class="tc-divider"></div>
+          <div class="tc-detail">
+            <svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+            10 minutes
+          </div>
+          <div class="tc-detail">
+            <svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Pick your slot on Topmate
+          </div>
+          <div class="tc-detail">
+            <svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Free, no commitment
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>© 2026 CyberGrad · Built by Rakesh Elamaran · cybergraduk@gmail.com</span>
+  <span class="footer-right">"Guidance, not guarantees."</span>
+</footer>
+
+<script>
+function toggleNav(){const ul=document.querySelector('.nav-links');const open=ul.style.display==='flex';ul.style.cssText=open?'':'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#080D18;padding:24px 20px;gap:18px;border-bottom:1px solid #1C2539;z-index:99';}
+const obs=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('vis')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
