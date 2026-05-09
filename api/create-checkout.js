@@ -42,7 +42,7 @@ module.exports = async function handler(req, res) {
         'line_items[0][quantity]': '1',
         'payment_method_types[0]': 'card',
         'payment_method_types[1]': 'klarna',
-        'payment_method_types[2]': 'clearpay',
+        'payment_method_types[2]': 'afterpay_clearpay',
         'success_url': 'https://www.cyber-grad.co.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
         'cancel_url': 'https://www.cyber-grad.co.uk/pricing.html',
         'metadata[name]': name || '',
