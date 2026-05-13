@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — CyberGrad</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#060B16;--bg2:#0A1020;--bg3:#0F1829;--teal:#00C896;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.2);--text:#F0F6FF;--muted:#8896B3;--faint:#4A5775;--border:#131D30;--card:rgba(255,255,255,0.025);--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif}
-body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh}
+:root{--bg:#050709;--bg2:#0a0e14;--bg3:#0f1520;--teal:#00d4a0;--teal-dim:rgba(0,212,160,0.08);--teal-b:rgba(0,212,160,0.2);--text:#e8edf5;--muted:#6b7a96;--faint:#3a4358;--border:rgba(255,255,255,0.06);--card:rgba(255,255,255,0.025)}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh}
 
 /* SIDEBAR */
 .app{display:flex;min-height:100vh}
@@ -258,7 +258,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
   <div class="main">
     <div class="topbar">
       <div class="topbar-left">
-        <h1>Hello, <span id="topbar-name" style="color:var(--teal)">there</span>.</h1>
+        <h1>Welcome back, <span id="topbar-name">there</span> 👋</h1>
         <p>Here's your CyberGrad dashboard. Everything you need to get UK-ready.</p>
       </div>
       <span class="free-badge">FREE ACCOUNT</span>
@@ -364,9 +364,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
         </div>
         <div class="community-item">
           <div class="comm-left">
-            <div class="comm-icon" style="background:rgba(37,211,102,0.12)">
-              <svg width="16" height="16" fill="none" stroke="#25d366" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
+            <div class="comm-icon" style="background:rgba(37,211,102,0.12)">📱</div>
             <div>
               <div class="comm-name">WhatsApp Group</div>
               <div class="comm-desc">Cohort community</div>
@@ -374,7 +372,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
           </div>
           <a href="#" class="btn-join">Join →</a>
         </div>
-        <!-- V1.2 — CyberBridge removed from dashboard, do not delete
         <div class="community-item">
           <div class="comm-left">
             <div class="comm-icon" style="background:rgba(79,156,249,0.12)">🌐</div>
@@ -385,20 +382,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
           </div>
           <a href="marketplace.html" class="btn-join">Join →</a>
         </div>
-        -->
       </div>
 
-      <!-- UPGRADE CARD — replaces marketplace -->
+      <!-- MARKETPLACE -->
       <div class="card card-marketplace">
         <div class="card-title">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          Upgrade to Foundation
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          CyberBridge Marketplace
         </div>
         <div class="marketplace-teaser">
-          <div class="mp-logo" style="background:var(--teal);color:#060B16;font-family:var(--font-h)">CG</div>
-          <div class="mp-title">Foundation Plan — £129</div>
-          <div class="mp-desc">4 live sessions, 1-to-1 coaching, UK Sponsorship Radar, WhatsApp community, and everything you need to land UK cyber roles. One-time payment.</div>
-          <a href="checkout.html" class="btn-mp" style="display:block;text-align:center;text-decoration:none;margin-top:12px">Get Foundation — £129 →</a>
+          <div class="mp-logo">CB</div>
+          <div class="mp-title">LinkedIn for Cyber</div>
+          <div class="mp-desc">Your public cyber profile. Discovered by UK employers. Coming soon.</div>
+          <input class="mp-input" type="email" id="mp-email" placeholder="Join the waitlist">
+          <button class="btn-mp" onclick="joinWaitlist()">Notify me when it launches</button>
         </div>
       </div>
 

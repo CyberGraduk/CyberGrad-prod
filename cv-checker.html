@@ -55,7 +55,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;ali
 .input-top h2{font-family:var(--font-h);font-size:17px;font-weight:700;margin-bottom:3px}
 .input-top p{font-size:13px;color:var(--text-2)}
 .textarea-wrap{padding:20px 28px}
-textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:var(--font-b);font-size:13px;line-height:1.7;padding:16px 18px;resize:vertical;min-height:420px;outline:none;transition:border-color .2s,box-shadow .2s}
+textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:var(--font-b);font-size:13px;line-height:1.7;padding:16px 18px;resize:vertical;min-height:260px;outline:none;transition:border-color .2s,box-shadow .2s}
 textarea::placeholder{color:var(--text-3);font-size:13px}
 textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)}
 .input-footer{padding:14px 28px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
@@ -223,7 +223,7 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
     <div class="hero-glow"></div>
     <div class="hero-tag"><span class="tag-dot"></span>Free · No account needed to check</div>
     <h1>Does your CV pass<br>the <span class="hl">UK cyber filter?</span></h1>
-    <p class="hero-sub">Paste your CV below. We score it against 24 rules UK ATS systems and employers use. Get your score instantly — full PDF report with your free account.</p>
+    <p class="hero-sub">Paste your CV below. We score it against 24 rules UK ATS systems and employers use. Get your score instantly — concise feedback in a report sent straight to your email, with a downloadable PDF.</p>
     <p class="hero-note">Built by Rakesh, who analysed hundreds of UK cybersecurity job postings so you don't have to.</p>
   </div>
 
@@ -375,23 +375,6 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
             No spam. No payment. Report arrives in under 60 seconds.
           </div>
         </form>
-      </div>
-
-      <!-- CHECK EMAIL SCREEN — shown after gate form submitted -->
-      <div id="check-email-screen" style="display:none;text-align:center;padding:48px 24px">
-        <div style="width:72px;height:72px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
-          <svg width="32" height="32" fill="none" stroke="var(--teal)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <h2 style="font-family:var(--font-h);font-size:26px;font-weight:800;letter-spacing:-0.8px;margin-bottom:12px">Check your inbox.</h2>
-        <p style="font-size:16px;color:var(--text-2);max-width:420px;margin:0 auto 8px;line-height:1.7">Your full CyberGrad CV report is on its way. It should arrive within 60 seconds.</p>
-        <p style="font-size:13px;color:var(--text-3);margin-bottom:32px">Can't find it? Check your spam folder.</p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-          <a href="pricing.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#060B16;padding:13px 24px;border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:700;text-decoration:none">
-            See Foundation Plan
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <button onclick="resetTool()" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text-2);padding:13px 24px;border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:600;cursor:pointer">Check another CV</button>
-        </div>
       </div>
 
       <!-- FULL REPORT -->
@@ -679,19 +662,10 @@ async function unlockReport(e){
 
   // Show report immediately
   document.getElementById('gate-card').style.display='none';
-
-  // V1.2 — Show "check your email" screen instead of full report on screen
-  const checkEmailDiv = document.getElementById('check-email-screen');
-  if (checkEmailDiv) {
-    checkEmailDiv.style.display = 'block';
-    checkEmailDiv.scrollIntoView({behavior:'smooth',block:'start'});
-  }
-
-  // Full report is generated in background for the email only
-  // V1.2 — Don't show full report on screen
-  // document.getElementById('full-report').style.display='block';
-  // renderFullReport(cvResults,userData);
-  // runAiAnalysis(document.getElementById('cv-input').value,cvResults.total);
+  document.getElementById('full-report').style.display='block';
+  renderFullReport(cvResults,userData);
+  runAiAnalysis(document.getElementById('cv-input').value,cvResults.total);
+  document.getElementById('full-report').scrollIntoView({behavior:'smooth',block:'start'});
 
   // Build data for email
   const allFails=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));

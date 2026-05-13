@@ -26,7 +26,6 @@ main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:4
 .unlock-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .unlock-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:10px}
 .unlock-icon{font-size:18px;flex-shrink:0}
-.unlock-icon-wrap{width:34px;height:34px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .unlock-text{font-size:13px;color:var(--text-2);line-height:1.5}
 .unlock-text strong{color:var(--text);font-weight:600;display:block;margin-bottom:2px}
 .counter-pill{display:inline-flex;align-items:center;gap:10px;background:var(--bg-2);border:1px solid var(--border);border-radius:100px;padding:8px 16px}
@@ -88,28 +87,22 @@ label .req{color:var(--teal)}
     <p>Create your free account and access everything you need to understand the UK cybersecurity job market — instantly.</p>
     <div class="unlock-list">
       <div class="unlock-item">
-        <div class="unlock-icon-wrap">
-          <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </div>
-        <div class="unlock-text"><strong>CV Checker + PDF Report</strong>Score your CV out of 100. Get a full report emailed directly to you.</div>
+        <span class="unlock-icon">📧</span>
+        <div class="unlock-text"><strong>CV Checker + Email Report</strong> Score out of 100. Concise feedback sent to your inbox with a downloadable PDF.</div>
       </div>
+      <!-- V1.2 — UK CV Template and LinkedIn guides removed from free tier
       <div class="unlock-item">
-        <div class="unlock-icon-wrap">
-          <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-        </div>
+        <span class="unlock-icon">📄</span>
         <div class="unlock-text"><strong>UK CV Template</strong>ATS-ready, UK-formatted, editable. Built for cybersecurity roles.</div>
       </div>
       <div class="unlock-item">
-        <div class="unlock-icon-wrap">
-          <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        </div>
-        <div class="unlock-text"><strong>LinkedIn & Job Search Guides</strong>32-point checklist and a structured UK job search plan.</div>
+        <span class="unlock-icon">🔗</span>
+        <div class="unlock-text"><strong>LinkedIn & Job Search Guides</strong>32-point checklist + structured 8-week UK job search plan.</div>
       </div>
+      -->
       <div class="unlock-item">
-        <div class="unlock-icon-wrap">
-          <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div class="unlock-text"><strong>WhatsApp Community</strong>Connect with other international students navigating the same journey.</div>
+        <span class="unlock-icon">💬</span>
+        <div class="unlock-text"><strong>WhatsApp Community</strong> Connect with other international students navigating the same journey.</div>
       </div>
     </div>
     <div class="counter-pill">
@@ -136,12 +129,92 @@ label .req{color:var(--teal)}
           <label>University <span class="req">*</span></label>
           <select class="fs" id="sg-uni" required>
             <option value="" disabled selected>Select your university</option>
-            <option>University of Southampton</option><option>University of Manchester</option>
-            <option>University of Birmingham</option><option>University of Edinburgh</option>
-            <option>UCL</option><option>Coventry University</option>
-            <option>Heriot-Watt University</option><option>University of Leeds</option>
-            <option>University of Sheffield</option><option>University of Bristol</option>
-            <option>King's College London</option><option>University of Exeter</option>
+            <optgroup label="Russell Group">
+              <option>University of Birmingham</option>
+              <option>University of Bristol</option>
+              <option>University of Cambridge</option>
+              <option>Cardiff University</option>
+              <option>Durham University</option>
+              <option>University of Edinburgh</option>
+              <option>University of Exeter</option>
+              <option>University of Glasgow</option>
+              <option>Imperial College London</option>
+              <option>King's College London</option>
+              <option>University of Leeds</option>
+              <option>University of Liverpool</option>
+              <option>London School of Economics (LSE)</option>
+              <option>University of Manchester</option>
+              <option>Newcastle University</option>
+              <option>University of Nottingham</option>
+              <option>University of Oxford</option>
+              <option>Queen Mary University of London</option>
+              <option>Queen's University Belfast</option>
+              <option>University of Sheffield</option>
+              <option>University of Southampton</option>
+              <option>University College London (UCL)</option>
+              <option>University of Warwick</option>
+              <option>University of York</option>
+            </optgroup>
+            <optgroup label="Other UK Universities">
+              <option>Anglia Ruskin University</option>
+              <option>Aston University</option>
+              <option>Bath Spa University</option>
+              <option>University of Bath</option>
+              <option>Bournemouth University</option>
+              <option>Brunel University London</option>
+              <option>Birkbeck, University of London</option>
+              <option>City, University of London</option>
+              <option>Coventry University</option>
+              <option>De Montfort University</option>
+              <option>University of Derby</option>
+              <option>University of East Anglia (UEA)</option>
+              <option>University of East London</option>
+              <option>Edinburgh Napier University</option>
+              <option>University of Essex</option>
+              <option>Goldsmiths, University of London</option>
+              <option>University of Greenwich</option>
+              <option>Heriot-Watt University</option>
+              <option>University of Hertfordshire</option>
+              <option>University of Huddersfield</option>
+              <option>University of Hull</option>
+              <option>Keele University</option>
+              <option>University of Kent</option>
+              <option>Kingston University London</option>
+              <option>Lancaster University</option>
+              <option>University of Leicester</option>
+              <option>University of Lincoln</option>
+              <option>Liverpool John Moores University</option>
+              <option>London Metropolitan University</option>
+              <option>London South Bank University</option>
+              <option>Loughborough University</option>
+              <option>Manchester Metropolitan University</option>
+              <option>Middlesex University</option>
+              <option>University of Northampton</option>
+              <option>Northumbria University</option>
+              <option>Nottingham Trent University</option>
+              <option>Oxford Brookes University</option>
+              <option>Plymouth University</option>
+              <option>University of Portsmouth</option>
+              <option>University of Reading</option>
+              <option>Robert Gordon University</option>
+              <option>Royal Holloway, University of London</option>
+              <option>University of Salford</option>
+              <option>Sheffield Hallam University</option>
+              <option>University of South Wales</option>
+              <option>University of Stirling</option>
+              <option>University of Strathclyde</option>
+              <option>University of Sunderland</option>
+              <option>Surrey University</option>
+              <option>University of Sussex</option>
+              <option>Swansea University</option>
+              <option>Teesside University</option>
+              <option>Ulster University</option>
+              <option>University of West London</option>
+              <option>University of West of England (UWE)</option>
+              <option>University of Westminster</option>
+              <option>University of Wolverhampton</option>
+              <option>Wrexham University</option>
+            </optgroup>
             <option>Other UK university</option>
           </select>
         </div>
@@ -247,14 +320,7 @@ async function handleSignup(e) {
       joined: new Date().toISOString()
     }));
 
-    /* 4. Send welcome confirmation email via Resend */
-    fetch('/api/send-welcome', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: fname, email })
-    }).catch(err => console.log('Welcome email error:', err));
-
-    /* 5. Show check-email state */
+    /* 4. Show check-email state */
     document.getElementById('sent-email').textContent = email;
     document.getElementById('step-form').classList.remove('active');
     document.getElementById('step-email').classList.add('active');

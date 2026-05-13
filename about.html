@@ -90,26 +90,17 @@ h2{font-family:var(--font-h);font-size:clamp(26px,3.5vw,36px);font-weight:700;le
 .btn-s:hover{border-color:rgba(255,255,255,.18)}
 
 /* FOOTER */
-/* TOPMATE BAND */
-.topmate-band{background:var(--bg-2,#0A1020);border-top:1px solid var(--border,#131D30);border-bottom:1px solid var(--border,#131D30);padding:64px 5%;margin-top:0}
-.topmate-inner{display:grid;grid-template-columns:1fr 340px;gap:56px;max-width:960px;margin:0 auto;align-items:center}
-.topmate-left h2{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-1px;margin-bottom:12px}
-.topmate-left p{font-size:15px;color:var(--text-2,#8896B3);line-height:1.7;margin-bottom:20px}
-.topmate-list{list-style:none;margin-bottom:24px}
-.topmate-list li{font-size:14px;color:var(--text-2,#8896B3);padding:6px 0;display:flex;align-items:center;gap:10px}
-.topmate-list li::before{content:'✓';color:var(--teal,#00C896);font-weight:700;flex-shrink:0}
-.btn-topmate{display:inline-flex;align-items:center;gap:8px;background:var(--teal,#00C896);color:#060B16;padding:13px 22px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:opacity .2s;margin-bottom:10px}
+/* TOPMATE STRIP */
+.topmate-strip{background:var(--bg-2,#0A1020);border-top:1px solid var(--border,#1C2539);padding:24px 5%;margin-top:0}
+.topmate-strip-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.topmate-strip-text{display:flex;flex-direction:column;gap:4px}
+.ts-label{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:700;color:var(--text,#F0F6FF);letter-spacing:-0.3px}
+.ts-sub{font-size:14px;color:var(--text-2,#8896B3)}
+.btn-topmate{display:inline-flex;align-items:center;gap:8px;background:var(--teal,#00C896);color:#060B16;padding:12px 20px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;transition:opacity .2s;flex-shrink:0}
 .btn-topmate:hover{opacity:.88}
-.topmate-note{font-size:12px;color:var(--text-3,#4A5775)}
-.topmate-card{background:var(--bg-3,#0F1829);border:1px solid var(--teal-b,rgba(0,200,150,0.22));border-radius:16px;padding:28px;text-align:center}
-.tc-avatar{width:64px;height:64px;border-radius:50%;background:var(--teal,#00C896);color:#060B16;font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
-.tc-name{font-weight:700;font-size:16px;margin-bottom:4px}
-.tc-role{font-size:12px;color:var(--text-2,#8896B3);margin-bottom:16px;line-height:1.5}
-.tc-divider{border:none;border-top:1px solid var(--border,#131D30);margin-bottom:16px}
-.tc-detail{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--text-2,#8896B3);margin-bottom:8px}
-@media(max-width:768px){.topmate-inner{grid-template-columns:1fr}.topmate-right{display:none}}
+@media(max-width:600px){.topmate-strip-inner{flex-direction:column;align-items:flex-start}.btn-topmate{width:100%;justify-content:center}}
 
-footer{padding:40px 5% 32px;border-top:1px solid var(--border,#131D30);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-3,#4A5775)}
+footer{padding:40px 5% 32px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-3)}
 .footer-right{font-style:italic}
 
 @media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}.about-hero,.content{padding-left:20px;padding-right:20px}.about-hero{padding-top:90px;padding-bottom:48px}.creds-grid,.trust-grid{grid-template-columns:1fr}.cta-band{padding:32px 24px}}
@@ -122,11 +113,9 @@ footer{padding:40px 5% 32px;border-top:1px solid var(--border,#131D30);display:f
   <a href="index.html" class="nav-logo"><div class="nav-lm">CG</div><span class="nav-lt">CyberGrad</span></a>
   <ul class="nav-links">
     <li><a href="cv-checker.html">CV Checker</a></li>
-    <!-- V1.2 — Marketplace removed -->
-    <!-- <li><a href="marketplace.html">Marketplace</a></li> -->
+    <li><a href="marketplace.html">Marketplace</a></li>
     <li><a href="pricing.html">Pricing</a></li>
     <li><a href="about.html" style="color:var(--teal)">About</a></li>
-    <li><a href="index.html#faq">FAQ</a></li>
     <li><a href="signup.html" class="nav-cta">Get started free</a></li>
   </ul>
   <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
@@ -228,44 +217,17 @@ footer{padding:40px 5% 32px;border-top:1px solid var(--border,#131D30);display:f
     </div>
   </div>
 
-  <!-- TOPMATE CALL SECTION -->
-  <div class="topmate-band fade-up">
-    <div class="topmate-inner">
-      <div class="topmate-left">
-        <div class="section-tag">1-to-1 with Rakesh</div>
-        <h2>Not sure if CyberGrad is for you?</h2>
-        <p>Book a free 10-minute call. No sales pitch — just a straight conversation about where you are, what you're struggling with, and whether this programme makes sense for your situation.</p>
-        <ul class="topmate-list">
-          <li>Where you are in your job search</li>
-          <li>What's stopping you from getting interviews</li>
-          <li>Whether Foundation is the right next step</li>
-        </ul>
-        <a href="https://topmate.io/rakeshelamaran" target="_blank" class="btn-topmate">
-          Book 10-min call — free
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-        <p class="topmate-note">Hosted on Topmate · topmate.io/rakeshelamaran</p>
+  <!-- TOPMATE — compact horizontal -->
+  <div class="topmate-strip fade-up">
+    <div class="topmate-strip-inner">
+      <div class="topmate-strip-text">
+        <span class="ts-label">Not sure if CyberGrad is right for you?</span>
+        <span class="ts-sub">Book a free 10-min call with Rakesh — straight talk, no sales pitch.</span>
       </div>
-      <div class="topmate-right">
-        <div class="topmate-card">
-          <div class="tc-avatar">RE</div>
-          <div class="tc-name">Rakesh Elamaran</div>
-          <div class="tc-role">Founder, CyberGrad · MSc Cybersecurity Engineering</div>
-          <div class="tc-divider"></div>
-          <div class="tc-detail">
-            <svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-            10 minutes
-          </div>
-          <div class="tc-detail">
-            <svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Pick your slot on Topmate
-          </div>
-          <div class="tc-detail">
-            <svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Free, no commitment
-          </div>
-        </div>
-      </div>
+      <a href="https://topmate.io/rakeshelamaran" target="_blank" class="btn-topmate">
+        Book 10-min call — free
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
     </div>
   </div>
 
