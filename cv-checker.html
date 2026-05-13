@@ -75,7 +75,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;ali
 .input-top h2{font-family:var(--font-h);font-size:17px;font-weight:700;margin-bottom:3px}
 .input-top p{font-size:13px;color:var(--text-2)}
 .textarea-wrap{padding:20px 28px}
-textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:var(--font-b);font-size:13px;line-height:1.7;padding:16px 18px;resize:vertical;min-height:260px;outline:none;transition:border-color .2s,box-shadow .2s}
+textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:var(--font-b);font-size:13px;line-height:1.7;padding:18px 20px;resize:vertical;min-height:440px;outline:none;transition:border-color .2s,box-shadow .2s}
+.gate-gdpr{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-3);margin-top:6px}
+.gate-gdpr svg{flex-shrink:0}
 textarea::placeholder{color:var(--text-3);font-size:13px}
 textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)}
 .input-footer{padding:14px 28px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
@@ -211,6 +213,8 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
 
 /* CTA */
 .report-cta{background:linear-gradient(135deg,rgba(26,158,117,0.10),rgba(26,158,117,0.04));border:1px solid var(--teal-b);border-radius:18px;padding:32px 28px;text-align:center}
+.cta-tag{font-family:var(--font-b);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.cta-note{font-size:12px;color:var(--text-3);margin-top:12px;margin-bottom:0}
 .report-cta h3{font-family:var(--font-h);font-size:22px;font-weight:800;margin-bottom:10px;letter-spacing:-0.6px}
 .report-cta p{font-size:15px;color:var(--text-2);margin-bottom:24px;line-height:1.65}
 .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -501,6 +505,10 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
             <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             No spam. No payment. Report arrives in under 60 seconds.
           </div>
+          <div class="gate-gdpr">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Your CV data is never stored or shared. Processed in-session only. GDPR compliant.
+          </div>
         </form>
       </div>
 
@@ -553,15 +561,17 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
 
         <!-- CTA -->
         <div class="report-cta">
-          <h3>Want a human expert to review this?</h3>
-          <p>Rakesh personally reviews every CV on the Foundation plan — live sessions, 1-to-1 coaching, and everything you need to land UK cyber roles.</p>
+          <div class="cta-tag">Ready to fix this?</div>
+          <h3>The CyberGrad Foundation System</h3>
+          <p>The CV Scorecard found the issues. Foundation fixes them — 4 weeks, live sessions, UK Sponsorship Radar, Cohort Community, and 1-to-1 sessions to go from this score to interview-ready.</p>
           <div class="cta-btns">
             <a href="checkout.html" class="btn-cta">
-              Join Foundation — £129
+              Join Foundation — £125
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <a href="signup.html" class="btn-cta-ghost">Create free account</a>
           </div>
+          <p class="cta-note">No subscription. One payment. Cohort 1 — Early Bird £125.</p>
         </div>
 
         <div style="text-align:center;margin-top:20px">
@@ -599,22 +609,40 @@ function scoreCv(text){
   const lenPts=wc>=300&&wc<=900?5:wc<300?2:2;
   const lenStatus=wc>=300&&wc<=900?'pass':wc<200?'fail':'warn';
   cat1.score+=lenPts;
-  cat1.items.push({status:lenStatus,title:'CV length',desc:wc>=300&&wc<=900?`Good length at ~${wc} words. UK CVs should be 1–2 pages (300–900 words).`:`Your CV is ${wc<300?'too short':'too long'} at ${wc} words. UK employers expect 1–2 pages maximum.`,fix:wc<300?'Expand your experience with detailed bullet points. Add relevant modules, projects, and a stronger personal statement.':wc>900?'Remove older or irrelevant experience. Every bullet point should add value. Cut generic filler sentences.':'',pts:lenPts,max:5});
+  cat1.items.push({status:lenStatus,title:'CV length',
+    desc:wc>=300&&wc<=900?`Good — ${wc} words sits in the UK sweet spot. Recruiters can read this in 30 seconds.`
+      :wc<300?`${wc} words. That's a skeleton, not a CV. A UK recruiter would spend 8 seconds on this and move on. There is not enough substance here to get past an ATS filter.`
+      :`${wc} words. Too long. UK employers read CVs in under 60 seconds — after page 2 they stop. You're burying your best points in filler.`,
+    fix:wc<300?'Expand every bullet point with what you did, how you did it, and the outcome. Add relevant modules, dissertation, and a strong personal statement. Aim for 500–750 words.'
+      :wc>900?'Ruthlessly cut. Remove older jobs if irrelevant. One line is enough for anything over 3 years old. Delete filler sentences that start with "I was responsible for".'
+      :'',pts:lenPts,max:5});
+
   const sections=['experience','education','skill','personal','summary','profile'];
   const foundSec=sections.filter(s=>t.includes(s));
   const secPts=Math.min(6,Math.round(foundSec.length*1.5));
   cat1.score+=secPts;
-  cat1.items.push({status:secPts>=4?'pass':secPts>=2?'warn':'fail',title:'Required UK sections present',desc:secPts>=4?'Good structure — Personal Statement, Experience, Education, and Skills sections detected.':'Missing key sections. UK CVs need clear labelled sections.',fix:secPts<4?'Add clear section headers: Personal Statement, Work Experience, Education, Technical Skills, Certifications, Projects.':'',pts:secPts,max:6});
+  cat1.items.push({status:secPts>=4?'pass':secPts>=2?'warn':'fail',title:'Required UK sections present',
+    desc:secPts>=4?'Core sections detected — Personal Statement, Experience, Education, and Skills. Good structure.'
+      :'Missing essential sections. A UK recruiter needs to find information instantly — if they have to search for it, they move on.',
+    fix:secPts<4?'Add clearly labelled sections: Personal Statement, Work Experience, Technical Skills, Education, Certifications, Projects. Each should be findable in under 3 seconds.':'',pts:secPts,max:6});
+
   const personalFlags=['date of birth','nationality:','marital','photograph','dob:'];
   const pFlagsFound=personalFlags.filter(f=>t.includes(f));
   const pdPts=pFlagsFound.length===0?4:Math.max(0,4-pFlagsFound.length*2);
   cat1.score+=pdPts;
-  cat1.items.push({status:pFlagsFound.length===0?'pass':'fail',title:'No inappropriate personal details',desc:pFlagsFound.length===0?'Correct — UK CVs do not include date of birth, nationality, or marital status.':'Found personal details that should NOT be on a UK CV: '+pFlagsFound.join(', ')+'. UK employers cannot legally ask for these.',fix:pFlagsFound.length>0?'Remove: date of birth, nationality, marital status, and photograph. These are never included on UK CVs.':'',pts:pdPts,max:4});
+  cat1.items.push({status:pFlagsFound.length===0?'pass':'fail',title:'No inappropriate personal details',
+    desc:pFlagsFound.length===0?'Correct — UK CVs do not include date of birth, nationality, or photos.'
+      :`You've included ${pFlagsFound.join(', ')}. This is not just unnecessary — in the UK, including these can make employers nervous about discrimination liability. It also signals you don't know UK hiring norms.`,
+    fix:pFlagsFound.length>0?'Delete these immediately: '+pFlagsFound.join(', ')+'. UK employers cannot legally factor these in, and seeing them makes your CV look foreign.':'',pts:pdPts,max:4});
+
   const hasEmail=/@/.test(text);const hasLinkedin=t.includes('linkedin');const hasLoc=/\b(london|manchester|birmingham|leeds|edinburgh|bristol|coventry|sheffield|liverpool|uk|england)\b/i.test(text);
   const contactPts=(hasEmail?2:0)+(hasLinkedin?2:0)+(hasLoc?1:0);
-  const missingContact=[];if(!hasEmail)missingContact.push('email');if(!hasLinkedin)missingContact.push('LinkedIn URL');if(!hasLoc)missingContact.push('UK city/location');
+  const missingContact=[];if(!hasEmail)missingContact.push('email');if(!hasLinkedin)missingContact.push('LinkedIn URL');if(!hasLoc)missingContact.push('UK city or location');
   cat1.score+=contactPts;
-  cat1.items.push({status:contactPts>=4?'pass':contactPts>=2?'warn':'fail',title:'Contact details',desc:contactPts>=4?'Email, LinkedIn, and location detected.':'Missing: '+missingContact.join(', ')+'. These are essential on a UK CV.',fix:missingContact.length?'Add '+missingContact.join(', ')+'. Use city only — not your full home address (outdated on UK CVs).':'',pts:contactPts,max:5});
+  cat1.items.push({status:contactPts>=4?'pass':contactPts>=2?'warn':'fail',title:'Contact details',
+    desc:contactPts>=4?'Email, LinkedIn, and UK location all present. Good.'
+      :`Missing: ${missingContact.join(', ')}. ${!hasLinkedin?'A CV without a LinkedIn in 2025 is a red flag — it suggests you either don\'t have one or have something to hide.':''}`,
+    fix:missingContact.length?'Add: '+missingContact.join(', ')+'. LinkedIn is non-negotiable for UK cyber hiring. Use your city only — not a full home address.':'',pts:contactPts,max:5});
   cat1.score=Math.min(20,Math.round(cat1.score));
   results.categories.push(cat1);
 
@@ -624,19 +652,31 @@ function scoreCv(text){
   const kwPts=foundKws.length>=8?10:foundKws.length>=6?8:foundKws.length>=4?5:foundKws.length>=2?3:0;
   const missingKws=CYBER_KEYWORDS.filter(kw=>!t.includes(kw)).slice(0,6);
   cat2.score+=kwPts;
-  cat2.items.push({status:kwPts>=7?'pass':kwPts>=4?'warn':'fail',title:'Cybersecurity keyword coverage',desc:`Found ${foundKws.length} cybersecurity keywords. Keywords detected: ${foundKws.slice(0,6).join(', ')}${foundKws.length>6?'...':''}.`,fix:kwPts<8?`Add relevant keywords you have genuine experience with: ${missingKws.slice(0,5).join(', ')}.`:'',pts:kwPts,max:10});
+  cat2.items.push({status:kwPts>=7?'pass':kwPts>=4?'warn':'fail',title:'Cybersecurity keyword coverage',
+    desc:kwPts>=7?`Good keyword density — ${foundKws.length} cybersecurity terms detected including: ${foundKws.slice(0,6).join(', ')}.`
+      :foundKws.length>0?`Only ${foundKws.length} cybersecurity keywords found. Most UK ATS systems require 8+ relevant terms before flagging a CV for human review. You're currently below that threshold.`
+      :'Zero cybersecurity keywords detected. This CV would be auto-rejected by every ATS system before a human sees it. This is a critical failure.',
+    fix:kwPts<8?`Add these terms where you have genuine experience: ${missingKws.slice(0,5).join(', ')}. Do not keyword-stuff — add them in context.`:'',pts:kwPts,max:10});
+
   const americanisms=['resume','honor roll','gpa','defense ','analyze','optimized','organized','summarize'];
   const americanFound=americanisms.filter(a=>t.includes(a));
   const ukPts=Math.max(0,8-americanFound.length*2);
   cat2.score+=ukPts;
-  cat2.items.push({status:americanFound.length===0?'pass':americanFound.length===1?'warn':'fail',title:'UK vs American English',desc:americanFound.length===0?'No Americanisms detected. Good — UK employers notice "resume" vs "CV" immediately.':'Found American terms: "'+americanFound.join('", "')+'" — these flag non-UK CVs to employers.',fix:americanFound.length?'Use British spellings: CV (not resume), analyse, optimise, organised. Use "degree classification" not "GPA".':'',pts:ukPts,max:8});
+  cat2.items.push({status:americanFound.length===0?'pass':americanFound.length===1?'warn':'fail',title:'UK vs American English',
+    desc:americanFound.length===0?'No Americanisms detected. Good — UK recruiters notice "resume" vs "CV" immediately, and it signals you haven\'t adapted.'
+      :`Found American spellings: "${americanFound.join('", "')}". UK recruiters see this and immediately know you copy-pasted from an American template. It undermines your entire application.`,
+    fix:americanFound.length?'Switch to British English throughout. CV not resume. Analyse not analyze. Optimise not optimize. Organised not organized. "Degree classification" not GPA.':'',pts:ukPts,max:8});
+
   const isAppSec=['appsec','sast','dast','sdlc','code review','application security'].some(k=>t.includes(k));
   const isPentest=['penetration','pentest','exploitation','kali','metasploit','oscp','burp'].some(k=>t.includes(k));
   const isSOC=['soc','siem','alert','triage','incident response','splunk'].some(k=>t.includes(k));
   const roleMatches=[isAppSec,isPentest,isSOC].filter(Boolean).length;
   const rolePts=roleMatches>=2?7:roleMatches===1?5:2;
   cat2.score+=rolePts;
-  cat2.items.push({status:rolePts>=5?'pass':'warn',title:'Role specialisation',desc:roleMatches>=1?`Specialisation detected: ${[isAppSec&&'AppSec',isPentest&&'Pentesting',isSOC&&'SOC/Defensive'].filter(Boolean).join(', ')}. UK employers want clear focus.`:'No clear role specialisation. Generic cybersecurity CVs are harder to place.',fix:roleMatches===0?'Choose a direction. SOC: add SIEM, Splunk, alert triage. Pentest: add methodology, Kali, report writing. AppSec: add SAST/DAST, SDLC.':'',pts:rolePts,max:7});
+  cat2.items.push({status:rolePts>=5?'pass':'warn',title:'Role specialisation signal',
+    desc:roleMatches>=1?`Specialisation detected: ${[isAppSec&&'AppSec',isPentest&&'Pentesting',isSOC&&'SOC/Defensive'].filter(Boolean).join(', ')}. UK hiring managers scan for a clear direction — you have one.`
+      :'No clear specialisation detected. This reads as a generic cybersecurity CV, which means it\'s not competitive for any specific role. UK employers hire for roles, not for "cybersecurity" in general.',
+    fix:roleMatches===0?'Pick a lane and go deep. SOC analyst: SIEM, Splunk, alert triage, incident response. Pentester: methodology, Kali, report writing, bug bounty. AppSec: SAST/DAST, secure code review, SDLC.':'',pts:rolePts,max:7});
   cat2.score=Math.min(25,Math.round(cat2.score));
   results.categories.push(cat2);
 
@@ -648,17 +688,31 @@ function scoreCv(text){
   const verbRatio=bulletLines.length>0?strongCount/bulletLines.length:0;
   const verbPts=weakCount>2?2:verbRatio>=0.7?8:verbRatio>=0.4?5:3;
   cat3.score+=verbPts;
-  cat3.items.push({status:verbPts>=6?'pass':verbPts>=3?'warn':'fail',title:'Strong action verbs',desc:verbPts>=6?'Good use of action verbs in your bullet points.':weakCount>0?`Found ${weakCount} weak phrases like "responsible for" or "worked on". These waste CV space.`:'Consider starting more bullets with action verbs.',fix:verbPts<6?'Replace "responsible for X" with "Implemented X", "Developed X", "Managed X". Start every bullet with a past-tense action verb.':'',pts:verbPts,max:8});
+  cat3.items.push({status:verbPts>=6?'pass':verbPts>=3?'warn':'fail',title:'Action verb strength',
+    desc:verbPts>=6?'Strong action verbs throughout. Your bullets read like achievements, not job descriptions.'
+      :weakCount>0?`Found ${weakCount} passive phrases like "responsible for" or "worked on". These are the verbal equivalent of white noise — recruiters skip past them instantly. You had a job. Tell them what you actually did.`
+      :'Your bullets are too passive. UK recruiters spend 6 seconds on this section. Right now it reads like a job description, not your achievements.',
+    fix:verbPts<6?'Every bullet must start with a strong past-tense verb: Implemented, Deployed, Engineered, Configured, Automated, Investigated, Remediated. "Responsible for monitoring" → "Monitored and triaged 200+ daily security alerts across X SIEM platform."':'',pts:verbPts,max:8});
+
   const numMatches=(text.match(/\d+\s*(%|£|\$|percent|systems?|servers?|users?|applications?|vulnerabilit)/gi)||[]).length;
   const quantPts=numMatches>=3?8:numMatches>=1?4:0;
   cat3.score+=quantPts;
-  cat3.items.push({status:quantPts>=6?'pass':quantPts>=3?'warn':'fail',title:'Quantified achievements',desc:numMatches>=3?`Found ${numMatches} quantified achievements. Numbers make impact concrete and memorable.`:numMatches>=1?`Only ${numMatches} quantified achievement. UK employers want to see scale and impact.`:'No quantified achievements. This is the most common weakness on graduate CVs.',fix:quantPts<6?'Add numbers: "Reduced false positives by 40%", "Managed security across 200+ endpoints", "Identified 12 critical vulnerabilities".':'',pts:quantPts,max:8});
+  cat3.items.push({status:quantPts>=6?'pass':quantPts>=3?'warn':'fail',title:'Quantified achievements',
+    desc:numMatches>=3?`${numMatches} quantified achievements found. Numbers make your impact real and memorable.`
+      :numMatches>=1?`Only ${numMatches} quantified achievement. Every statement without a number is forgettable. "Improved system performance" means nothing. "Reduced false positive alerts by 40%" means something.`
+      :'Not a single number. This is the most common and most damaging gap on graduate CVs. Without numbers, your experience sounds theoretical — because to a UK recruiter, it is.',
+    fix:quantPts<6?'Force numbers into your bullets: scale (200+ endpoints), improvement (reduced by X%), volume (identified 12 critical vulns), timeframe (delivered in 3 weeks). If you don\'t have exact numbers, estimate conservatively.':'',pts:quantPts,max:8});
+
   const hasPStatement=t.includes('personal')||t.includes('profile')||t.includes('summary');
   const genericPhrases=['hardworking','team player','passionate about technology','seeking opportunity','quick learner','looking to grow'];
   const genericFound=genericPhrases.filter(p=>t.includes(p));
   const psPts=!hasPStatement?0:genericFound.length>1?1:genericFound.length===1?2:4;
   cat3.score+=psPts;
-  cat3.items.push({status:psPts>=3?'pass':psPts>=1?'warn':'fail',title:'Personal statement quality',desc:!hasPStatement?'No personal statement found. UK CVs should open with 3–4 sentences for your target role.':genericFound.length>0?`Contains generic phrases: "${genericFound.join('", "')}". Every graduate uses these — they add zero value.`:'Personal statement appears role-focused. Good.',fix:psPts<4?'Write 3 sentences: [What you are + specific skills] + [Key achievement or specialisation] + [Target role and value you bring]. Remove all clichés.':'',pts:psPts,max:4});
+  cat3.items.push({status:psPts>=3?'pass':psPts>=1?'warn':'fail',title:'Personal statement quality',
+    desc:!hasPStatement?'No personal statement. You have 3 seconds at the top of your CV to make a recruiter care. Right now that space is empty.'
+      :genericFound.length>0?`Contains these clichés: "${genericFound.join('", "')}". Every single graduate uses these phrases. They are meaningless. A recruiter's eyes glaze over these before they finish reading the sentence.`
+      :'Personal statement appears specific and role-focused. Good.',
+    fix:psPts<4?'Write 3 specific sentences: 1. What you are + your strongest credential. 2. One concrete achievement or specialism. 3. The specific role and value you bring. Remove every adjective that every other candidate also uses.':'',pts:psPts,max:4});
   cat3.score=Math.min(20,Math.round(cat3.score));
   results.categories.push(cat3);
 
@@ -668,15 +722,27 @@ function scoreCv(text){
   const hasGrade=/distinction|merit|pass|2:1|2:2|first class|upper second|lower second/i.test(text);
   const degPts=hasMSc&&hasGrade?5:hasMSc?3:1;
   cat4.score+=degPts;
-  cat4.items.push({status:degPts>=4?'pass':degPts>=2?'warn':'fail',title:'Degree and classification',desc:hasMSc&&hasGrade?'MSc listed with grade classification. Perfect.':hasMSc?'MSc detected but no grade classification found.':'No postgraduate degree detected.',fix:!hasGrade&&hasMSc?'Always include your grade: "MSc Cybersecurity Engineering — Distinction" or "Merit" or "Pass".':'',pts:degPts,max:5});
+  cat4.items.push({status:degPts>=4?'pass':degPts>=2?'warn':'fail',title:'Degree and classification',
+    desc:hasMSc&&hasGrade?'MSc listed with grade classification. Correct — never omit your grade on a UK CV.'
+      :hasMSc?'MSc detected but no grade classification found. This looks like you\'re hiding something. Recruiters will assume the worst.'
+      :'No postgraduate degree detected. If you have one, it needs to be far more visible.',
+    fix:!hasGrade&&hasMSc?'Add your exact classification immediately after your degree title: "MSc Cybersecurity Engineering — Distinction" or "Merit". Omitting it signals a weak grade.':'',pts:degPts,max:5});
+
   const foundCerts=UK_CERT_LIST.filter(c=>t.includes(c));
   const certPts=foundCerts.length>=2?6:foundCerts.length===1?4:0;
   cat4.score+=certPts;
-  cat4.items.push({status:certPts>=4?'pass':certPts>=2?'warn':'fail',title:'UK-relevant certifications',desc:foundCerts.length>0?`Certifications found: ${foundCerts.join(', ')}. Good — these are recognised by UK employers.`:'No industry certifications detected.',fix:certPts===0?'CompTIA Security+ is the most recognised entry point for UK cyber employers. Add "(in progress)" if not yet complete.':'',pts:certPts,max:6});
+  cat4.items.push({status:certPts>=4?'pass':certPts>=2?'warn':'fail',title:'UK-recognised certifications',
+    desc:foundCerts.length>0?`Certifications found: ${foundCerts.join(', ')}. These are recognised by UK cyber employers.`
+      :'No industry certifications detected. In UK cyber hiring, a certification signals commitment to the field. Without one, your MSc theory has no practical credibility marker.',
+    fix:certPts===0?'CompTIA Security+ is the baseline UK employers recognise. Start it immediately — add "(in progress)" to your CV while studying. CEH or OSCP for pentesting. AWS Security for cloud roles. CySA+ for SOC.':'',pts:certPts,max:6});
+
   const hasModules=/module|dissertation|thesis|final.year.project|coursework/i.test(text);
   const modPts=hasModules?4:0;
   cat4.score+=modPts;
-  cat4.items.push({status:modPts===4?'pass':'warn',title:'Relevant modules or dissertation',desc:hasModules?'Dissertation or relevant modules mentioned. Valuable context for graduate applications.':'No mention of MSc modules, dissertation, or final project.',fix:!hasModules?'Add 4–6 relevant module names under Education. Include your dissertation title — it shows depth and sparks interview conversation.':'',pts:modPts,max:4});
+  cat4.items.push({status:modPts===4?'pass':'warn',title:'Relevant modules or dissertation',
+    desc:hasModules?'Dissertation or modules mentioned. This is exactly what junior candidates should be doing — your academic work is your portfolio until you have work experience.'
+      :'No modules or dissertation mentioned. You spent a year on a postgraduate degree and you\'re not using any of it. This is wasted credibility.',
+    fix:!hasModules?'Add your dissertation title under Education — it is a conversation starter in every interview. List 4–6 relevant module names. "Network Security", "Digital Forensics", "Ethical Hacking" — these are keywords AND experience signals.':'',pts:modPts,max:4});
   cat4.score=Math.min(15,Math.round(cat4.score));
   results.categories.push(cat4);
 
@@ -686,14 +752,25 @@ function scoreCv(text){
   const practFound=practicalTerms.filter(p=>t.includes(p));
   const practPts=practFound.length>=2?6:practFound.length===1?3:0;
   cat5.score+=practPts;
-  cat5.items.push({status:practPts>=4?'pass':practPts>=2?'warn':'fail',title:'Practical security experience',desc:practFound.length>0?`Practical experience found: ${practFound.slice(0,3).join(', ')}. UK employers value demonstrated hands-on skills.`:'No practical security experience detected (CTF, HackTheBox, GitHub, home lab, placement).',fix:practPts===0?'Add a Projects section. Sign up for TryHackMe — free, and UK employers recognise it. Even your dissertation security work counts.':'',pts:practPts,max:6});
+  cat5.items.push({status:practPts>=4?'pass':practPts>=2?'warn':'fail',title:'Hands-on security experience',
+    desc:practFound.length>0?`Practical experience found: ${practFound.slice(0,3).join(', ')}. UK employers want proof you've actually done something, not just studied it. Good.`
+      :'No hands-on security experience detected — no CTFs, no HackTheBox, no GitHub, no home lab, no placement. UK employers have hundreds of MSc graduates with the same theoretical knowledge. The ones who get interviews have done something practical.',
+    fix:practPts===0?'This is fixable fast. Create a TryHackMe account today — it\'s free and UK employers recognise it. Start a GitHub with even 2–3 documented security projects. Document your dissertation as a project. One CTF writeup is better than nothing.':'',pts:practPts,max:6});
+
   const hasGithub=t.includes('github')||t.includes('tryhackme')||t.includes('hackthebox')||t.includes('portfolio');
   cat5.score+=hasGithub?3:0;
-  cat5.items.push({status:hasGithub?'pass':'warn',title:'GitHub or practical profile link',desc:hasGithub?'GitHub or practical platform profile found. UK cyber employers check these.':'No GitHub, portfolio, or practical platform link.',fix:!hasGithub?'Add your GitHub URL even with 2–3 clean repos. Add READMEs and link prominently in your contact section.':'',pts:hasGithub?3:0,max:3});
+  cat5.items.push({status:hasGithub?'pass':'warn',title:'GitHub or portfolio link',
+    desc:hasGithub?'Portfolio or practical platform link found. UK hiring managers look at these — make sure your profile is clean and active.'
+      :'No GitHub or portfolio link. In cyber hiring, showing is infinitely more powerful than telling. A CV without a GitHub is a sales pitch without a product demo.',
+    fix:!hasGithub?'Add your GitHub URL in your contact section today. Even with 2 repos. Write a proper README for each. Pin your best work. A clean GitHub with 3 documented projects puts you ahead of 70% of applicants.':'',pts:hasGithub?3:0,max:3});
+
   const years=(text.match(/20\d{2}/g)||[]);
   const datePts=years.length>=2?3:1;
   cat5.score+=datePts;
-  cat5.items.push({status:datePts>=2?'pass':'warn',title:'Employment dates',desc:years.length>=2?`Employment dates found: ${[...new Set(years)].join(', ')}. Ensure all roles have start and end dates.`:'Limited date information found.',fix:datePts<2?'Add dates to all entries: "Month Year – Month Year". UK employers flag unexplained gaps.':'',pts:datePts,max:3});
+  cat5.items.push({status:datePts>=2?'pass':'warn',title:'Employment dates',
+    desc:years.length>=2?`Dates found: ${[...new Set(years)].join(', ')}. Make sure every role has a start and end month, not just year.`
+      :'Limited date information. UK employers look for unexplained gaps immediately. No dates = automatic suspicion.',
+    fix:datePts<2?'Add "Month Year – Month Year" to every position. If you have a gap, own it briefly: "Career break — independent security research and certification study." Silence about gaps is worse than the gap itself.':'',pts:datePts,max:3});
   cat5.score=Math.min(12,Math.round(cat5.score));
   results.categories.push(cat5);
 
@@ -701,17 +778,29 @@ function scoreCv(text){
   const cat6={name:'Red Flags',max:8,score:0,items:[]};
   const hasRef=/references (available|on request|upon request)/i.test(text);
   cat6.score+=hasRef?0:2;
-  cat6.items.push({status:hasRef?'fail':'pass',title:'"References available on request"',desc:hasRef?'Found "references available on request" — this is outdated and wastes valuable CV space.':'No outdated references line. Good use of space.',fix:hasRef?'Delete this line entirely. UK employers assume references are available.':'',pts:hasRef?0:2,max:2});
+  cat6.items.push({status:hasRef?'fail':'pass',title:'"References available on request"',
+    desc:hasRef?'"References available on request" — this line has been outdated since 2005. It wastes a line that could say something useful about you. Every recruiter knows references are available. This signals you\'re working from an old template.'
+      :'No outdated references line. Good — you\'re using that space properly.',
+    fix:hasRef?'Delete this line. Replace with a relevant certification, a project, or another achievement bullet.':'',pts:hasRef?0:2,max:2});
+
   const firstPerson=['i am looking','i want to','i am seeking','i hope to'].some(p=>t.includes(p));
   cat6.score+=firstPerson?0:2;
-  cat6.items.push({status:firstPerson?'fail':'pass',title:'First-person wish statements',desc:firstPerson?'Found "I am looking for" style language. UK CVs use a professional third-person summary.':'No first-person wish statements. Professional tone maintained.',fix:firstPerson?'Rewrite as: "MSc Cybersecurity graduate with 2 years experience in..." not "I am looking for..."':'',pts:firstPerson?0:2,max:2});
+  cat6.items.push({status:firstPerson?'fail':'pass',title:'First-person language',
+    desc:firstPerson?'"I am looking for" or "I want to" language detected. UK CVs use a professional third-person tone. First-person wish statements make you sound like you\'re writing a cover letter — or a diary.'
+      :'No first-person wish statements. Professional tone maintained.',
+    fix:firstPerson?'Rewrite completely. "I am looking for a role in cybersecurity" → "MSc Cybersecurity graduate with 2 years of hands-on AppSec experience, seeking [specific role] at [type of company]."':'',pts:firstPerson?0:2,max:2});
+
   const spellingErrors=['recieved','occured','expereince','enviroment','securty','vulnerabilty','managment'];
   const spellFound=spellingErrors.filter(e=>t.includes(e));
   cat6.score+=spellFound.length===0?2:0;
-  cat6.items.push({status:spellFound.length===0?'pass':'fail',title:'Spelling check',desc:spellFound.length===0?'No common spelling errors detected in key terms.':'Possible spelling errors: '+spellFound.join(', ')+'. Typos signal carelessness — serious in security roles.',fix:spellFound.length?'Run a full spellcheck. Ask a native English speaker to proofread before submitting.':'',pts:spellFound.length===0?2:0,max:2});
+  cat6.items.push({status:spellFound.length===0?'pass':'fail',title:'Spelling accuracy',
+    desc:spellFound.length===0?'No common spelling errors detected. In security roles, attention to detail is everything — a clean CV signals this.'
+      :`Spelling errors found: ${spellFound.join(', ')}. You are applying for a security role that requires precision and attention to detail. Typos on your CV actively argue against hiring you.`,
+    fix:spellFound.length?'Run a full spellcheck. Then have a native English speaker read it. Then read it backwards — your brain autocorrects mistakes when reading forwards.':'',pts:spellFound.length===0?2:0,max:2});
+
   const emailMatch=text.match(/[\w.\-]+@[\w.\-]+\.\w+/);
   let emailPts=2,emailDesc='Email address looks professional.',emailFix='';
-  if(emailMatch){const em=emailMatch[0].toLowerCase();if(/\d{3,}/.test(em.split('@')[0])||/cool|hacker|ninja|wizard|master/.test(em)){emailPts=0;emailDesc=`Email "${em}" looks unprofessional.`;emailFix='Use firstname.lastname@gmail.com format.';}else if(/\.ac\.uk$/.test(em)){emailPts=1;emailDesc=`University email (${em}) — fine while studying, switch once graduated.`;emailFix='Switch to personal Gmail or Outlook after graduation.';}}
+  if(emailMatch){const em=emailMatch[0].toLowerCase();if(/\d{3,}/.test(em.split('@')[0])||/cool|hacker|ninja|wizard|master/.test(em)){emailPts=0;emailDesc=`"${em}" — this email address is not professional. Recruiters notice.`;emailFix='Use firstname.lastname@gmail.com format. If your name is taken, add a middle initial or a dot. Never use numbers, nicknames, or anything that reads like a username.';}else if(/\.ac\.uk$/.test(em)){emailPts=1;emailDesc=`University email (${em}) detected. Fine while studying — but once you graduate, switch to a personal address. It signals you haven't updated your CV since you were a student.`;emailFix='Switch to a personal Gmail or Outlook. Your university email expires and signals you\'re still in student mode.';}}
   cat6.score+=emailPts;
   cat6.items.push({status:emailPts===2?'pass':emailPts===1?'warn':'fail',title:'Professional email address',desc:emailDesc,fix:emailFix,pts:emailPts,max:2});
   cat6.score=Math.min(8,Math.round(cat6.score));
@@ -722,10 +811,10 @@ function scoreCv(text){
 }
 
 function getBand(score){
-  if(score<=39)return{cls:'band-red',label:'Needs Major Work',headline:'Your CV is likely filtered before a human reads it.',desc:'This is fixable. Most international graduates score here — the problems are specific and solvable.'};
-  if(score<=59)return{cls:'band-amber',label:'Getting There',headline:'Solid foundations, but gaps UK employers will notice.',desc:'You\'re in the better half. Targeted fixes will move you significantly.'};
-  if(score<=79)return{cls:'band-blue',label:'Solid Base',headline:'A good CV, missing some UK-specific elements.',desc:'Strong position. The remaining wins come from tailoring per application.'};
-  return{cls:'band-green',label:'Strong CV',headline:'Well-structured and UK-ready.',desc:'Focus now on tailoring per role and building your network.'};
+  if(score<=39)return{cls:'band-red',label:'Not Yet UK-Ready',headline:'This CV would be filtered before a human reads it.',desc:'The problems are specific and fixable. Most international graduates start here — but most don\'t know what\'s wrong. Now you do.'};
+  if(score<=59)return{cls:'band-amber',label:'Getting There',headline:'Solid base. But UK recruiters will still spot the gaps.',desc:'You\'re ahead of the pack on structure. The issues holding you back are fixable in a weekend.'};
+  if(score<=79)return{cls:'band-blue',label:'Strong Foundation',headline:'A competitive CV. Missing a few UK-specific signals.',desc:'You\'re in the top tier. The remaining gaps are the difference between shortlisted and hired.'};
+  return{cls:'band-green',label:'UK-Ready',headline:'This CV is competitive for UK cybersecurity roles.',desc:'Focus on tailoring per application and building your network. The CV itself is not your bottleneck.'};
 }
 function catColour(s,m){const p=s/m;return p>=0.75?'#1A9E75':p>=0.5?'#D97706':'#DC2626';}
 function updateWordCount(ta){const w=ta.value.trim().split(/\s+/).filter(x=>x.length>0).length;document.getElementById('word-count').textContent=w;document.getElementById('btn-analyse').disabled=w<50;}

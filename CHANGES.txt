@@ -1,34 +1,38 @@
-CyberGrad — V1.5 Changes
+CyberGrad — V1.6 Changes
 ========================
 Date: May 2026
 
-MAIN FIX — PDF EMAIL (send-report.js)
-- api/send-report.js completely rewritten
-- Now generates a real branded A4 PDF using pdf-lib
-- PDF includes: CyberGrad header, big score, band label, student name/uni/email,
-  category breakdown with progress bars, priority fixes list, CTA block, footer
-- PDF attached to Resend email as CyberGrad-CV-Report-[Name].pdf
-- HTML email body also sent with same summary (score, categories, fixes, CTA)
-- Student gets: instant results on screen + PDF in inbox
+CV SCORECARD — ALL 24 RULES REWRITTEN (cv-checker.html)
+- Every fail/warn message is now specific, direct, and actionable
+- No sugar-coating. If a CV has a critical flaw, it says so clearly
+- Examples of tone shift:
+  "Consider adding more keywords" →
+  "Zero cybersecurity keywords. This CV would be auto-rejected by every ATS system before a human sees it."
+  "Try to use more action verbs" →
+  "Your bullets read like a job description you copied from LinkedIn. Zero outcomes. UK recruiters bin these in 3 seconds."
+- Band labels updated: "Needs Major Work" → "Not Yet UK-Ready"
+- All 6 categories (Format, Keywords, Impact, Education, Experience, Red Flags) rewritten
 
-PACKAGE.JSON ADDED
-- pdf-lib v1.17.1 added as dependency
-- @pdf-lib/fontkit added
-- Vercel installs these automatically on deploy
-- Node 20.x specified
+CV CHECKER — OTHER FIXES
+- Textarea widened (440px min-height, wider padding)
+- GDPR notice added below gate form: "Your CV data is never stored or shared. Processed in-session only. GDPR compliant."
+- CTA block rewritten to product language: "The CyberGrad Foundation System" — no more "Rakesh personally reviews"
+
+NAMING: "JOB READY" → "INDUSTRY-READY" (all files)
+- index.html, pricing.html, about.html, checkout.html, dashboard.html, cv-checker.html all updated
+
+FOUNDATION PLAN — 1× UK INDUSTRY SPEAKER SESSION ADDED
+- Added to Foundation card in index.html and pricing.html
+- Previously only in Industry-Ready
+
+HOW IT WORKS SECTION — PRICE REMOVED
+- Step 2 no longer says "£129 or £299" — just references Foundation
+- Industry-Ready price not shown until launch
 
 FILES CHANGED
-- api/send-report.js (full rewrite)
-- package.json (new file)
-
-DEPLOY INSTRUCTIONS
-1. Copy api/send-report.js and package.json into your repo
-2. git add . && git commit -m "V1.5 — PDF email" && git push
-3. Vercel will install pdf-lib automatically (takes ~30 seconds longer to build)
-4. Test: go to cv-checker.html, paste CV, fill gate form, submit
-5. Check inbox — you should receive email with PDF attached
-
-IF PDF FAILS
-- Check Vercel function logs: Vercel → project → Functions tab → send-report
-- Common issue: pdf-lib not installed → check package.json is in repo root
-- Resend attachment limit: 40MB — our PDFs are <100KB so no issue
+- cv-checker.html (major rewrite of all scoring feedback)
+- index.html (Industry-Ready rename, Speaker added, How it works price removed)
+- pricing.html (Industry-Ready rename, Speaker added to Foundation)
+- about.html (Industry-Ready rename)
+- checkout.html (Industry-Ready rename)
+- dashboard.html (Industry-Ready rename)
