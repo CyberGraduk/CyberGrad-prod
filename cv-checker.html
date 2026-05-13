@@ -255,15 +255,15 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
           <li>Score out of 100 across 6 categories</li>
           <li>Every specific issue with a clear fix</li>
           <li>Missing UK keywords identified</li>
-          <li>AI-powered language quality analysis</li>
+          <li>Writing quality analysis</li>
           <li>Concise report sent to your email — free with account</li>
         </ul>
       </div>
       <div class="checker-visual">
         <div class="cv-header">
-          <div>
+          <div style="display:flex;align-items:baseline;gap:6px">
             <div class="cv-score-big">49</div>
-            <div class="cv-score-denom">out of 100</div>
+            <div style="font-size:16px;color:var(--text-2);font-weight:600">/100</div>
           </div>
           <div><div class="cv-band-pill">Getting there</div></div>
         </div>
@@ -288,7 +288,6 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
     <div class="hero-tag"><span class="tag-dot"></span>Free · No account needed to check</div>
     <h1>Does your CV pass<br>the <span class="hl">UK cyber filter?</span></h1>
     <p class="hero-sub">Paste your CV below. We score it against 24 rules UK ATS systems and employers use. Get your score instantly — concise feedback in a report sent straight to your email, with a downloadable PDF.</p>
-    <p class="hero-note">Built by Rakesh, who analysed hundreds of UK cybersecurity job postings so you don't have to.</p>
   </div>
 
   <div class="checker-wrap">
@@ -512,16 +511,23 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
         </form>
       </div>
 
-      <!-- FULL REPORT -->
-      <div id="full-report">
-
-        <!-- EMAIL SENT CONFIRMATION (top) -->
-        <div class="download-section" id="email-sent-banner" style="display:none">
-          <div class="download-text">
-            <h3>📬 Report sent to your inbox!</h3>
-            <p>Check your email — your full CyberGrad CV report is on its way. Should arrive within 60 seconds.</p>
-          </div>
+      <!-- CHECK EMAIL SCREEN — shown first after gate -->
+      <div id="check-email-screen" style="display:none;text-align:center;padding:56px 24px">
+        <div style="width:76px;height:76px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+          <svg width="34" height="34" fill="none" stroke="var(--teal)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
+        <h2 style="font-family:var(--font-h);font-size:28px;font-weight:800;letter-spacing:-0.8px;margin-bottom:10px">Report sent to your inbox.</h2>
+        <p style="font-size:16px;color:var(--text-2);max-width:400px;margin:0 auto 6px;line-height:1.7">Your full CV report with PDF is on its way. Should arrive within 60 seconds.</p>
+        <p style="font-size:13px;color:var(--text-3);margin-bottom:32px">Can't find it? Check your spam folder.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:20px">
+          <a href="checkout.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#060B16;padding:13px 22px;border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:700;text-decoration:none">Join Industry-Ready — £125 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <button onclick="showFullReport()" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text-2);padding:13px 22px;border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:600;cursor:pointer">View report on screen ↓</button>
+        </div>
+        <button onclick="resetTool()" style="background:none;border:none;color:var(--text-3);font-family:var(--font-b);font-size:13px;cursor:pointer">← Check another CV</button>
+      </div>
+
+      <!-- FULL REPORT — shown when student clicks "View on screen" -->
+      <div id="full-report">
 
         <!-- PRIORITY ACTIONS -->
         <div class="priority-section">
@@ -538,7 +544,7 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
         <!-- AI ANALYSIS -->
         <div class="ai-section">
           <div class="ai-head">
-            <span class="ai-badge">AI Analysis</span>
+            <span class="ai-badge">Writing Quality</span>
             <span class="ai-title">Language & impact quality</span>
           </div>
           <div class="ai-body" id="ai-body">
@@ -562,11 +568,11 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
         <!-- CTA -->
         <div class="report-cta">
           <div class="cta-tag">Ready to fix this?</div>
-          <h3>The CyberGrad Foundation System</h3>
+          <h3>The CyberGrad Industry-Ready System</h3>
           <p>The CV Scorecard found the issues. Foundation fixes them — 4 weeks, live sessions, UK Sponsorship Radar, Cohort Community, and 1-to-1 sessions to go from this score to interview-ready.</p>
           <div class="cta-btns">
             <a href="checkout.html" class="btn-cta">
-              Join Foundation — £125
+              Join Industry-Ready — £125
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <a href="signup.html" class="btn-cta-ghost">Create free account</a>
@@ -876,12 +882,16 @@ async function unlockReport(e){
     university:uni,status,plan:'free',cv_score:cvResults.total
   },{onConflict:'email',ignoreDuplicates:false});
 
-  // Show report immediately
+  // Show CONFIRMATION SCREEN first — report is rendered but hidden
   document.getElementById('gate-card').style.display='none';
-  document.getElementById('full-report').style.display='block';
   renderFullReport(cvResults,userData);
   runAiAnalysis(document.getElementById('cv-input').value,cvResults.total);
-  document.getElementById('full-report').scrollIntoView({behavior:'smooth',block:'start'});
+  // Show confirmation screen
+  const confirmScreen=document.getElementById('check-email-screen');
+  if(confirmScreen){
+    confirmScreen.style.display='block';
+    confirmScreen.scrollIntoView({behavior:'smooth',block:'start'});
+  }
 
   // Build data for email
   const allFails=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
@@ -1090,6 +1100,12 @@ function downloadPDF(){
   doc.text(`© 2026 CyberGrad · Generated for ${userData.name} · ${new Date().toLocaleDateString('en-GB')} · cybergraduk@gmail.com`,PX,289);
 
   doc.save(`CyberGrad-CV-Report-${userData.name.replace(/\s+/g,'-')}.pdf`);
+}
+
+function showFullReport(){
+  document.getElementById('check-email-screen').style.display='none';
+  document.getElementById('full-report').style.display='block';
+  document.getElementById('full-report').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function resetTool(){
