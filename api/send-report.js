@@ -65,6 +65,25 @@ module.exports = async function handler(req, res) {
 // ────────────────────────────────────────
 // PDF GENERATION
 // ────────────────────────────────────────
+
+// Sanitise text to WinAnsi-safe characters only (pdf-lib standard fonts)
+function sanitiseText(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/→|►|▶/g, '->')
+    .replace(/←|◄|◀/g, '<-')
+    .replace(/–/g, '-')
+    .replace(/—/g, '-')
+    .replace(/'/g, "'")
+    .replace(/'/g, "'")
+    .replace(/"/g, '"')
+    .replace(/"/g, '"')
+    .replace(/…/g, '...')
+    .replace(/×/g, 'x')
+    .replace(/•/g, '-')
+    .replace(/✓/g, 'v')
+    .replace(/[^\x00-\xFF]/g, ''); // strip anything outside latin range
+}
 async function generatePDF({ name, firstName, email, university, score, categories, priorities, band }) {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595, 842]); // A4
@@ -104,15 +123,15 @@ async function generatePDF({ name, firstName, email, university, score, categori
   page.drawText(scoreStr, { x: 50, y: y - 60, size: 52, font: fontBold, color: scoreColour });
   page.drawText('/100', { x: 50 + scoreStr.length * 28, y: y - 52, size: 16, font: fontReg, color: grey });
 
-  const bandLabel = band || getBandLabel(score);
+  const bandLabel = sanitiseText(band || getBandLabel(score));
   const bandW = fontBold.widthOfTextAtSize(bandLabel, 9) + 16;
   page.drawRectangle({ x: 50, y: y - 82, width: bandW, height: 16, color: scoreColour, borderRadius: 3 });
   page.drawText(bandLabel, { x: 58, y: y - 78, size: 9, font: fontBold, color: dark });
 
   // Student info right
-  page.drawText(name, { x: width - 210, y: y - 38, size: 12, font: fontBold, color: white });
-  if (university) page.drawText(university, { x: width - 210, y: y - 53, size: 9, font: fontReg, color: grey });
-  page.drawText(email, { x: width - 210, y: y - 66, size: 9, font: fontReg, color: grey });
+  page.drawText(sanitiseText(name), { x: width - 210, y: y - 38, size: 12, font: fontBold, color: white });
+  if (university) page.drawText(sanitiseText(university), { x: width - 210, y: y - 53, size: 9, font: fontReg, color: grey });
+  page.drawText(sanitiseText(email), { x: width - 210, y: y - 66, size: 9, font: fontReg, color: grey });
 
   y -= 104;
 
@@ -129,7 +148,7 @@ async function generatePDF({ name, firstName, email, university, score, categori
     const barW = 220;
     const barX = 220;
 
-    page.drawText(cat.name, { x: 30, y, size: 10, font: fontReg, color: dark });
+    page.drawText(sanitiseText(cat.name), { x: 30, y, size: 10, font: fontReg, color: dark });
     page.drawText(`${cat.score}/${cat.max}`, { x: width - 60, y, size: 10, font: fontBold, color: catCol });
 
     // Bar
@@ -150,8 +169,8 @@ async function generatePDF({ name, firstName, email, university, score, categori
   const fixes = (priorities || []).slice(0, 6);
   for (let i = 0; i < fixes.length; i++) {
     const fix = fixes[i];
-    const label = fix.title || fix.label || `Fix ${i + 1}`;
-    const detail = fix.fix || fix.detail || '';
+    const label = sanitiseText(fix.title || fix.label || `Fix ${i + 1}`);
+    const detail = sanitiseText(fix.fix || fix.detail || '');
 
     // Number badge
     page.drawRectangle({ x: 30, y: y - 1, width: 16, height: 16, color: teal, borderRadius: 3 });
