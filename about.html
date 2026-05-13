@@ -90,15 +90,17 @@ h2{font-family:var(--font-h);font-size:clamp(26px,3.5vw,36px);font-weight:700;le
 .btn-s:hover{border-color:rgba(255,255,255,.18)}
 
 /* FOOTER */
-/* TOPMATE STRIP */
-.topmate-strip{background:var(--bg-2,#0A1020);border-top:1px solid var(--border,#1C2539);padding:24px 5%;margin-top:0}
-.topmate-strip-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.topmate-strip-text{display:flex;flex-direction:column;gap:4px}
-.ts-label{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:700;color:var(--text,#F0F6FF);letter-spacing:-0.3px}
-.ts-sub{font-size:14px;color:var(--text-2,#8896B3)}
-.btn-topmate{display:inline-flex;align-items:center;gap:8px;background:var(--teal,#00C896);color:#060B16;padding:12px 20px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;transition:opacity .2s;flex-shrink:0}
-.btn-topmate:hover{opacity:.88}
-@media(max-width:600px){.topmate-strip-inner{flex-direction:column;align-items:flex-start}.btn-topmate{width:100%;justify-content:center}}
+/* FINAL CTA + TOPMATE */
+.final-cta{background:linear-gradient(135deg,rgba(0,200,150,0.08),rgba(0,200,150,0.03));border:1px solid var(--teal-b);border-radius:20px;padding:52px 48px;margin-top:64px}
+.topmate-inline{border-top:1px solid var(--border);padding-top:24px;text-align:center}
+.topmate-q{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px}
+.topmate-sub{font-size:14px;color:var(--text-2);margin-bottom:16px}
+.btn-topmate-sm{display:inline-flex;align-items:center;gap:7px;background:var(--teal,#00C896);color:#060B16;padding:11px 20px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:opacity .2s}
+.btn-topmate-sm:hover{opacity:.88}
+
+/* TOPMATE STRIP — kept for reference, replaced by final-cta
+.topmate-strip{...}
+*/
 
 footer{padding:40px 5% 32px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-3)}
 .footer-right{font-style:italic}
@@ -207,26 +209,21 @@ footer{padding:40px 5% 32px;border-top:1px solid var(--border);display:flex;alig
     </div>
   </div>
 
-  <div class="cta-band fade-up">
-    <div class="section-tag" style="text-align:center">Ready?</div>
-    <h2>Start with the free session.</h2>
-    <p>30 minutes on Zoom. No payment. No commitment. See if CyberGrad is the right fit for where you are right now.</p>
-    <div class="cta-btns">
+  <!-- SINGLE CTA + TOPMATE SECTION -->
+  <div class="final-cta fade-up">
+    <div class="section-tag" style="text-align:center;margin-bottom:14px">Ready?</div>
+    <h2 style="text-align:center;margin-bottom:10px">Start with the free session.</h2>
+    <p style="text-align:center;font-size:16px;color:var(--text-2);margin-bottom:28px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.65">30 minutes on Zoom. No payment. No commitment.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px">
       <a href="signup.html" class="btn-p">Create free account <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       <a href="pricing.html" class="btn-s">See plans</a>
     </div>
-  </div>
-
-  <!-- TOPMATE — compact horizontal -->
-  <div class="topmate-strip fade-up">
-    <div class="topmate-strip-inner">
-      <div class="topmate-strip-text">
-        <span class="ts-label">Not sure if CyberGrad is right for you?</span>
-        <span class="ts-sub">Book a free 10-min call with Rakesh — straight talk, no sales pitch.</span>
-      </div>
-      <a href="https://topmate.io/rakeshelamaran" target="_blank" class="btn-topmate">
+    <div class="topmate-inline">
+      <p class="topmate-q">Not sure if CyberGrad is right for you?</p>
+      <p class="topmate-sub">Book a free 10-min call with Rakesh — straight talk, no sales pitch.</p>
+      <a href="https://topmate.io/rakeshelamaran" target="_blank" class="btn-topmate-sm">
         Book 10-min call — free
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </a>
     </div>
   </div>

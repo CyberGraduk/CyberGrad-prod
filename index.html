@@ -95,6 +95,19 @@ h3{font-family:var(--font-b);font-size:17px;font-weight:700;letter-spacing:-0.2p
 .cs-icon{font-size:32px;margin-bottom:12px}
 .cs-text{font-size:14px;color:var(--text-2);line-height:1.65}
 
+.view-more-btn{background:none;border:none;color:var(--teal);font-family:var(--font-b);font-size:13px;font-weight:600;cursor:pointer;padding:6px 0;text-align:left;transition:opacity .2s}
+.view-more-btn:hover{opacity:.75}
+/* EARLY BIRD */
+.early-bird-block{background:rgba(0,200,150,0.05);border:1px solid var(--teal-b);border-radius:14px;padding:24px 28px;margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.eb-price{font-family:var(--font-b);font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
+.eb-price strong{color:var(--teal);font-size:20px}
+.eb-strike{color:var(--text-3);text-decoration:line-through;font-size:14px;margin-left:6px}
+.eb-save{background:var(--teal-dim);border:1px solid var(--teal-b);color:var(--teal);font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.eb-copy{font-size:14px;color:var(--text-2);margin-bottom:6px;line-height:1.6}
+.eb-urgency{font-size:13px;color:var(--text-2);font-weight:500}
+.eb-cta{display:inline-flex;align-items:center;background:var(--teal);color:#060B16;padding:13px 22px;border-radius:9px;font-family:var(--font-b);font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;transition:opacity .2s;flex-shrink:0}
+.eb-cta:hover{opacity:.88}
+
 /* ── PRICING CARDS (homepage) ── */
 .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px}
 .price-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:30px 26px;display:flex;flex-direction:column;position:relative;transition:border-color .2s}
@@ -328,7 +341,7 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
   </div>
 </section>
 
-<!-- ── CV CHECKER ── -->
+<!-- V1.2 — CV CHECKER FEATURE SECTION MOVED TO cv-checker.html
 <section class="section section-alt">
   <div class="checker-feature fade-up">
     <div class="checker-text">
@@ -342,42 +355,30 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
         <li>AI-powered language quality analysis</li>
         <li>Download your full PDF report — free with account</li>
       </ul>
-      <a href="cv-checker.html" class="btn-p">
-        Check my CV — free
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+      <a href="cv-checker.html" class="btn-p">Check my CV — free</a>
     </div>
-    <div class="checker-visual">
-      <div class="cv-header">
-        <div>
-          <div class="cv-score-big">49</div>
-          <div class="cv-score-denom">out of 100</div>
-        </div>
-        <div><div class="cv-band-pill">Getting there</div></div>
-      </div>
-      <div class="cv-bars">
-        <div class="cv-bar-row"><span class="cv-bar-label">UK format & structure</span><div class="cv-bar-track"><div class="cv-bar-fill" style="width:65%"></div></div><span class="cv-bar-score">13/20</span></div>
-        <div class="cv-bar-row"><span class="cv-bar-label">ATS keywords</span><div class="cv-bar-track"><div class="cv-bar-fill" style="width:40%"></div></div><span class="cv-bar-score">10/25</span></div>
-        <div class="cv-bar-row"><span class="cv-bar-label">Impact language</span><div class="cv-bar-track"><div class="cv-bar-fill" style="width:30%"></div></div><span class="cv-bar-score">6/20</span></div>
-        <div class="cv-bar-row"><span class="cv-bar-label">Education & certs</span><div class="cv-bar-track"><div class="cv-bar-fill" style="width:53%"></div></div><span class="cv-bar-score">8/15</span></div>
-        <div class="cv-bar-row"><span class="cv-bar-label">Projects & experience</span><div class="cv-bar-track"><div class="cv-bar-fill" style="width:50%"></div></div><span class="cv-bar-score">6/12</span></div>
-        <div class="cv-bar-row"><span class="cv-bar-label">Red flags</span><div class="cv-bar-track"><div class="cv-bar-fill" style="width:75%"></div></div><span class="cv-bar-score">6/8</span></div>
-      </div>
-      <div class="cv-pdf-row">
-        <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-        Full PDF report — <strong>unlocked with free account</strong>
-      </div>
-    </div>
+    [visual removed]
   </div>
 </section>
+-->
+
+<!-- V1.2 — HOW IT WORKS / SIMPLE AS THAT REMOVED FROM HOMEPAGE
+<section class="section section-alt">
+  <div class="section-tag fade-up">How it works</div>
+  <h2 class="fade-up" style="margin-bottom:48px">Simple as that.</h2>
+  <div class="steps">...</div>
+</section>
+-->
 
 <!-- ── PRICING ── -->
 <section class="section">
-  <div class="section-tag fade-up">Pricing</div>
-  <h2 class="fade-up">Simple, one-time pricing.</h2>
-  <p class="section-sub fade-up">No subscriptions. No recurring charges. Pay once, get everything you need.</p>
+  <div style="text-align:center;margin-bottom:48px">
+    <div class="section-tag fade-up">Pricing</div>
+    <h2 class="fade-up" style="text-align:center">Simple, one-time pricing.</h2>
+    <p class="fade-up" style="text-align:center;color:var(--text-2);font-size:17px;margin-top:10px">No subscriptions. No recurring charges. Pay once, get everything you need.</p>
+  </div>
 
-  <div class="pricing-grid">
+  <div class="pricing-grid" style="margin:0 auto">
 
     <!-- FREE -->
     <div class="price-card fade-up">
@@ -386,7 +387,7 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
       <div class="pc-price"><sup>£</sup>0</div>
       <p class="pc-desc">Instant access to career tools built specifically for international cyber graduates in the UK.</p>
       <ul class="pc-features">
-        <li>CV Checker + PDF Report</li>
+        <li>CV Checker + Email Report</li>
         <li>RoadMap Clarity Quiz — provided by YourCyberBuddy</li>
         <li>No credit card required</li>
       </ul>
@@ -397,9 +398,15 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
     <div class="price-card fade-up" style="transition-delay:.08s">
       <div class="pc-tier">One-time payment</div>
       <div class="pc-name">Foundation</div>
-      <div class="pc-price"><sup>£</sup>129</div>
+      <div class="pc-price"><sup>£</sup>125 <span style="font-size:18px;color:var(--text-3);text-decoration:line-through;font-weight:400;letter-spacing:0;margin-left:4px">£139</span></div>
       <p class="pc-desc">Everything you need to build a solid foundation for your UK cybersecurity job search.</p>
-      <ul class="pc-features">
+      <ul class="pc-features" id="found-short">
+        <li>4× live group sessions (45 mins each)</li>
+        <li>2× personal 1-to-1 sessions</li>
+        <li>UK Sponsorship Radar (50+ verified companies)</li>
+        <li>WhatsApp community access</li>
+      </ul>
+      <ul class="pc-features" id="found-full" style="display:none">
         <li>4× live group sessions (45 mins each)</li>
         <li>2× personal 1-to-1 sessions</li>
         <li>UK Sponsorship Radar (50+ verified companies)</li>
@@ -411,7 +418,8 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
         <li>Cohort peer group (10–20 students)</li>
         <li>Be a Campus Ambassador</li>
       </ul>
-      <a href="checkout.html" class="pc-btn ghost">Get started</a>
+      <button onclick="toggleFound()" id="found-toggle" class="view-more-btn">View all features ↓</button>
+      <a href="checkout.html" class="pc-btn ghost" style="margin-top:10px">Get started — £125</a>
     </div>
 
     <!-- JOB READY -->
@@ -419,8 +427,10 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
       <div class="pc-popular">Coming Soon</div>
       <div class="pc-tier">One-time payment</div>
       <div class="pc-name">Job Ready</div>
+      <!-- V1.2 — Price hidden until launch
       <div class="pc-price"><sup>£</sup>299</div>
-      <p class="pc-desc">Full hands-on support including personalised reviews, mock interview, and real UK pentesting content.</p>
+      -->
+      <p class="pc-desc" style="margin-top:12px">Full hands-on support including personalised reviews, mock interview, and real UK pentesting content.</p>
       <!-- FEATURES HIDDEN — COMING SOON
         <ul class="pc-features">
           <li>Everything in Foundation</li>
@@ -438,7 +448,6 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
         </ul>
       -->
       <div class="coming-soon-block">
-        <div class="cs-icon">🚀</div>
         <div class="cs-text">Full details dropping soon.<br>Join the waitlist to be notified first.</div>
         <a href="signup.html" class="pc-btn primary" style="margin-top:20px">Join waitlist</a>
       </div>
@@ -446,8 +455,17 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
 
   </div>
 
-  <!-- TRUST BAR — 14-day refund removed -->
-  <div class="trust-bar fade-up">
+  <!-- EARLY BIRD BLOCK -->
+  <div class="early-bird-block fade-up">
+    <div class="eb-left">
+      <div class="eb-price">Early Bird Price: <strong>£125</strong> <span class="eb-strike">£139</span> <span class="eb-save">Save £14</span></div>
+      <p class="eb-copy">Less than a daily coffee for 28 days — and it works harder than caffeine ever will.</p>
+      <p class="eb-urgency">🔴 Early bird closes when Cohort 1 fills.</p>
+    </div>
+    <a href="checkout.html" class="eb-cta">Get Foundation — £125 →</a>
+  </div>
+
+  <div class="trust-bar fade-up" style="justify-content:center;margin-top:20px">
     <span>🔒 Secure payment via Stripe</span>
     <span class="trust-sep"></span>
     <span>One-time payment</span>
@@ -457,7 +475,7 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
 
 </section>
 
-<!-- ── HOW IT WORKS ── -->
+<!-- V1.2 — HOW IT WORKS / SIMPLE AS THAT REMOVED FROM HOMEPAGE
 <section class="section section-alt">
   <div class="section-tag fade-up">How it works</div>
   <h2 class="fade-up" style="margin-bottom:48px">Simple as that.</h2>
@@ -484,6 +502,7 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
     </div>
   </div>
 </section>
+-->
 
 <!-- ── MARKETPLACE — HIDDEN, DO NOT DELETE ──
 <section class="section">
@@ -558,28 +577,17 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
     </div>
   </div>
 
-  <!-- STATS BAR -->
+  <!-- V1.2 — STATS BAR REMOVED, numbers kept in first why-card only
   <div class="stats-bar fade-up">
-    <div class="stat-item">
-      <span class="stat-num">7,000+</span>
-      <span class="stat-label">International cybersecurity MSc graduates in the UK per year</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">7,000+</span><span class="stat-label">International cybersecurity MSc graduates in the UK per year</span></div>
     <div class="stat-divider"></div>
-    <div class="stat-item">
-      <span class="stat-num">3.4M</span>
-      <span class="stat-label">UK cybersecurity skills gap — employers are desperate</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">3.4M</span><span class="stat-label">UK cybersecurity skills gap — employers are desperate</span></div>
     <div class="stat-divider"></div>
-    <div class="stat-item">
-      <span class="stat-num">2 years</span>
-      <span class="stat-label">Graduate Visa window — every week counts</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">2 years</span><span class="stat-label">Graduate Visa window — every week counts</span></div>
     <div class="stat-divider"></div>
-    <div class="stat-item">
-      <span class="stat-num">You</span>
-      <span class="stat-label">Are the bridge between a willing workforce and a desperate industry</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">You</span><span class="stat-label">Are the bridge between a willing workforce and a desperate industry</span></div>
   </div>
+  -->
 </section>
 
 <!-- ── FAQ ── -->
@@ -764,6 +772,22 @@ function toggleFaq(btn) {
   const open = item.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!open) item.classList.add('open');
+}
+
+/* Foundation toggle */
+function toggleFound() {
+  const s = document.getElementById('found-short');
+  const f = document.getElementById('found-full');
+  const btn = document.getElementById('found-toggle');
+  if (f.style.display === 'none') {
+    s.style.display = 'none';
+    f.style.display = 'block';
+    btn.textContent = 'Show less ↑';
+  } else {
+    s.style.display = 'block';
+    f.style.display = 'none';
+    btn.textContent = 'View all features ↓';
+  }
 }
 
 loadCounter();

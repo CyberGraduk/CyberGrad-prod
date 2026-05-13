@@ -1,0 +1,60 @@
+CyberGrad — V1.3 Changes
+========================
+Date: May 2026
+
+ISSUE 1 — Magic link email duplicate URL
+Fix: Update the Supabase email template directly in Supabase dashboard.
+Go to: Supabase → Authentication → Email Templates → Magic Link
+Remove the second occurrence of {{ .ConfirmationURL }} in the body.
+The template should only show the URL once as the fallback text.
+
+ISSUE 2 — Dashboard font, theme, name, CyberBridge, resources, price
+Fixes applied in dashboard.html:
+- Font changed from Space Grotesk to Bricolage Grotesque + Plus Jakarta Sans
+- Theme updated to match site colours (#060B16 bg, #00C896 teal, #F0F6FF text)
+- Greeting changed from "Welcome back, [email]" to "Hello, [FirstName]"
+- CyberBridge Marketplace card removed (commented, not deleted)
+- Marketplace link removed from sidebar (commented, not deleted)
+- Resources card now shows "Upgrade to Foundation" locked state instead of free downloads
+- Upgrade button price corrected from £99 to £129 → now shows £125 (early bird)
+- Foundation features list updated to match current plan
+
+ISSUE 3 — About page two boxes / Topmate
+Fix applied in about.html:
+- Removed the two separate boxes (CTA band + topmate strip)
+- Replaced with one clean section: Ready? heading → CTA buttons → divider → Topmate call text + button
+- No repetition of Create/See plans buttons
+
+ISSUE 4 — Homepage pricing section left-aligned
+Fix applied in index.html:
+- "PRICING" label, heading, subtitle all centered
+- Cards centered with margin:0 auto
+
+ISSUE 5 — Foundation card too tall + Early Bird pricing
+Fixes applied in index.html and pricing.html:
+- Foundation card folded to show 4 items only, "View all features ↓" toggle to expand
+- Price updated to £125 (early bird, was £129)
+- Strikethrough £139 shown next to £125
+- Job Ready price (£299) hidden (commented), Coming Soon badge kept
+- Rocket emoji removed from Job Ready
+- Early Bird block added below cards with coffee copy
+- "8 spots remaining" NOT included (will add dynamically from Supabase later)
+
+HOMEPAGE CLEANUP
+- CV checker feature/preview section removed from homepage (commented) → moved to cv-checker.html top
+- "How it works / Simple as that" section removed from homepage (commented)
+- Stats bar below Solution section removed (commented) — 7,000+ and 3.4M kept in first Solution card only
+- "How CyberGrad works" (with 4 numbered steps) remains after Solution section
+
+FILES CHANGED
+- index.html
+- dashboard.html
+- about.html
+- pricing.html
+- checkout.html
+- cv-checker.html (feature preview added at top)
+- api/create-checkout.js (price updated to £125 = 12500 pence)
+
+SUPABASE ACTION REQUIRED (not in code)
+- Fix magic link email template to remove duplicate URL (Issue 1)
+- Go to: Supabase → Authentication → Email Templates → Magic Link

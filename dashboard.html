@@ -1,212 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — CyberGrad</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#050709;--bg2:#0a0e14;--bg3:#0f1520;--teal:#00d4a0;--teal-dim:rgba(0,212,160,0.08);--teal-b:rgba(0,212,160,0.2);--text:#e8edf5;--muted:#6b7a96;--faint:#3a4358;--border:rgba(255,255,255,0.06);--card:rgba(255,255,255,0.025)}
-body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh}
+:root{
+  --bg:#060B16;--bg2:#0A1020;--bg3:#0F1829;
+  --teal:#00C896;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.20);
+  --text:#F0F6FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;
+  --font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;-webkit-font-smoothing:antialiased}
+.app{display:flex;min-height:100vh}
 
 /* SIDEBAR */
-.app{display:flex;min-height:100vh}
-.sidebar{
-  width:220px;flex-shrink:0;
-  background:var(--bg2);
-  border-right:1px solid var(--border);
-  position:fixed;top:0;left:0;bottom:0;
-  display:flex;flex-direction:column;z-index:50;
-}
-.sidebar-logo{
-  display:flex;align-items:center;gap:10px;
-  padding:18px 16px;border-bottom:1px solid var(--border);
-  text-decoration:none;
-}
-.s-lm{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#000;background:var(--teal);padding:4px 7px;border-radius:4px}
-.s-lt{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--text)}
+.sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:50}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:18px 16px;border-bottom:1px solid var(--border);text-decoration:none}
+.s-lm{width:28px;height:28px;border-radius:6px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:11px;font-weight:800;color:#060B16}
+.s-lt{font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
 .sidebar-nav{flex:1;padding:16px 10px}
-.nav-sec{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);padding:4px 8px 8px;margin-top:10px}
-.nav-item{
-  display:flex;align-items:center;gap:9px;
-  padding:9px 10px;border-radius:7px;
-  font-size:13px;font-weight:500;color:var(--muted);
-  text-decoration:none;cursor:pointer;
-  transition:background .15s,color .15s;margin-bottom:2px;
-}
-.nav-item:hover{background:var(--card);color:var(--text)}
+.nav-sec{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);padding:4px 8px 8px;margin-top:10px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--text-2);text-decoration:none;cursor:pointer;transition:background .15s,color .15s;margin-bottom:2px;border:none;background:none;width:100%}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text)}
 .nav-item.active{background:var(--teal-dim);color:var(--text);border:1px solid var(--teal-b)}
 .nav-item svg{width:15px;height:15px;flex-shrink:0}
 .sidebar-footer{padding:14px 16px;border-top:1px solid var(--border)}
 .user-row{display:flex;align-items:center;gap:10px}
-.user-av{width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#000;flex-shrink:0}
-.user-name{font-size:13px;font-weight:600;color:var(--text)}
+.user-av{width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:700;color:#060B16;flex-shrink:0}
+.user-name{font-size:13px;font-weight:600;color:var(--text);font-family:var(--font-b)}
 .user-plan{font-size:11px;color:var(--teal)}
-.btn-logout{background:none;border:none;color:var(--faint);font-family:'Space Grotesk',sans-serif;font-size:12px;cursor:pointer;margin-top:8px;padding:0;transition:color .2s}
-.btn-logout:hover{color:var(--muted)}
+.btn-logout{background:none;border:none;color:var(--text-3);font-family:var(--font-b);font-size:12px;cursor:pointer;margin-top:8px;padding:0;transition:color .2s}
+.btn-logout:hover{color:var(--text-2)}
 
 /* MAIN */
 .main{margin-left:220px;flex:1}
-.topbar{
-  padding:24px 32px 20px;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:flex-start;justify-content:space-between;
-  flex-wrap:wrap;gap:12px;
-}
-.topbar-left h1{font-size:20px;font-weight:700;letter-spacing:-0.4px;margin-bottom:3px}
-.topbar-left p{font-size:13px;color:var(--muted)}
-.free-badge{
-  background:var(--teal-dim);border:1px solid var(--teal-b);
-  border-radius:6px;padding:5px 12px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;font-weight:500;color:var(--teal);
-  letter-spacing:.5px;
-}
+.topbar{padding:24px 32px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.topbar-left h1{font-family:var(--font-h);font-size:22px;font-weight:800;letter-spacing:-0.6px;margin-bottom:3px}
+.topbar-left h1 span{color:var(--teal)}
+.topbar-left p{font-size:13px;color:var(--text-2)}
+.free-badge{background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.5px;text-transform:uppercase}
 
 /* GRID */
 .grid{padding:28px 32px;display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-
-/* CARDS */
-.card{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:14px;padding:22px;
-  transition:border-color .2s;
-}
-.card:hover{border-color:rgba(255,255,255,.1)}
-.card-title{
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:500;letter-spacing:1.2px;
-  text-transform:uppercase;color:var(--faint);
-  margin-bottom:16px;display:flex;align-items:center;gap:8px;
-}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:22px;transition:border-color .2s}
+.card:hover{border-color:rgba(255,255,255,.08)}
+.card-title{font-family:var(--font-b);font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .card-title svg{width:13px;height:13px;color:var(--teal)}
 
-/* CV SCORE CARD */
+/* CV SCORE */
 .card-cv{grid-column:span 4}
-.cv-score-big{
-  font-family:'JetBrains Mono',monospace;
-  font-size:52px;font-weight:600;
-  color:var(--teal);letter-spacing:-2px;
-  line-height:1;margin-bottom:4px;
-}
-.cv-score-sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.cv-score-big{font-family:var(--font-h);font-size:52px;font-weight:800;color:var(--teal);letter-spacing:-2px;line-height:1;margin-bottom:4px}
+.cv-score-sub{font-size:13px;color:var(--text-2);margin-bottom:16px}
 .cv-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:14px}
 .cv-fill{height:100%;border-radius:2px;background:var(--teal);transition:width 1.2s ease}
-.btn-check{
-  width:100%;background:var(--teal);color:#000;
-  border:none;border-radius:7px;
-  font-family:'Space Grotesk',sans-serif;
-  font-size:13px;font-weight:700;padding:10px;cursor:pointer;
-  transition:opacity .2s;text-decoration:none;
-  display:flex;align-items:center;justify-content:center;gap:7px;
-}
+.btn-check{width:100%;background:var(--teal);color:#060B16;border:none;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:10px;cursor:pointer;transition:opacity .2s;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:7px}
 .btn-check:hover{opacity:.88}
 
-/* RESOURCES CARD */
+/* RESOURCES — locked for free users */
 .card-resources{grid-column:span 8}
-.resources-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.resource-item{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:10px;padding:14px;
-  display:flex;align-items:center;gap:12px;
-  text-decoration:none;transition:all .2s;cursor:pointer;
-}
-.resource-item:hover{border-color:var(--teal-b);background:var(--teal-dim)}
-.r-icon{
-  width:36px;height:36px;flex-shrink:0;
-  background:var(--teal-dim);border:1px solid var(--teal-b);
-  border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;
-}
-.r-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
-.r-type{font-size:11px;color:var(--faint)}
-.r-dl{
-  margin-left:auto;flex-shrink:0;
-  color:var(--teal);opacity:0;transition:opacity .2s;
-}
-.resource-item:hover .r-dl{opacity:1}
+.resources-locked{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center}
+.lock-icon{width:44px;height:44px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.resources-locked h3{font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px}
+.resources-locked p{font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.6}
+.resource-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;opacity:.4;pointer-events:none;filter:blur(1px)}
+.resource-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:12px;display:flex;align-items:center;gap:10px}
+.r-icon{width:32px;height:32px;flex-shrink:0;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.r-name{font-size:12px;font-weight:600;color:var(--text)}
+.r-type{font-size:11px;color:var(--text-3)}
+.btn-unlock{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:10px 20px;cursor:pointer;text-decoration:none;transition:opacity .2s}
+.btn-unlock:hover{opacity:.88}
 
-/* COMMUNITY CARD */
+/* UPGRADE */
+.card-upgrade{grid-column:span 8;background:linear-gradient(135deg,rgba(0,200,150,0.06),rgba(0,200,150,0.02));border:1px solid var(--teal-b)}
+.upgrade-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.upgrade-text h3{font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px}
+.upgrade-text p{font-size:13px;color:var(--text-2);line-height:1.55;max-width:360px}
+.upgrade-items{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap}
+.upgrade-item{font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:5px}
+.upgrade-item::before{content:'✓';color:var(--teal);font-weight:700}
+.btn-upgrade{background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:700;padding:12px 24px;cursor:pointer;white-space:nowrap;text-decoration:none;transition:opacity .2s;flex-shrink:0;display:inline-block}
+.btn-upgrade:hover{opacity:.88}
+
+/* COMMUNITY */
 .card-community{grid-column:span 4}
-.community-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px;background:var(--card);border:1px solid var(--border);
-  border-radius:9px;margin-bottom:10px;
-  transition:border-color .2s;
-}
+.community-item{display:flex;align-items:center;justify-content:space-between;padding:12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px;margin-bottom:10px;transition:border-color .2s}
 .community-item:last-child{margin-bottom:0}
 .community-item:hover{border-color:var(--teal-b)}
 .comm-left{display:flex;align-items:center;gap:10px}
-.comm-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px}
-.comm-name{font-size:13px;font-weight:600}
-.comm-desc{font-size:11px;color:var(--muted)}
-.btn-join{
-  font-size:12px;font-weight:600;color:var(--teal);
-  background:var(--teal-dim);border:1px solid var(--teal-b);
-  border-radius:6px;padding:5px 12px;cursor:pointer;
-  text-decoration:none;transition:background .2s;
-}
-.btn-join:hover{background:rgba(0,212,160,0.16)}
+.comm-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.comm-name{font-size:13px;font-weight:600;font-family:var(--font-b)}
+.comm-desc{font-size:11px;color:var(--text-2)}
+.btn-join{font-size:12px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:6px;padding:5px 12px;cursor:pointer;text-decoration:none;transition:background .2s}
+.btn-join:hover{background:rgba(0,200,150,.14)}
 
-/* UPGRADE CARD */
-.card-upgrade{
-  grid-column:span 8;
-  background:linear-gradient(135deg,rgba(0,212,160,0.08),rgba(0,212,160,0.03));
-  border:1px solid var(--teal-b);
-}
-.upgrade-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.upgrade-text h3{font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px}
-.upgrade-text p{font-size:13px;color:var(--muted);line-height:1.55;max-width:360px}
-.upgrade-items{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
-.upgrade-item{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
-.upgrade-item::before{content:'✓';color:var(--teal);font-weight:700}
-.btn-upgrade{
-  background:var(--teal);color:#000;border:none;
-  border-radius:8px;font-family:'Space Grotesk',sans-serif;
-  font-size:14px;font-weight:700;padding:12px 24px;
-  cursor:pointer;white-space:nowrap;text-decoration:none;
-  transition:opacity .2s;flex-shrink:0;
-}
-.btn-upgrade:hover{opacity:.88}
-
-/* MARKETPLACE CARD */
-.card-marketplace{grid-column:span 4}
-.marketplace-teaser{text-align:center;padding:8px 0}
-.mp-logo{
-  font-family:'JetBrains Mono',monospace;
-  font-size:13px;font-weight:600;color:#000;
-  background:#4f9cf9;padding:4px 10px;border-radius:5px;
-  display:inline-block;margin-bottom:12px;
-}
-.mp-title{font-size:15px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px}
-.mp-desc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.55}
-.mp-input{
-  width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);
-  border-radius:7px;color:var(--text);font-family:'Space Grotesk',sans-serif;
-  font-size:13px;padding:10px 12px;outline:none;margin-bottom:8px;
-  transition:border-color .2s;
-}
-.mp-input::placeholder{color:var(--faint)}
-.mp-input:focus{border-color:rgba(79,156,249,0.5)}
-.btn-mp{
-  width:100%;background:#4f9cf9;color:#000;border:none;
-  border-radius:7px;font-family:'Space Grotesk',sans-serif;
-  font-size:13px;font-weight:700;padding:10px;cursor:pointer;
-  transition:opacity .2s;
-}
-.btn-mp:hover{opacity:.88}
-
-/* MOBILE */
-@media(max-width:900px){
-  .sidebar{display:none}
-  .main{margin-left:0}
-  .topbar,.grid{padding-left:20px;padding-right:20px}
-  .grid{grid-template-columns:1fr}
-  .card-cv,.card-resources,.card-community,.card-upgrade,.card-marketplace{grid-column:span 1}
-  .resources-grid{grid-template-columns:1fr}
-  .upgrade-inner{flex-direction:column}
-}
+@media(max-width:900px){.sidebar{display:none}.main{margin-left:0}.topbar,.grid{padding-left:20px;padding-right:20px}.grid{grid-template-columns:1fr}.card-cv,.card-resources,.card-community,.card-upgrade{grid-column:span 1}.resource-preview{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -215,7 +105,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <a href="index.html" class="sidebar-logo">
-      <span class="s-lm">CG</span>
+      <div class="s-lm">CG</div>
       <span class="s-lt">CyberGrad</span>
     </a>
     <nav class="sidebar-nav">
@@ -228,19 +118,9 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
         CV Checker
       </a>
-      <a class="nav-item" href="marketplace.html">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Marketplace
-      </a>
-      <div class="nav-sec">Resources</div>
-      <a class="nav-item" href="#" onclick="downloadResource('cv-template')">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        CV Template
-      </a>
-      <a class="nav-item" href="#" onclick="downloadResource('linkedin-guide')">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        LinkedIn Guide
-      </a>
+      <!-- V1.2 — Marketplace removed from sidebar
+      <a class="nav-item" href="marketplace.html">Marketplace</a>
+      -->
     </nav>
     <div class="sidebar-footer">
       <div class="user-row">
@@ -258,10 +138,10 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
   <div class="main">
     <div class="topbar">
       <div class="topbar-left">
-        <h1>Welcome back, <span id="topbar-name">there</span> 👋</h1>
+        <h1>Hello, <span id="topbar-name">there</span>.</h1>
         <p>Here's your CyberGrad dashboard. Everything you need to get UK-ready.</p>
       </div>
-      <span class="free-badge">FREE ACCOUNT</span>
+      <span class="free-badge">Free Account</span>
     </div>
 
     <div class="grid">
@@ -274,7 +154,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
         </div>
         <div id="cv-score-content">
           <div style="text-align:center;padding:16px 0">
-            <div style="font-size:14px;color:var(--muted);margin-bottom:16px">You haven't checked your CV yet.</div>
+            <div style="font-size:14px;color:var(--text-2);margin-bottom:16px">You haven't checked your CV yet.</div>
             <a href="cv-checker.html" class="btn-check">
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
               Check my CV now
@@ -283,53 +163,28 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
         </div>
       </div>
 
-      <!-- RESOURCES -->
+      <!-- RESOURCES — locked -->
       <div class="card card-resources">
         <div class="card-title">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/></svg>
-          Your Free Resources
+          Foundation Resources
         </div>
-        <div class="resources-grid">
-          <div class="resource-item" onclick="downloadResource('cv-template')">
-            <div class="r-icon">📄</div>
-            <div>
-              <div class="r-name">UK CV Template</div>
-              <div class="r-type">Word Document · Editable</div>
-            </div>
-            <div class="r-dl">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </div>
+        <div class="resources-locked">
+          <div class="resource-preview">
+            <div class="resource-item"><div class="r-icon"><svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16h12V8z"/></svg></div><div><div class="r-name">UK CV Template</div><div class="r-type">Word · Editable</div></div></div>
+            <div class="resource-item"><div class="r-icon"><svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="r-name">LinkedIn Checklist</div><div class="r-type">PDF · 32 points</div></div></div>
+            <div class="resource-item"><div class="r-icon"><svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div><div class="r-name">Job Search Strategy</div><div class="r-type">PDF · 8-week plan</div></div></div>
+            <div class="resource-item"><div class="r-icon"><svg width="14" height="14" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><div class="r-name">Interview Questions</div><div class="r-type">PDF · UK cyber roles</div></div></div>
           </div>
-          <div class="resource-item" onclick="downloadResource('linkedin-guide')">
-            <div class="r-icon">🔗</div>
-            <div>
-              <div class="r-name">LinkedIn Checklist</div>
-              <div class="r-type">PDF · 32 points</div>
-            </div>
-            <div class="r-dl">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </div>
+          <div class="lock-icon">
+            <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
-          <div class="resource-item" onclick="downloadResource('job-guide')">
-            <div class="r-icon">🗺️</div>
-            <div>
-              <div class="r-name">Job Search Strategy</div>
-              <div class="r-type">PDF · 8-week plan</div>
-            </div>
-            <div class="r-dl">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </div>
-          </div>
-          <div class="resource-item" onclick="downloadResource('interview-pack')">
-            <div class="r-icon">🎯</div>
-            <div>
-              <div class="r-name">Interview Questions Pack</div>
-              <div class="r-type">PDF · UK cyber roles</div>
-            </div>
-            <div class="r-dl">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </div>
-          </div>
+          <h3>Unlock with Foundation</h3>
+          <p>CV template, LinkedIn checklist, job search strategy guide, interview questions pack — all included in Foundation (£129).</p>
+          <a href="checkout.html" class="btn-unlock">
+            Upgrade to Foundation — £129
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
 
@@ -341,18 +196,16 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
         </div>
         <div class="upgrade-inner">
           <div class="upgrade-text">
-            <h3>Join the 4-week cohort programme</h3>
-            <p>Live sessions, personalised CV review, mock interview, UK industry speaker, and a peer cohort of students in the same position as you.</p>
+            <h3>Join the Foundation programme</h3>
+            <p>4 live group sessions, 2 personal 1-to-1 sessions, UK Sponsorship Radar, WhatsApp community, and all resources — in one structured programme.</p>
             <div class="upgrade-items">
-              <span class="upgrade-item">Live group sessions</span>
-              <span class="upgrade-item">1-to-1 CV review</span>
-              <span class="upgrade-item">Mock interview</span>
+              <span class="upgrade-item">4× live sessions</span>
+              <span class="upgrade-item">2× 1-to-1</span>
               <span class="upgrade-item">WhatsApp community</span>
+              <span class="upgrade-item">UK resources</span>
             </div>
           </div>
-          <a href="checkout-foundation.html" class="btn-upgrade">
-            See plans from £99 →
-          </a>
+          <a href="checkout.html" class="btn-upgrade">Get Foundation — £129 →</a>
         </div>
       </div>
 
@@ -364,7 +217,9 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
         </div>
         <div class="community-item">
           <div class="comm-left">
-            <div class="comm-icon" style="background:rgba(37,211,102,0.12)">📱</div>
+            <div class="comm-icon" style="background:rgba(37,211,102,0.12)">
+              <svg width="16" height="16" fill="none" stroke="#25d366" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
             <div>
               <div class="comm-name">WhatsApp Group</div>
               <div class="comm-desc">Cohort community</div>
@@ -372,31 +227,9 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
           </div>
           <a href="#" class="btn-join">Join →</a>
         </div>
-        <div class="community-item">
-          <div class="comm-left">
-            <div class="comm-icon" style="background:rgba(79,156,249,0.12)">🌐</div>
-            <div>
-              <div class="comm-name">CyberBridge</div>
-              <div class="comm-desc">Waitlist open</div>
-            </div>
-          </div>
-          <a href="marketplace.html" class="btn-join">Join →</a>
-        </div>
-      </div>
-
-      <!-- MARKETPLACE -->
-      <div class="card card-marketplace">
-        <div class="card-title">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
-          CyberBridge Marketplace
-        </div>
-        <div class="marketplace-teaser">
-          <div class="mp-logo">CB</div>
-          <div class="mp-title">LinkedIn for Cyber</div>
-          <div class="mp-desc">Your public cyber profile. Discovered by UK employers. Coming soon.</div>
-          <input class="mp-input" type="email" id="mp-email" placeholder="Join the waitlist">
-          <button class="btn-mp" onclick="joinWaitlist()">Notify me when it launches</button>
-        </div>
+        <!-- V1.2 — CyberBridge removed, do not delete
+        <div class="community-item">CyberBridge...</div>
+        -->
       </div>
 
     </div>
@@ -410,11 +243,8 @@ const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function handleAuth() {
-  // Show loading state while checking auth
   setLoading(true);
-
   try {
-    // Handle URL hash tokens (from magic link click)
     if (window.location.hash && window.location.hash.includes('access_token')) {
       const { data, error } = await sb.auth.getSession();
       if (error) throw error;
@@ -424,15 +254,11 @@ async function handleAuth() {
         return;
       }
     }
-
-    // Check for existing session
     const { data: { session }, error } = await sb.auth.getSession();
-
     if (session?.user) {
       window.history.replaceState(null, '', '/dashboard.html');
       await loadUser(session.user);
     } else {
-      // No session — redirect to login
       window.location.href = 'login.html';
     }
   } catch (err) {
@@ -443,19 +269,11 @@ async function handleAuth() {
 
 async function loadUser(user) {
   const meta = user.user_metadata || {};
-
-  // Pull full name from metadata or DB
   let firstName = meta.first_name || '';
   let fullName = '';
 
   if (!firstName) {
-    // Try fetching from students table
-    const { data } = await sb
-      .from('students')
-      .select('first_name, last_name, university, status, cv_score')
-      .eq('email', user.email)
-      .single();
-
+    const { data } = await sb.from('students').select('first_name,last_name,cv_score').eq('email', user.email).single();
     if (data) {
       firstName = data.first_name || user.email.split('@')[0];
       fullName = (data.first_name + ' ' + (data.last_name || '')).trim();
@@ -468,49 +286,28 @@ async function loadUser(user) {
   if (!firstName) firstName = user.email.split('@')[0];
   if (!fullName) fullName = firstName;
 
-  // Save to localStorage
-  localStorage.setItem('cg_user', JSON.stringify({
-    name: fullName,
-    firstName,
-    email: user.email,
-    plan: 'free'
-  }));
+  document.getElementById('topbar-name').textContent = firstName;
+  document.getElementById('user-name').textContent = fullName;
+  document.getElementById('user-av').textContent = firstName[0].toUpperCase();
 
-  // Update UI
-  const nameEl = document.getElementById('topbar-name');
-  const userNameEl = document.getElementById('user-name');
-  const userAvEl = document.getElementById('user-av');
-
-  if (nameEl) nameEl.textContent = firstName;
-  if (userNameEl) userNameEl.textContent = fullName;
-  if (userAvEl) userAvEl.textContent = firstName[0].toUpperCase();
-
-  // CV score
   const cvScore = localStorage.getItem('cg_cv_score');
   if (cvScore) {
     const score = parseInt(cvScore);
-    const colour = score >= 80 ? '#00C896' : score >= 60 ? '#3b82f6' : score >= 40 ? '#d97706' : '#e53e3e';
-    const el = document.getElementById('cv-score-content');
-    if (el) el.innerHTML = `
-      <div class="cv-score-big" style="color:${colour}">${score}</div>
+    const col = score >= 80 ? '#00C896' : score >= 60 ? '#3b82f6' : score >= 40 ? '#d97706' : '#dc2626';
+    document.getElementById('cv-score-content').innerHTML = `
+      <div class="cv-score-big" style="color:${col}">${score}</div>
       <div class="cv-score-sub">out of 100</div>
-      <div class="cv-bar"><div class="cv-fill" style="width:0%;background:${colour}" id="cv-fill-bar"></div></div>
-      <a href="cv-checker.html" class="btn-check">Re-check my CV</a>
-    `;
-    setTimeout(() => {
-      const bar = document.getElementById('cv-fill-bar');
-      if (bar) bar.style.width = score + '%';
-    }, 300);
+      <div class="cv-bar"><div class="cv-fill" style="width:0%;background:${col}" id="cv-fill-bar"></div></div>
+      <a href="cv-checker.html" class="btn-check">Re-check my CV</a>`;
+    setTimeout(() => { const b = document.getElementById('cv-fill-bar'); if(b) b.style.width = score + '%'; }, 300);
   }
 
   setLoading(false);
 }
 
-function setLoading(loading) {
-  // Simple loading state — hide main content until auth confirmed
-  const main = document.querySelector('.main');
-  if (main) main.style.opacity = loading ? '0' : '1';
-  if (main) main.style.transition = 'opacity 0.3s ease';
+function setLoading(on) {
+  const m = document.querySelector('.main');
+  if (m) { m.style.opacity = on ? '0' : '1'; m.style.transition = 'opacity 0.3s ease'; }
 }
 
 async function logout() {
@@ -520,18 +317,6 @@ async function logout() {
   window.location.href = 'index.html';
 }
 
-function downloadResource(id) {
-  alert('Resources coming soon — check back shortly.');
-}
-
-function joinWaitlist() {
-  const email = document.getElementById('mp-email')?.value.trim();
-  if (!email) return;
-  const btn = document.querySelector('.btn-mp');
-  if (btn) { btn.textContent = "You're on the waitlist ✓"; btn.style.background = '#00C896'; }
-}
-
-// Run on load
 window.addEventListener('DOMContentLoaded', handleAuth);
 </script>
 </body>
