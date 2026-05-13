@@ -144,7 +144,7 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
       <div class="card-price"><sup>£</sup>0</div>
       <p class="card-desc">Instant access to career tools built specifically for international cyber graduates in the UK.</p>
       <ul class="feat-list">
-        <li><span class="feat-check">✓</span>CV Checker + PDF Report</li>
+        <li><span class="feat-check">✓</span>CV Checker + Email Report</li>
         <li><span class="feat-check">✓</span>RoadMap Clarity Quiz — provided by YourCyberBuddy</li>
         <li><span class="feat-check">✓</span>No credit card required</li>
       </ul>
@@ -157,7 +157,13 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
       <div class="card-name">Foundation</div>
       <div class="card-price"><sup>£</sup>125 <span style="font-size:16px;color:var(--text-3);text-decoration:line-through;font-weight:400;margin-left:4px">£139</span></div>
       <p class="card-desc">Everything you need to build a solid foundation for your UK cybersecurity job search.</p>
-      <ul class="feat-list">
+      <ul class="feat-list" id="pr-found-short">
+        <li><span class="feat-check">✓</span>4× live group sessions (45 mins each)</li>
+        <li><span class="feat-check">✓</span>2× personal 1-to-1 sessions</li>
+        <li><span class="feat-check">✓</span>UK Sponsorship Radar (50+ verified companies)</li>
+        <li><span class="feat-check">✓</span>WhatsApp community access</li>
+      </ul>
+      <ul class="feat-list" id="pr-found-full" style="display:none">
         <li><span class="feat-check">✓</span>4× live group sessions (45 mins each)</li>
         <li><span class="feat-check">✓</span>2× personal 1-to-1 sessions</li>
         <li><span class="feat-check">✓</span>UK Sponsorship Radar (50+ verified companies)</li>
@@ -169,7 +175,8 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
         <li><span class="feat-check">✓</span>Cohort peer group (10–20 students)</li>
         <li><span class="feat-check">✓</span>Be a Campus Ambassador</li>
       </ul>
-      <a href="checkout.html" class="card-btn ghost">Get started</a>
+      <button onclick="togglePrFound()" id="pr-found-toggle" style="background:none;border:none;color:var(--teal);font-size:13px;font-weight:600;cursor:pointer;padding:6px 0;text-align:left">View all features ↓</button>
+      <a href="checkout.html" class="card-btn ghost" style="margin-top:10px">Get started — £125</a>
     </div>
 
     <!-- JOB READY -->
@@ -177,26 +184,14 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
       <div class="featured-badge">Coming Soon</div>
       <div class="card-tier">One-time payment</div>
       <div class="card-name">Job Ready</div>
+      <!-- V1.3 — Price hidden until launch
       <div class="card-price"><sup>£</sup>299</div>
-      <p class="card-desc">Full hands-on support including personalised reviews, mock interview, and real UK pentesting content.</p>
+      -->
+      <p class="card-desc" style="margin-top:12px">Full hands-on support including personalised reviews, mock interview, and real UK pentesting content.</p>
       <!-- FEATURES HIDDEN — COMING SOON
-        <ul class="feat-list">
-          <li><span class="feat-check">✓</span>Everything in Foundation</li>
-          <li><span class="feat-check">✓</span>1-to-1 CV review (written feedback)</li>
-          <li><span class="feat-check">✓</span>1-to-1 LinkedIn profile review</li>
-          <li><span class="feat-check">✓</span>1× mock interview (45 mins, recorded)</li>
-          <li><span class="feat-check">✓</span>Job application strategy session</li>
-          <li><span class="feat-check">✓</span>Real UK pentesting workflow & case study</li>
-          <li><span class="feat-check">✓</span>1× UK industry speaker session</li>
-          <li><span class="feat-check">✓</span>Priority Q&A response</li>
-          <li><span class="feat-check">✓</span>Certificate of completion</li>
-          <li><span class="feat-check">✓</span>Access to Security Companies</li>
-          <li><span class="feat-check">✓</span>How to Submit CFP in Conference</li>
-          <li><span class="feat-check">✓</span>Building a Portfolio</li>
-        </ul>
+        <ul class="feat-list">...</ul>
       -->
       <div style="text-align:center;padding:24px 0 8px;flex:1;display:flex;flex-direction:column;align-items:center">
-        <div style="font-size:32px;margin-bottom:12px">🚀</div>
         <div style="font-size:14px;color:var(--text-2);line-height:1.65">Full details dropping soon.<br>Join the waitlist to be notified first.</div>
         <a href="signup.html" class="card-btn primary" style="margin-top:20px">Join waitlist</a>
       </div>
@@ -205,8 +200,18 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
   </div>
 </div>
 
+<!-- EARLY BIRD BLOCK -->
+<div style="max-width:960px;margin:24px auto 0;background:rgba(0,200,150,0.05);border:1px solid var(--teal-b);border-radius:14px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+  <div>
+    <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px">Early Bird Price: <strong style="color:var(--teal);font-size:18px">£125</strong> <span style="color:var(--text-3);text-decoration:line-through;font-size:13px;margin-left:4px">£139</span> <span style="background:var(--teal-dim);border:1px solid var(--teal-b);color:var(--teal);font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px">Save £14</span></div>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:4px">Less than a daily coffee for 28 days — and it works harder than caffeine ever will.</p>
+    <p style="font-size:12px;color:var(--text-2)">🔴 Early bird closes when Cohort 1 fills.</p>
+  </div>
+  <a href="checkout.html" style="display:inline-flex;align-items:center;background:var(--teal);color:#060B16;padding:12px 22px;border-radius:9px;font-family:var(--font-b);font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:opacity .2s">Get Foundation — £125 →</a>
+</div>
+
 <!-- TRUST BAR -->
-<div class="trust-bar">
+<div class="trust-bar" style="justify-content:center;margin-top:20px">
   <span>🔒 Secure payment via Stripe</span>
   <span class="trust-sep"></span>
   <span>One-time payment</span>
@@ -277,6 +282,13 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
 function toggleNav(){const ul=document.querySelector('.nav-links');const open=ul.style.display==='flex';ul.style.cssText=open?'':'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#060B16;padding:24px 20px;gap:18px;border-bottom:1px solid #131D30;z-index:99'}
 const obs=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('vis')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function togglePrFound(){
+  const s=document.getElementById('pr-found-short');
+  const f=document.getElementById('pr-found-full');
+  const btn=document.getElementById('pr-found-toggle');
+  if(f.style.display==='none'){s.style.display='none';f.style.display='block';btn.textContent='Show less ↑';}
+  else{s.style.display='block';f.style.display='none';btn.textContent='View all features ↓';}
+}
 </script>
 </body>
 </html>
