@@ -1,57 +1,43 @@
-CyberGrad — V1.7 Changes
+CyberGrad — V1.8 Changes
 ========================
 Date: May 2026
 
-ISSUE 1 — Tier Rename (all files)
-- Free Account → Starter
-- Foundation → Industry-Ready
-- Job Ready / Industry-Ready (coming soon) → Elite
-- Applied across: index.html, pricing.html, about.html, checkout.html, dashboard.html, cv-checker.html, signup.html, login.html, success.html
+NEW PAGES
+- sectors.html — UK cybersecurity sectors & domains (8 sectors, gated for logged-in users)
+- roles.html — UK cybersecurity roles to apply (10 roles with skills, gated)
 
-ISSUE 2 — CV Checker feature preview score (cv-checker.html)
-- Score display compacted: "49" + "/100" inline, no separate "out of 100" line below
-- Less vertical space, cleaner layout
+NAV — RESOURCES DROPDOWN (all pages)
+- Replaced "CV Checker" nav item with "Resources" dropdown on all pages
+- Dropdown contains: CV Scorecard, Sectors & Domains, Roles to Apply
+- Dropdown works on hover, dark themed, matches site design
 
-ISSUE 3 — Gate flow: confirmation screen first (cv-checker.html)
-- After gate form submitted: shows "Report sent to your inbox." screen prominently
-- Two options below: "Join Industry-Ready — £125" CTA + "View report on screen ↓" button
-- Student clicks "View on screen" to see full breakdown
-- Full report pre-rendered in background so it loads instantly when they click
-- "Check another CV" link also available
+DASHBOARD
+- Added Sectors & Domains card linking to sectors.html
+- Added Roles to Apply card linking to roles.html
+- Both visible to all logged-in users
 
-ISSUE 4 — Removals (cv-checker.html)
-- Removed: "Built by Rakesh, who analysed hundreds of UK cybersecurity job postings so you don't have to."
-- New FAQ question added to first 5: "What happens in the 4 weeks?" with week-by-week breakdown
-- New FAQ question added: "Want to know more before joining? Book a call." with Topmate link
-- New FAQ question added: "How many students are in a cohort?" — 15-20, open to other backgrounds
+ABOUT PAGE
+- Experience & credentials section removed (commented, not deleted)
+- CTA simplified: no boxes, no border, just "Ready?" then buttons then Topmate
+- Clean text hierarchy: Create account / See plans / then Topmate link below
 
-ISSUE 5 — AI references removed (cv-checker.html)
-- "AI-powered language quality analysis" → "Writing quality analysis"
-- "AI Analysis" badge → "Writing Quality"
-- Unnecessary em dashes fixed across pages: "No — and" → "No, and", "Yes — and" → "Yes, and"
+CV CHECKER
+- Feature preview section (Issue 1 revisited) fully removed from page
+- Tool starts directly — no "Does your CV pass the UK filter?" section above it
 
-ISSUE 6 (combined) — Multiple fixes
-- Why CyberGrad emojis (🌉🎯🚫) replaced with SVG icons (index.html)
-- About page: "← Home" link added to navbar
-- Checkout page: disclaimer added — "Practical industry knowledge beyond your degree. No job guarantees."
-- GDPR line added to footer across all pages: "Your data is handled in accordance with UK GDPR. We never sell or share your personal information."
-
-FAQ — Full rewrite (index.html)
-New order (first 5 are highest priority):
-1. Who is CyberGrad for?
-2. What happens in the 4 weeks?
-3. Want to know more? Book a call (with Topmate link)
-4. How many students in a cohort?
-5. I'm still studying. Can I join?
-6-11. Remaining questions updated with product language, no "Rakesh personally" framing
+PDF FIX (send-report.js)
+- sanitiseText() function added — strips all non-WinAnsi characters
+- Fixes: arrow (->), em dash (-), curly quotes (''), ellipsis (...), bullets (-)
+- Applied to all dynamic text fields: name, university, email, band, categories, fixes
+- PDF generation no longer crashes on special characters from CV feedback text
 
 FILES CHANGED
-- index.html (major: FAQ rewrite, tier rename, emojis, GDPR)
-- cv-checker.html (major: flow, score display, AI removal, Rakesh line removal)
-- about.html (home link, GDPR, tier rename)
-- pricing.html (tier rename, GDPR, Elite card)
-- checkout.html (disclaimer, GDPR, tier rename)
-- dashboard.html (tier rename, GDPR)
-- signup.html (tier rename, GDPR)
-- login.html (tier rename)
-- success.html (tier rename)
+- index.html (Resources dropdown)
+- pricing.html (Resources dropdown)
+- cv-checker.html (feature preview removed, Resources dropdown)
+- about.html (credentials removed, CTA simplified)
+- dashboard.html (sectors + roles cards added)
+- signup.html, login.html, checkout.html, success.html (Resources dropdown)
+- api/send-report.js (sanitiseText fix)
+- sectors.html (NEW)
+- roles.html (NEW)
