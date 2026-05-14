@@ -1,43 +1,37 @@
-CyberGrad — V1.8 Changes
+CyberGrad — V2.0 Changes
 ========================
 Date: May 2026
 
-NEW PAGES
-- sectors.html — UK cybersecurity sectors & domains (8 sectors, gated for logged-in users)
-- roles.html — UK cybersecurity roles to apply (10 roles with skills, gated)
+DROPDOWN FIX — ALL PAGES
+- Changed from hover-only to click-toggle on all pages
+- .dropdown:hover .dropdown-menu replaced with .dropdown.open .dropdown-menu
+- initDropdowns() JS added: click to open, click anywhere else to close
+- Works on mobile, tablet, and desktop
+- Pages fixed: index, pricing, cv-checker, signup, login, checkout, success, about, sectors, roles
 
-NAV — RESOURCES DROPDOWN (all pages)
-- Replaced "CV Checker" nav item with "Resources" dropdown on all pages
-- Dropdown contains: CV Scorecard, Sectors & Domains, Roles to Apply
-- Dropdown works on hover, dark themed, matches site design
+SECTORS & ROLES — GATE LOGIC FIXED
+- No longer redirects to signup.html on click
+- Instead shows an inline "Free with a CyberGrad account" screen
+- Screen shows: lock icon, explanation, Create free account + Log in buttons
+- Content remains hidden (opacity:0) until session check completes
+- If logged in: content fades in smoothly
+- If not logged in: gate screen fades in instead
+- Dashboard cards link to these pages — logged-in users go straight to content
 
-DASHBOARD
-- Added Sectors & Domains card linking to sectors.html
-- Added Roles to Apply card linking to roles.html
-- Both visible to all logged-in users
-
-ABOUT PAGE
-- Experience & credentials section removed (commented, not deleted)
-- CTA simplified: no boxes, no border, just "Ready?" then buttons then Topmate
-- Clean text hierarchy: Create account / See plans / then Topmate link below
-
-CV CHECKER
-- Feature preview section (Issue 1 revisited) fully removed from page
-- Tool starts directly — no "Does your CV pass the UK filter?" section above it
-
-PDF FIX (send-report.js)
-- sanitiseText() function added — strips all non-WinAnsi characters
-- Fixes: arrow (->), em dash (-), curly quotes (''), ellipsis (...), bullets (-)
-- Applied to all dynamic text fields: name, university, email, band, categories, fixes
-- PDF generation no longer crashes on special characters from CV feedback text
+FLOW SUMMARY
+- Not logged in: clicks Sectors from nav -> sees gate screen with signup/login
+- Creates account -> logs in -> dashboard shows Sectors & Roles cards
+- Clicks from dashboard -> content shows immediately (session already active)
+- Direct URL visit without login -> same gate screen
 
 FILES CHANGED
-- index.html (Resources dropdown)
-- pricing.html (Resources dropdown)
-- cv-checker.html (feature preview removed, Resources dropdown)
-- about.html (credentials removed, CTA simplified)
-- dashboard.html (sectors + roles cards added)
-- signup.html, login.html, checkout.html, success.html (Resources dropdown)
-- api/send-report.js (sanitiseText fix)
-- sectors.html (NEW)
-- roles.html (NEW)
+- sectors.html (gate logic rewritten, dropdown fixed)
+- roles.html (gate logic rewritten, dropdown fixed)
+- index.html (dropdown CSS fixed)
+- pricing.html (dropdown CSS fixed)
+- cv-checker.html (dropdown CSS + JS added)
+- signup.html (dropdown CSS + JS added)
+- login.html (dropdown CSS + JS added)
+- checkout.html (dropdown CSS + JS added)
+- success.html (dropdown CSS + JS added)
+- about.html (dropdown CSS fixed)

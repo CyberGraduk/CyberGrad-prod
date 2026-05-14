@@ -115,6 +115,23 @@ function resend() {
   btn.textContent = 'Sent ✓';
   setTimeout(() => btn.textContent = 'Resend link', 3000);
 }
+
+/* DROPDOWN CLICK TOGGLE */
+function initDropdowns(){
+  document.querySelectorAll(".dropdown-toggle").forEach(function(btn){
+    btn.addEventListener("click",function(e){
+      e.stopPropagation();
+      var dd=this.closest(".dropdown");
+      var isOpen=dd.classList.contains("open");
+      document.querySelectorAll(".dropdown.open").forEach(function(d){d.classList.remove("open");});
+      if(!isOpen) dd.classList.add("open");
+    });
+  });
+  document.addEventListener("click",function(){
+    document.querySelectorAll(".dropdown.open").forEach(function(d){d.classList.remove("open");});
+  });
+}
+document.addEventListener("DOMContentLoaded",initDropdowns);
 </script>
 </body>
 </html>

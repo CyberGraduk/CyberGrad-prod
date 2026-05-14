@@ -161,6 +161,28 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
 /* FULL REPORT */
 #full-report{display:none}
 
+/* ── GOOD / BAD / FIX LAYOUT ── */
+.gbf-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:4px}
+.gbf-col{padding:14px 16px}
+.gbf-col-good{background:rgba(0,200,150,0.04);border-right:1px solid var(--border)}
+.gbf-col-bad{background:rgba(220,38,38,0.04);border-right:1px solid var(--border)}
+.gbf-col-fix{background:rgba(59,130,246,0.04)}
+.gbf-col-head{margin-bottom:10px}
+.gbf-badge{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:4px}
+.gbf-badge.good{background:rgba(0,200,150,0.12);color:#00C896;border:1px solid rgba(0,200,150,0.25)}
+.gbf-badge.bad{background:rgba(220,38,38,0.12);color:#EF4444;border:1px solid rgba(220,38,38,0.25)}
+.gbf-badge.fix{background:rgba(59,130,246,0.12);color:#60A5FA;border:1px solid rgba(59,130,246,0.25)}
+.gbf-item{display:flex;gap:8px;margin-bottom:10px;align-items:flex-start}
+.gbf-item:last-child{margin-bottom:0}
+.gbf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.gbf-dot.good{background:#00C896}
+.gbf-dot.bad{background:#EF4444}
+.gbf-dot.warn{background:#D97706}
+.gbf-fix-num{font-size:13px;font-weight:700;color:#60A5FA;flex-shrink:0;margin-top:1px;line-height:1.4}
+.gbf-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;line-height:1.4}
+.gbf-desc{font-size:11px;color:var(--text-2);line-height:1.55}
+.gbf-empty{font-size:11px;color:var(--text-3);font-style:italic;padding:2px 0}
+
 .report-section{background:var(--bg-2);border:1px solid var(--border);border-radius:18px;padding:26px 28px;margin-bottom:12px}
 .report-section-head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
 .rs-num{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
@@ -497,8 +519,8 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
         <!-- PRIORITY ACTIONS -->
         <div class="priority-section">
           <div class="priority-head">
-            <span class="priority-icon">🎯</span>
-            <span class="priority-title">Your top 5 priority actions — highest impact first</span>
+            <span class="priority-icon"><svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+            <span class="priority-title">Top priority fixes — critical issues first</span>
           </div>
           <div class="priority-list" id="priority-list"></div>
         </div>
@@ -506,7 +528,7 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
         <!-- CATEGORY BREAKDOWNS -->
         <div id="report-categories"></div>
 
-        <!-- AI ANALYSIS -->
+        <!-- WRITING QUALITY ANALYSIS -->
         <div class="ai-section">
           <div class="ai-head">
             <span class="ai-badge">Writing Quality</span>
@@ -563,10 +585,12 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 /* ══════════════════════════════════
    SCORING ENGINE (full rules)
 ══════════════════════════════════ */
-const CYBER_KEYWORDS=['siem','soc','penetration testing','pentest','vulnerability assessment','incident response','threat intelligence','firewall','ids','ips','owasp','devsecops','cissp','ceh','security+','comptia','iso 27001','nist','cloud security','aws','azure','gcp','zero trust','iam','encryption','python','splunk','wireshark','metasploit','nessus','burp suite','kali linux','threat hunting','malware analysis','digital forensics','risk assessment','vulnerability management'];
-const STRONG_VERBS=['implemented','developed','analysed','deployed','managed','led','reduced','improved','designed','configured','automated','monitored','investigated','remediated','built','created','established','delivered','engineered','optimised','secured','architected','conducted','identified','resolved','maintained','collaborated','presented','produced','achieved'];
-const WEAK_PHRASES=['responsible for','helped with','worked on','assisted in','involved in','participated in','tasked with','duties included'];
-const UK_CERT_LIST=['security+','ceh','oscp','cissp','cism','cysa+','pentest+','aws certified','azure security','google cloud','iso 27001','comptia','giac','ccsp'];
+const CYBER_KEYWORDS=['siem','soc','penetration testing','pentest','vulnerability assessment','incident response','threat intelligence','firewall','ids','ips','owasp','devsecops','cissp','ceh','security+','comptia','iso 27001','nist','cloud security','aws','azure','gcp','zero trust','iam','encryption','python','splunk','wireshark','metasploit','nessus','burp suite','kali linux','threat hunting','malware analysis','digital forensics','risk assessment','vulnerability management','endpoint security','pci dss','soc 2','mitre','soar','edr','xdr','sast','dast','appsec'];
+const STRONG_VERBS=['implemented','developed','analysed','deployed','managed','led','reduced','improved','designed','configured','automated','monitored','investigated','remediated','built','created','established','delivered','engineered','optimised','secured','architected','conducted','identified','resolved','maintained','collaborated','presented','produced','achieved','spearheaded','streamlined','accelerated','enhanced','fortified'];
+const WEAK_PHRASES=['responsible for','helped with','worked on','assisted in','involved in','participated in','tasked with','duties included','was part of','contributed to','supported the team'];
+const UK_CERT_LIST=['security+','ceh','oscp','cissp','cism','cysa+','pentest+','aws certified','azure security','google cloud','iso 27001','comptia','giac','ccsp','sc-200','az-500','aws security'];
+const BUZZWORDS=['passionate about','highly motivated','team player','hard working','hardworking','eager to learn','quick learner','self-starter','go-getter','think outside the box','synergy','dynamic','proactive','results-driven','detail-oriented','fast-paced','leverage','utilise','utilize'];
+const PERSONAL_PRONOUNS=['i am','i have','i was','i will','i can','my experience','my skills','my background'];
 
 function scoreCv(text){
   const t=text.toLowerCase();
@@ -777,6 +801,59 @@ function scoreCv(text){
   cat6.score=Math.min(8,Math.round(cat6.score));
   results.categories.push(cat6);
 
+  // CAT 7: PROFESSIONAL SIGNALS (10pts) — new advanced checks
+  const cat7={name:'Professional Signals',max:10,score:0,items:[]};
+
+  // Check for buzzwords/clichés
+  const buzzFound=BUZZWORDS.filter(b=>t.includes(b));
+  const buzzPts=buzzFound.length===0?2:buzzFound.length<=2?1:0;
+  cat7.score+=buzzPts;
+  cat7.items.push({status:buzzPts===2?'pass':buzzPts===1?'warn':'fail',title:'Buzzword-free language',
+    desc:buzzPts===2?'No hollow buzzwords detected. Your language appears specific and substantive.'
+      :buzzFound.length>0?`Found ${buzzFound.length} buzzword${buzzFound.length>1?'s':''}: "${buzzFound.slice(0,3).join('", "')}". These are the verbal filler of graduate CVs. Every hiring manager has read "passionate about cybersecurity" ten thousand times this week.`
+      :'',
+    fix:buzzFound.length?'Delete every buzzword. Replace with a specific fact. Not "passionate about security" — "Completed OSCP in 3 months while working full-time." Not "team player" — "Collaborated with a 6-person dev team to integrate SAST into the CI/CD pipeline."':'',pts:buzzPts,max:2});
+
+  // Check for personal pronouns in body (outside personal statement)
+  const pronounFound=PERSONAL_PRONOUNS.filter(p=>t.includes(p));
+  const pronounPts=pronounFound.length===0?2:pronounFound.length<=2?1:0;
+  cat7.score+=pronounPts;
+  cat7.items.push({status:pronounPts===2?'pass':pronounPts===1?'warn':'fail',title:'Third-person professional tone',
+    desc:pronounPts===2?'No first-person language detected in experience sections. Correct UK CV tone.'
+      :`Found first-person phrases: "${pronounFound.slice(0,2).join('", "')}". UK CVs use implied first-person — you never write "I" in the body. It reads as amateur.`,
+    fix:pronounFound.length?'Remove all "I", "my", "me" from experience bullets. "I managed a team" → "Managed a cross-functional team of 5 engineers." The subject is always implied.':'',pts:pronounPts,max:2});
+
+  // Check for phone number
+  const hasPhone=/(\+44|\+91|\+\d{2})?\s?[\d\s\-\(\)]{10,14}/.test(text)&&text.match(/\d{10,}/);
+  const phonePts=hasPhone?2:0;
+  cat7.score+=phonePts;
+  cat7.items.push({status:hasPhone?'pass':'warn',title:'Phone number present',
+    desc:hasPhone?'Phone number detected. Good — UK recruiters often call directly without emailing first.'
+      :'No phone number found. Some UK recruiters call before emailing. Missing this means missed opportunities.',
+    fix:!hasPhone?'Add a UK phone number in your contact section. Format: +44 7XXX XXXXXX. Include country code since recruiters receive international CVs.':'',pts:phonePts,max:2});
+
+  // Check for consistent formatting signals (all caps headers = ATS risk)
+  const allCapsHeaders=(text.match(/^[A-Z\s]{5,}$/gm)||[]).filter(h=>h.trim().length>4);
+  const capsPts=allCapsHeaders.length>3?1:2;
+  cat7.score+=capsPts;
+  cat7.items.push({status:capsPts===2?'pass':'warn',title:'ATS-safe formatting',
+    desc:capsPts===2?'No problematic all-caps or formatting patterns detected that would cause ATS issues.'
+      :`Detected ${allCapsHeaders.length} all-caps section headers. Some ATS systems misread these as body text rather than headings, disrupting parsing.`,
+    fix:capsPts<2?'Use standard Title Case for section headers (Work Experience, not WORK EXPERIENCE). Ensure your CV is saved as a plain Word document or ATS-compatible PDF — not a designed template with text boxes.':'',pts:capsPts,max:2});
+
+  // Check word repetition — sign of limited vocabulary
+  const wordFreq={};words.filter(w=>w.length>5).forEach(w=>{const lw=w.toLowerCase().replace(/[^a-z]/g,'');wordFreq[lw]=(wordFreq[lw]||0)+1;});
+  const overused=Object.entries(wordFreq).filter(([w,c])=>c>=5&&!['experience','security','management','university','developed','project'].includes(w)).slice(0,3);
+  const repPts=overused.length===0?2:overused.length<=1?1:0;
+  cat7.score+=repPts;
+  cat7.items.push({status:repPts===2?'pass':repPts===1?'warn':'fail',title:'Vocabulary variety',
+    desc:repPts===2?'Good vocabulary variety. No single word appears excessively.'
+      :`Overused words detected: ${overused.map(([w,c])=>`"${w}" (${c}x)`).join(', ')}. Repetition signals a limited range of experience or poor editing.`,
+    fix:repPts<2?'Use a thesaurus for your most repeated words. Vary your action verbs — not every bullet should start with "Managed". Use synonyms: coordinated, directed, oversaw, administered, spearheaded.':'',pts:repPts,max:2});
+
+  cat7.score=Math.min(10,Math.round(cat7.score));
+  results.categories.push(cat7);
+
   results.total=results.categories.reduce((s,c)=>s+c.score,0);
   return results;
 }
@@ -888,7 +965,7 @@ async function unlockReport(e){
 }
 
 function renderFullReport(r,user){
-  // PRIORITY LIST
+  // PRIORITY LIST — top 5 critical fixes
   const allFails=r.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
   const allWarns=r.categories.flatMap(c=>c.items.filter(i=>i.status==='warn'&&i.fix));
   const priorities=[...allFails,...allWarns].slice(0,5);
@@ -897,31 +974,49 @@ function renderFullReport(r,user){
       <div class="priority-num">${i+1}</div>
       <div class="priority-text"><strong>${item.title}:</strong> ${item.fix}</div>
     </div>`).join('');
-  if(priorities.length===0)document.getElementById('priority-list').innerHTML='<div class="priority-item"><div class="priority-num">✓</div><div class="priority-text"><strong>Excellent CV!</strong> Focus on tailoring each application to the specific job description and building your UK professional network.</div></div>';
+  if(priorities.length===0)document.getElementById('priority-list').innerHTML='<div class="priority-item"><div class="priority-num">✓</div><div class="priority-text"><strong>Strong CV.</strong> Focus on tailoring per role and building your UK network.</div></div>';
 
-  // CATEGORIES
-  const catColors=['#1A9E75','#3B82F6','#D97706','#8B5CF6','#EC4899','#DC2626'];
-  const catBgs=['rgba(26,158,117,.12)','rgba(59,130,246,.12)','rgba(217,119,6,.12)','rgba(139,92,246,.12)','rgba(236,72,153,.12)','rgba(220,38,38,.12)'];
-  document.getElementById('report-categories').innerHTML=r.categories.map((cat,ci)=>`
-    <div class="report-section">
+  // GOOD / BAD / FIX layout per category
+  document.getElementById('report-categories').innerHTML=r.categories.map((cat,ci)=>{
+    const passItems=cat.items.filter(i=>i.status==='pass');
+    const warnItems=cat.items.filter(i=>i.status==='warn');
+    const failItems=cat.items.filter(i=>i.status==='fail');
+    const col=catColour(cat.score,cat.max);
+
+    const goodHTML=passItems.length>0
+      ?passItems.map(i=>`<div class="gbf-item gbf-good"><div class="gbf-dot good"></div><div><div class="gbf-title">${i.title}</div><div class="gbf-desc">${i.desc}</div></div></div>`).join('')
+      :`<div class="gbf-empty">Nothing passing in this category — full attention needed.</div>`;
+
+    const badHTML=[...failItems,...warnItems].length>0
+      ?[...failItems,...warnItems].map(i=>`<div class="gbf-item ${i.status==='fail'?'gbf-bad':'gbf-warn'}"><div class="gbf-dot ${i.status==='fail'?'bad':'warn'}"></div><div><div class="gbf-title">${i.title}</div><div class="gbf-desc">${i.desc}</div></div></div>`).join('')
+      :`<div class="gbf-empty">No issues found here.</div>`;
+
+    const fixHTML=[...failItems,...warnItems].filter(i=>i.fix).length>0
+      ?[...failItems,...warnItems].filter(i=>i.fix).map(i=>`<div class="gbf-item gbf-fix"><div class="gbf-fix-num">→</div><div><div class="gbf-title">${i.title}</div><div class="gbf-desc">${i.fix}</div></div></div>`).join('')
+      :`<div class="gbf-empty">Nothing to fix here — solid.</div>`;
+
+    return `<div class="report-section">
       <div class="report-section-head">
-        <div class="rs-num" style="background:${catBgs[ci]};color:${catColors[ci]}">0${ci+1}</div>
+        <div class="rs-num" style="background:${col}18;color:${col}">0${ci+1}</div>
         <div class="rs-title">${cat.name}</div>
-        <div class="rs-score" style="color:${catColour(cat.score,cat.max)}">${cat.score}<span style="font-size:14px;font-weight:400;color:var(--text-3)">/${cat.max}</span></div>
+        <div class="rs-score" style="color:${col}">${cat.score}<span style="font-size:14px;font-weight:400;color:var(--text-3)">/${cat.max}</span></div>
       </div>
-      <div class="report-items">
-        ${cat.items.map(item=>`
-          <div class="ri ${item.status}">
-            <div class="ri-icon">${item.status==='pass'?'✓':item.status==='warn'?'!':'✗'}</div>
-            <div class="ri-body">
-              <div class="ri-title">${item.title}</div>
-              <div class="ri-desc">${item.desc}</div>
-              ${item.fix?`<div class="ri-fix">→ ${item.fix}</div>`:''}
-            </div>
-            <div class="ri-pts">${item.pts}/${item.max}</div>
-          </div>`).join('')}
+      <div class="gbf-grid">
+        <div class="gbf-col gbf-col-good">
+          <div class="gbf-col-head"><span class="gbf-badge good">✓ Good</span></div>
+          ${goodHTML}
+        </div>
+        <div class="gbf-col gbf-col-bad">
+          <div class="gbf-col-head"><span class="gbf-badge bad">✗ Bad</span></div>
+          ${badHTML}
+        </div>
+        <div class="gbf-col gbf-col-fix">
+          <div class="gbf-col-head"><span class="gbf-badge fix">→ Fix</span></div>
+          ${fixHTML}
+        </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 async function runAiAnalysis(cvText,score){
@@ -931,8 +1026,8 @@ async function runAiAnalysis(cvText,score){
     const data=await res.json();
     const text=data.content?.[0]?.text||'';
     if(text){aiBody.innerHTML=text.split('\n\n').filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join('');}
-    else{aiBody.innerHTML='<p>For personalised language feedback, Rakesh reviews every CV on the Career Accelerator plan.</p>';}
-  }catch(err){aiBody.innerHTML='<p>The detailed scoring above covers your full breakdown. For personalised language feedback, Rakesh reviews every CV on the Career Accelerator plan — written feedback on your actual document.</p>';}
+    else{aiBody.innerHTML='<p>For deeper personalised feedback, join the Industry-Ready programme.</p>';}
+  }catch(err){aiBody.innerHTML='<p>The detailed scoring above covers your full breakdown. For deeper personalised feedback on your specific CV, join the Industry-Ready programme.</p>';}
 }
 
 /* PDF GENERATION */
@@ -1052,7 +1147,7 @@ function downloadPDF(){
   doc.setTextColor(...teal);doc.setFontSize(14);doc.setFont('helvetica','bold');
   doc.text('Want a human expert to review this?',PX,40);
   doc.setTextColor(240,244,255);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(...muted);
-  const ctaText='Rakesh personally reviews every CV on the Career Accelerator plan — written feedback on your actual document, a 1-to-1 LinkedIn review, a recorded mock interview, and more.';
+  const ctaText='The CyberGrad Industry-Ready programme includes 1-to-1 CV review, LinkedIn review, mock interview, and live sessions — everything to go from your current score to interview-ready.';
   const ctaLines=doc.splitTextToSize(ctaText,W-PX*2);
   doc.text(ctaLines,PX,52);
   doc.setFillColor(...teal);doc.roundedRect(PX,70,90,12,3,3,'F');
@@ -1084,6 +1179,23 @@ function resetTool(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function delay(ms){return new Promise(r=>setTimeout(r,ms));}
+
+/* DROPDOWN CLICK TOGGLE */
+function initDropdowns(){
+  document.querySelectorAll(".dropdown-toggle").forEach(function(btn){
+    btn.addEventListener("click",function(e){
+      e.stopPropagation();
+      var dd=this.closest(".dropdown");
+      var isOpen=dd.classList.contains("open");
+      document.querySelectorAll(".dropdown.open").forEach(function(d){d.classList.remove("open");});
+      if(!isOpen) dd.classList.add("open");
+    });
+  });
+  document.addEventListener("click",function(){
+    document.querySelectorAll(".dropdown.open").forEach(function(d){d.classList.remove("open");});
+  });
+}
+document.addEventListener("DOMContentLoaded",initDropdowns);
 </script>
 </body>
 </html>

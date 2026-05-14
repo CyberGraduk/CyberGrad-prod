@@ -21,7 +21,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;ali
 .dropdown-toggle{font-size:14px;font-weight:500;color:var(--text-2);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:var(--font-b);transition:color .2s}
 .dropdown-toggle:hover{color:var(--text)}
 .dropdown-menu{position:absolute;top:calc(100% + 12px);left:0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;min-width:200px;padding:8px;display:none;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
-.dropdown:hover .dropdown-menu{display:block}
+.dropdown.open .dropdown-menu{display:block}
 .dropdown-item{display:block;padding:9px 12px;font-size:13px;color:var(--text-2);text-decoration:none;border-radius:6px;transition:background .15s,color .15s}
 .dropdown-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
 .dropdown-item.active{color:var(--teal)}
@@ -198,9 +198,45 @@ footer{padding:32px 5%;border-top:1px solid var(--border);display:flex;align-ite
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const sb = supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
-// Gate — redirect to signup if not logged in
-sb.auth.getSession().then(({data:{session}})=>{
-  if(!session) window.location.href='signup.html?next=sectors.html';
+
+function initDropdowns(){
+  document.querySelectorAll(".dropdown-toggle").forEach(function(btn){
+    btn.addEventListener("click",function(e){
+      e.stopPropagation();
+      var dd=this.closest(".dropdown");
+      var isOpen=dd.classList.contains("open");
+      document.querySelectorAll(".dropdown.open").forEach(function(d){d.classList.remove("open");});
+      if(!isOpen) dd.classList.add("open");
+    });
+  });
+  document.addEventListener("click",function(){
+    document.querySelectorAll(".dropdown.open").forEach(function(d){d.classList.remove("open");});
+  });
+}
+document.addEventListener("DOMContentLoaded",initDropdowns);
+
+// Gate — show content only if logged in, otherwise show signup prompt
+var mainEl = document.querySelector('main');
+mainEl.style.opacity = '0';
+
+sb.auth.getSession().then(function(res){
+  var session = res.data.session;
+  if(session){
+    mainEl.style.opacity = '1';
+    mainEl.style.transition = 'opacity 0.3s ease';
+  } else {
+    mainEl.innerHTML = '<div style="text-align:center;padding:100px 24px;max-width:480px;margin:0 auto">'
+      + '<div style="width:64px;height:64px;background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">'
+      + '<svg width="28" height="28" fill="none" stroke="#00C896" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>'
+      + '<h2 style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.8px;margin-bottom:12px;color:#F0F6FF">Free with a CyberGrad account.</h2>'
+      + '<p style="font-size:15px;color:#8896B3;line-height:1.7;margin-bottom:28px">Create a free account to access Sectors & Domains, Roles to Apply, and the CV Scorecard. No payment needed.</p>'
+      + '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'
+      + '<a href="signup.html" style="display:inline-flex;align-items:center;gap:8px;background:#00C896;color:#060B16;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:700;text-decoration:none">Create free account</a>'
+      + '<a href="login.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid #131D30;color:#8896B3;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:600;text-decoration:none">Log in</a>'
+      + '</div></div>';
+    mainEl.style.opacity = '1';
+    mainEl.style.transition = 'opacity 0.3s ease';
+  }
 });
 </script>
 </body>

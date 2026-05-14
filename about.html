@@ -238,6 +238,22 @@ footer{padding:40px 5% 32px;border-top:1px solid var(--border);display:flex;alig
 </footer>
 
 <script>
+/* DROPDOWN CLICK TOGGLE */
+function initDropdowns(){
+  document.querySelectorAll(".dropdown-toggle").forEach(btn=>{
+    btn.addEventListener("click",function(e){
+      e.stopPropagation();
+      const dd=this.closest(".dropdown");
+      const isOpen=dd.classList.contains("open");
+      document.querySelectorAll(".dropdown.open").forEach(d=>d.classList.remove("open"));
+      if(!isOpen)dd.classList.add("open");
+    });
+  });
+  document.addEventListener("click",()=>document.querySelectorAll(".dropdown.open").forEach(d=>d.classList.remove("open")));
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initDropdowns);
+else initDropdowns();
+
 function toggleNav(){const ul=document.querySelector('.nav-links');const open=ul.style.display==='flex';ul.style.cssText=open?'':'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#080D18;padding:24px 20px;gap:18px;border-bottom:1px solid #1C2539;z-index:99';}
 const obs=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('vis')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
