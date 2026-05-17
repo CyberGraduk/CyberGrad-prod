@@ -67,6 +67,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;ali
 /* CHECKER CARD */
 .checker-wrap{max-width:800px;margin:0 auto;padding:0 5% 80px}
 
+/* ROLE SELECTOR */
+.role-btn{background:var(--bg-2,#0A1020);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:left;cursor:pointer;transition:border-color .2s,background .2s;font-family:var(--font-b);width:100%}
+.role-btn:hover,.role-btn.selected{border-color:var(--teal-b);background:var(--teal-dim)}
+.role-btn-icon{color:var(--teal);margin-bottom:8px}
+.role-btn-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
+.role-btn-sub{font-size:11px;color:var(--text-3)}
+
 /* STEP 1 — INPUT */
 #step-input{}
 .input-card{background:var(--bg-2);border:1px solid var(--border);border-radius:20px;overflow:hidden}
@@ -270,11 +277,38 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
   <div class="checker-feature-section">...</div>
   -->
 
+  <!-- ROLE SELECTOR STEP -->
+  <div id="role-step">
+    <div class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-tag"><span class="tag-dot"></span>Free · No account needed</div>
+      <h1>Does your CV pass<br>the <span class="hl">UK cyber filter?</span></h1>
+      <p class="hero-sub">First — what role are you targeting? This personalises your keyword scoring and feedback.</p>
+    </div>
+    <div class="checker-wrap" style="max-width:720px">
+      <div class="input-card">
+        <div class="input-top"><div class="step-badge">1</div><div><h2>Select your target role</h2><p>Your score is weighted differently per role. A SOC analyst CV should not be penalised for missing pentest keywords.</p></div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:20px 0 8px">
+          <button class="role-btn" onclick="selectRole('soc','SOC Analyst')"><div class="role-btn-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div><div class="role-btn-name">SOC Analyst</div><div class="role-btn-sub">SIEM · triage · incidents</div></button>
+          <button class="role-btn" onclick="selectRole('pentest','Penetration Tester')"><div class="role-btn-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="role-btn-name">Penetration Tester</div><div class="role-btn-sub">Burp Suite · Kali · OSCP</div></button>
+          <button class="role-btn" onclick="selectRole('appsec','AppSec Engineer')"><div class="role-btn-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/></svg></div><div class="role-btn-name">AppSec Engineer</div><div class="role-btn-sub">SAST · DAST · SDLC</div></button>
+          <button class="role-btn" onclick="selectRole('grc','GRC Analyst')"><div class="role-btn-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16h12V8z"/><polyline points="14,2 14,8 20,8"/></svg></div><div class="role-btn-name">GRC Analyst</div><div class="role-btn-sub">ISO 27001 · NIST · risk</div></button>
+          <button class="role-btn" onclick="selectRole('cloud','Cloud Security')"><div class="role-btn-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div><div class="role-btn-name">Cloud Security</div><div class="role-btn-sub">AWS · Azure · IAM</div></button>
+          <button class="role-btn" onclick="selectRole('devsecops','DevSecOps')"><div class="role-btn-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div><div class="role-btn-name">DevSecOps</div><div class="role-btn-sub">CI/CD · Docker · pipelines</div></button>
+          <button class="role-btn" onclick="selectRole('general','General Cyber')"><div class="role-btn-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="role-btn-name">Not sure yet</div><div class="role-btn-sub">General cybersecurity</div></button>
+        </div>
+        <p style="font-size:12px;color:var(--text-3)">You can change this and re-check anytime.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV INPUT STEP -->
+  <div id="cv-input-step" style="display:none">
   <div class="hero">
     <div class="hero-glow"></div>
-    <div class="hero-tag"><span class="tag-dot"></span>Free · No account needed to check</div>
-    <h1>Does your CV pass<br>the <span class="hl">UK cyber filter?</span></h1>
-    <p class="hero-sub">Paste your CV below. We score it against 24 rules UK ATS systems and employers use. Get your score instantly — concise feedback in a report sent straight to your email, with a downloadable PDF.</p>
+    <div class="hero-tag"><span class="tag-dot"></span>Targeting: <strong id="role-display" style="color:var(--teal)">SOC Analyst</strong> <button onclick="backToRole()" style="background:none;border:none;color:var(--text-3);font-size:12px;cursor:pointer;margin-left:8px;text-decoration:underline;font-family:var(--font-b)">change</button></div>
+    <h1>Paste your CV below</h1>
+    <p class="hero-sub">Copy everything from your CV and paste it. The more complete the text, the more accurate your score.</p>
   </div>
 
   <div class="checker-wrap">
@@ -577,20 +611,69 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
 </div>
 
 <script>
+/* ══════════════════════════════════
+   ROLE-BASED KEYWORD MAPS
+══════════════════════════════════ */
+const ROLE_KEYWORDS = {
+  soc:       ['siem','splunk','qradar','sentinel','alert triage','incident response','log analysis','threat hunting','soar','edr','xdr','mitre','playbook','escalation','network monitoring','vulnerability','ioc','threat intelligence'],
+  pentest:   ['penetration testing','pentest','burp suite','metasploit','kali linux','oscp','owasp','exploitation','reconnaissance','nmap','vulnerability assessment','report writing','ceh','web application','network pentest','privilege escalation','post-exploitation'],
+  appsec:    ['sast','dast','secure code review','sdlc','owasp','application security','threat modelling','code review','static analysis','dynamic analysis','appsec','devsecops','api security','secure development','dependency scanning','vulnerability remediation'],
+  grc:       ['iso 27001','nist','risk assessment','gdpr','compliance','audit','governance','policy','risk management','bia','business continuity','data protection','regulatory','pci dss','soc 2','control framework','risk register','third party risk'],
+  cloud:     ['aws','azure','gcp','iam','zero trust','cloud security','terraform','kubernetes','docker','cspm','cwpp','cloudtrail','security groups','vpc','encryption','key management','cloud native','azure security','aws security','cloud compliance'],
+  devsecops: ['ci/cd','pipeline','docker','kubernetes','terraform','github actions','jenkins','container security','sast','dast','infrastructure as code','iac','shift left','secrets management','image scanning','devsecops','devops','automation','python','bash'],
+  general:   ['siem','soc','penetration testing','vulnerability assessment','incident response','threat intelligence','firewall','ids','ips','owasp','devsecops','cissp','ceh','security+','comptia','iso 27001','nist','cloud security','aws','azure','zero trust','iam','encryption','python','splunk','wireshark','nessus']
+};
+
+const ROLE_LABELS = {
+  soc: 'SOC Analyst', pentest: 'Penetration Tester', appsec: 'AppSec Engineer',
+  grc: 'GRC Analyst', cloud: 'Cloud Security', devsecops: 'DevSecOps', general: 'General Cyber'
+};
+
+// Global selected role
+let selectedRole = 'general';
+
+const STRONG_VERBS=['implemented','developed','analysed','deployed','managed','led','reduced','improved','designed','configured','automated','monitored','investigated','remediated','built','created','established','delivered','engineered','optimised','secured','architected','conducted','identified','resolved','maintained','collaborated','presented','produced','achieved','spearheaded','streamlined','accelerated','enhanced','fortified'];
+const WEAK_PHRASES=['responsible for','helped with','worked on','assisted in','involved in','participated in','tasked with','duties included','was part of','contributed to','supported the team'];
+const UK_CERT_LIST=['security+','ceh','oscp','cissp','cism','cysa+','pentest+','aws certified','azure security','google cloud','iso 27001','comptia','giac','ccsp','sc-200','az-500','aws security'];
+const BUZZWORDS=['passionate about','highly motivated','team player','hard working','hardworking','eager to learn','quick learner','self-starter','go-getter','think outside the box','synergy','dynamic','proactive','results-driven','detail-oriented','fast-paced'];
+const PERSONAL_PRONOUNS=['i am ','i have ','i was ','i will ','i can ','my experience','my skills','my background'];
+
+// Role selector functions
+function selectRole(role, label) {
+  selectedRole = role;
+  document.getElementById('role-step').style.display = 'none';
+  document.getElementById('cv-input-step').style.display = 'block';
+  document.getElementById('role-display').textContent = label || ROLE_LABELS[role];
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+}
+
+function backToRole() {
+  document.getElementById('role-step').style.display = 'block';
+  document.getElementById('cv-input-step').style.display = 'none';
+}
+
 /* ── SUPABASE ── */
 const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// Check if returning user — show previous score
+sb.auth.getSession().then(({data:{session}})=>{
+  if(session){
+    const prevScore = localStorage.getItem('cg_cv_score');
+    if(prevScore){
+      const prevBanner = document.getElementById('prev-score-banner');
+      if(prevBanner){
+        prevBanner.style.display='flex';
+        prevBanner.querySelector('.prev-score-val').textContent = prevScore+'/100';
+      }
+    }
+  }
+});
+
 /* ══════════════════════════════════
-   SCORING ENGINE (full rules)
+   SCORING ENGINE (35+ rules, role-specific)
 ══════════════════════════════════ */
-const CYBER_KEYWORDS=['siem','soc','penetration testing','pentest','vulnerability assessment','incident response','threat intelligence','firewall','ids','ips','owasp','devsecops','cissp','ceh','security+','comptia','iso 27001','nist','cloud security','aws','azure','gcp','zero trust','iam','encryption','python','splunk','wireshark','metasploit','nessus','burp suite','kali linux','threat hunting','malware analysis','digital forensics','risk assessment','vulnerability management','endpoint security','pci dss','soc 2','mitre','soar','edr','xdr','sast','dast','appsec'];
-const STRONG_VERBS=['implemented','developed','analysed','deployed','managed','led','reduced','improved','designed','configured','automated','monitored','investigated','remediated','built','created','established','delivered','engineered','optimised','secured','architected','conducted','identified','resolved','maintained','collaborated','presented','produced','achieved','spearheaded','streamlined','accelerated','enhanced','fortified'];
-const WEAK_PHRASES=['responsible for','helped with','worked on','assisted in','involved in','participated in','tasked with','duties included','was part of','contributed to','supported the team'];
-const UK_CERT_LIST=['security+','ceh','oscp','cissp','cism','cysa+','pentest+','aws certified','azure security','google cloud','iso 27001','comptia','giac','ccsp','sc-200','az-500','aws security'];
-const BUZZWORDS=['passionate about','highly motivated','team player','hard working','hardworking','eager to learn','quick learner','self-starter','go-getter','think outside the box','synergy','dynamic','proactive','results-driven','detail-oriented','fast-paced','leverage','utilise','utilize'];
-const PERSONAL_PRONOUNS=['i am','i have','i was','i will','i can','my experience','my skills','my background'];
 
 function scoreCv(text){
   const t=text.toLowerCase();
@@ -641,37 +724,42 @@ function scoreCv(text){
   cat1.score=Math.min(20,Math.round(cat1.score));
   results.categories.push(cat1);
 
-  // CAT 2: ATS KEYWORDS (25pts)
+  // CAT 2: ATS KEYWORDS (25pts) — ROLE SPECIFIC
   const cat2={name:'ATS Keyword Coverage',max:25,score:0,items:[]};
-  const foundKws=CYBER_KEYWORDS.filter(kw=>t.includes(kw));
+  const roleKws = ROLE_KEYWORDS[selectedRole] || ROLE_KEYWORDS.general;
+  const foundKws=roleKws.filter(kw=>t.includes(kw));
+  const missingKws=roleKws.filter(kw=>!t.includes(kw));
   const kwPts=foundKws.length>=8?10:foundKws.length>=6?8:foundKws.length>=4?5:foundKws.length>=2?3:0;
-  const missingKws=CYBER_KEYWORDS.filter(kw=>!t.includes(kw)).slice(0,6);
+  const roleLabel = ROLE_LABELS[selectedRole] || 'cybersecurity';
   cat2.score+=kwPts;
-  cat2.items.push({status:kwPts>=7?'pass':kwPts>=4?'warn':'fail',title:'Cybersecurity keyword coverage',
-    desc:kwPts>=7?`Good keyword density — ${foundKws.length} cybersecurity terms detected including: ${foundKws.slice(0,6).join(', ')}.`
-      :foundKws.length>0?`Only ${foundKws.length} cybersecurity keywords found. Most UK ATS systems require 8+ relevant terms before flagging a CV for human review. You're currently below that threshold.`
-      :'Zero cybersecurity keywords detected. This CV would be auto-rejected by every ATS system before a human sees it. This is a critical failure.',
-    fix:kwPts<8?`Add these terms where you have genuine experience: ${missingKws.slice(0,5).join(', ')}. Do not keyword-stuff — add them in context.`:'',pts:kwPts,max:10});
+  cat2.items.push({status:kwPts>=7?'pass':kwPts>=4?'warn':'fail',title:'Role-specific keyword coverage',
+    desc:kwPts>=7?`Strong keyword match for ${roleLabel} roles — ${foundKws.length} role-specific terms detected: ${foundKws.slice(0,6).join(', ')}.`
+      :foundKws.length>0?`Only ${foundKws.length} of ${roleKws.length} ${roleLabel} keywords found in your CV. A UK ATS system requires 8+ to shortlist. Found: ${foundKws.slice(0,4).join(', ')}.`
+      :`Zero ${roleLabel}-specific keywords detected. Your CV would be auto-rejected before any human sees it. This is a critical failure.`,
+    fix:kwPts<8&&missingKws.length>0?`Add these ${roleLabel} keywords where you have genuine experience: ${missingKws.slice(0,6).join(', ')}. Do not keyword-stuff — add them in context within your bullet points.`:'',
+    pts:kwPts,max:10});
 
   const americanisms=['resume','honor roll','gpa','defense ','analyze','optimized','organized','summarize'];
   const americanFound=americanisms.filter(a=>t.includes(a));
   const ukPts=Math.max(0,8-americanFound.length*2);
   cat2.score+=ukPts;
   cat2.items.push({status:americanFound.length===0?'pass':americanFound.length===1?'warn':'fail',title:'UK vs American English',
-    desc:americanFound.length===0?'No Americanisms detected. Good — UK recruiters notice "resume" vs "CV" immediately, and it signals you haven\'t adapted.'
+    desc:americanFound.length===0?'No Americanisms detected. UK recruiters notice "resume" vs "CV" immediately and it signals you have not adapted.'
       :`Found American spellings: "${americanFound.join('", "')}". UK recruiters see this and immediately know you copy-pasted from an American template. It undermines your entire application.`,
-    fix:americanFound.length?'Switch to British English throughout. CV not resume. Analyse not analyze. Optimise not optimize. Organised not organized. "Degree classification" not GPA.':'',pts:ukPts,max:8});
+    fix:americanFound.length?`Switch to British English: CV not resume. Analyse not analyze. Optimise not optimize. Organised not organized. "Degree classification" not GPA. Found: ${americanFound.join(', ')}.`:'',pts:ukPts,max:8});
 
   const isAppSec=['appsec','sast','dast','sdlc','code review','application security'].some(k=>t.includes(k));
   const isPentest=['penetration','pentest','exploitation','kali','metasploit','oscp','burp'].some(k=>t.includes(k));
   const isSOC=['soc','siem','alert','triage','incident response','splunk'].some(k=>t.includes(k));
-  const roleMatches=[isAppSec,isPentest,isSOC].filter(Boolean).length;
-  const rolePts=roleMatches>=2?7:roleMatches===1?5:2;
+  const isGRC=['iso 27001','nist','risk assessment','compliance','gdpr','audit'].some(k=>t.includes(k));
+  const isCloud=['aws','azure','gcp','cloud security','iam','terraform'].some(k=>t.includes(k));
+  const specMatches=[isAppSec,isPentest,isSOC,isGRC,isCloud].filter(Boolean).length;
+  const rolePts=specMatches>=2?7:specMatches===1?5:2;
   cat2.score+=rolePts;
-  cat2.items.push({status:rolePts>=5?'pass':'warn',title:'Role specialisation signal',
-    desc:roleMatches>=1?`Specialisation detected: ${[isAppSec&&'AppSec',isPentest&&'Pentesting',isSOC&&'SOC/Defensive'].filter(Boolean).join(', ')}. UK hiring managers scan for a clear direction — you have one.`
-      :'No clear specialisation detected. This reads as a generic cybersecurity CV, which means it\'s not competitive for any specific role. UK employers hire for roles, not for "cybersecurity" in general.',
-    fix:roleMatches===0?'Pick a lane and go deep. SOC analyst: SIEM, Splunk, alert triage, incident response. Pentester: methodology, Kali, report writing, bug bounty. AppSec: SAST/DAST, secure code review, SDLC.':'',pts:rolePts,max:7});
+  cat2.items.push({status:rolePts>=5?'pass':'warn',title:'Specialisation signal',
+    desc:specMatches>=1?`Specialisation detected: ${[isAppSec&&'AppSec',isPentest&&'Pentesting',isSOC&&'SOC',isGRC&&'GRC',isCloud&&'Cloud'].filter(Boolean).join(', ')}. UK hiring managers scan for a clear direction.`
+      :'No clear specialisation detected. This reads as a generic CV, which means it is not competitive for any specific role. UK employers hire for roles, not for "cybersecurity" in general.',
+    fix:specMatches===0?'Pick a lane and go deep. SOC: SIEM, Splunk, alert triage. Pentest: Kali, Burp Suite, OSCP, report writing. GRC: ISO 27001, NIST, risk register. AppSec: SAST/DAST, secure code review.':'',pts:rolePts,max:7});
   cat2.score=Math.min(25,Math.round(cat2.score));
   results.categories.push(cat2);
 
@@ -965,16 +1053,43 @@ async function unlockReport(e){
 }
 
 function renderFullReport(r,user){
-  // PRIORITY LIST — top 5 critical fixes
+  // SCORE COMPARISON CONTEXT
+  const score = r.total;
+  const context = score >= 75 ? 'You are in the top 20% of CVs we have seen.'
+    : score >= 60 ? 'Most students score 45-58 on their first check. You are above average — but gaps remain.'
+    : score >= 45 ? 'Most students score 45-58 on first check. You are in the typical range — fixable issues identified.'
+    : 'Most students score 45-58 on first check. You are below average. The fixes below are specific and actionable.';
+
+  // SHARE BUTTON
+  const shareText = `I just scored ${score}/100 on the CyberGrad UK CV Scorecard for ${ROLE_LABELS[selectedRole] || 'cybersecurity'} roles. How does yours compare? cyber-grad.co.uk/cv-checker`;
+
+  // PRIORITY LIST — only items that actually failed, with specific language
   const allFails=r.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
   const allWarns=r.categories.flatMap(c=>c.items.filter(i=>i.status==='warn'&&i.fix));
-  const priorities=[...allFails,...allWarns].slice(0,5);
-  document.getElementById('priority-list').innerHTML=priorities.map((item,i)=>`
-    <div class="priority-item">
-      <div class="priority-num">${i+1}</div>
-      <div class="priority-text"><strong>${item.title}:</strong> ${item.fix}</div>
-    </div>`).join('');
-  if(priorities.length===0)document.getElementById('priority-list').innerHTML='<div class="priority-item"><div class="priority-num">✓</div><div class="priority-text"><strong>Strong CV.</strong> Focus on tailoring per role and building your UK network.</div></div>';
+  const priorities=[...allFails,...allWarns].slice(0,6);
+
+  const priorityHTML = priorities.length > 0
+    ? priorities.map((item,i)=>`
+        <div class="priority-item">
+          <div class="priority-num">${i+1}</div>
+          <div class="priority-text">
+            <strong>${item.title}</strong>
+            <div style="font-size:13px;color:var(--text-3);margin-top:3px;line-height:1.6">${item.desc}</div>
+            <div style="font-size:13px;color:var(--text-2);margin-top:6px;padding:8px 12px;background:rgba(0,200,150,0.06);border-left:2px solid var(--teal);border-radius:0 6px 6px 0"><strong style="color:var(--teal)">Fix:</strong> ${item.fix}</div>
+          </div>
+        </div>`).join('')
+    : '<div class="priority-item"><div class="priority-num" style="background:var(--teal)">✓</div><div class="priority-text"><strong>No critical issues.</strong> Strong CV — focus on tailoring per role and building your UK network.</div></div>';
+
+  document.getElementById('priority-list').innerHTML = `
+    <div style="font-size:13px;color:var(--text-2);margin-bottom:16px;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid var(--border)">${context}</div>
+    ${priorityHTML}
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <button onclick="navigator.clipboard.writeText('${shareText}').then(()=>{this.textContent='Copied!';setTimeout(()=>{this.textContent='Share your score on LinkedIn'},2000)})" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-2);padding:8px 14px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Share your score on LinkedIn
+      </button>
+      <span style="font-size:12px;color:var(--text-3)">Challenge others to beat ${score}/100</span>
+    </div>`;
 
   // GOOD / BAD / FIX layout per category
   document.getElementById('report-categories').innerHTML=r.categories.map((cat,ci)=>{
@@ -985,14 +1100,14 @@ function renderFullReport(r,user){
 
     const goodHTML=passItems.length>0
       ?passItems.map(i=>`<div class="gbf-item gbf-good"><div class="gbf-dot good"></div><div><div class="gbf-title">${i.title}</div><div class="gbf-desc">${i.desc}</div></div></div>`).join('')
-      :`<div class="gbf-empty">Nothing passing in this category — full attention needed.</div>`;
+      :`<div class="gbf-empty">Nothing passing here — full attention needed.</div>`;
 
     const badHTML=[...failItems,...warnItems].length>0
       ?[...failItems,...warnItems].map(i=>`<div class="gbf-item ${i.status==='fail'?'gbf-bad':'gbf-warn'}"><div class="gbf-dot ${i.status==='fail'?'bad':'warn'}"></div><div><div class="gbf-title">${i.title}</div><div class="gbf-desc">${i.desc}</div></div></div>`).join('')
-      :`<div class="gbf-empty">No issues found here.</div>`;
+      :`<div class="gbf-empty">No issues here.</div>`;
 
     const fixHTML=[...failItems,...warnItems].filter(i=>i.fix).length>0
-      ?[...failItems,...warnItems].filter(i=>i.fix).map(i=>`<div class="gbf-item gbf-fix"><div class="gbf-fix-num">→</div><div><div class="gbf-title">${i.title}</div><div class="gbf-desc">${i.fix}</div></div></div>`).join('')
+      ?[...failItems,...warnItems].filter(i=>i.fix).map(i=>`<div class="gbf-item gbf-fix"><div class="gbf-fix-num">Fix</div><div><div class="gbf-title">${i.title}</div><div class="gbf-desc">${i.fix}</div></div></div>`).join('')
       :`<div class="gbf-empty">Nothing to fix here — solid.</div>`;
 
     return `<div class="report-section">

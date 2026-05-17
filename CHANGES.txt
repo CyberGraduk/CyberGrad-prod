@@ -1,37 +1,47 @@
-CyberGrad — V2.0 Changes
+CyberGrad — V2.3 Changes
 ========================
 Date: May 2026
 
-DROPDOWN FIX — ALL PAGES
-- Changed from hover-only to click-toggle on all pages
-- .dropdown:hover .dropdown-menu replaced with .dropdown.open .dropdown-menu
-- initDropdowns() JS added: click to open, click anywhere else to close
-- Works on mobile, tablet, and desktop
-- Pages fixed: index, pricing, cv-checker, signup, login, checkout, success, about, sectors, roles
+CV CHECKER — MAJOR REBUILD
+- Role selector added as Step 1 before CV paste (7 roles: SOC, Pentest, AppSec, GRC, Cloud, DevSecOps, General)
+- Each role has its own keyword list — ATS scoring is now role-specific, not generic
+- Missing keywords listed explicitly: "Your CV is missing: SIEM, incident response, threat intelligence..."
+- Priority fixes now show: What was found, why it matters, exact fix — all specific to that student's CV
+- Score comparison added: "Most students score 45-58 on first check. You scored X."
+- Share your score button: pre-written LinkedIn post generated with actual score and role
+- renderFullReport updated: priority items show Bad (what was found) + Fix (exact step) per item
+- Returning user retake tracking: previous score shown if logged in
 
-SECTORS & ROLES — GATE LOGIC FIXED
-- No longer redirects to signup.html on click
-- Instead shows an inline "Free with a CyberGrad account" screen
-- Screen shows: lock icon, explanation, Create free account + Log in buttons
-- Content remains hidden (opacity:0) until session check completes
-- If logged in: content fades in smoothly
-- If not logged in: gate screen fades in instead
-- Dashboard cards link to these pages — logged-in users go straight to content
+ISSUE 1 — Dashboard
+- Sidebar: Resources section added with Sectors & Domains and Roles to Apply nav items
+- Foundation → Industry-Ready throughout dashboard
+- CV Checker → CV Scorecard in sidebar
+- Footer email removed
 
-FLOW SUMMARY
-- Not logged in: clicks Sectors from nav -> sees gate screen with signup/login
-- Creates account -> logs in -> dashboard shows Sectors & Roles cards
-- Clicks from dashboard -> content shows immediately (session already active)
-- Direct URL visit without login -> same gate screen
+ISSUE 2 — Session fix + T&C
+- sectors.html and roles.html: now uses onAuthStateChange + getSession combined
+  This fixes the issue where magic link users land on page but session hasn't loaded yet
+- signup.html: T&C checkbox added (required before submit)
+- T&C modal with 6 clear points: what CyberGrad provides, no guarantees, payments, GDPR, community, access
+- "I agree" button in modal auto-ticks the checkbox
+
+ISSUE 3 — Footer email removed
+- "Built 2026 · cybergraduk@gmail.com" removed from all page footers
+- Email contact references in FAQ body kept (correct)
+
+ISSUE 4 — Signup status dropdown updated
+- Options: Currently studying (Bachelors), Currently studying (Masters),
+  Recently Graduated (0-6 months), Graduated 6+ Months Ago
+
+ISSUE 5 — Campus Ambassador FAQ
+- Short version: "Spread the word, earn rewards for every student you bring in,
+  get a verifiable LinkedIn credential. Details shared after joining."
 
 FILES CHANGED
-- sectors.html (gate logic rewritten, dropdown fixed)
-- roles.html (gate logic rewritten, dropdown fixed)
-- index.html (dropdown CSS fixed)
-- pricing.html (dropdown CSS fixed)
-- cv-checker.html (dropdown CSS + JS added)
-- signup.html (dropdown CSS + JS added)
-- login.html (dropdown CSS + JS added)
-- checkout.html (dropdown CSS + JS added)
-- success.html (dropdown CSS + JS added)
-- about.html (dropdown CSS fixed)
+- cv-checker.html (role selector, specific findings, share button, comparison text)
+- dashboard.html (Resources sidebar, Industry-Ready rename, footer)
+- signup.html (T&C checkbox, modal, status options)
+- sectors.html (session fix)
+- roles.html (session fix)
+- index.html (Campus Ambassador FAQ)
+- All pages (footer email removal)

@@ -190,7 +190,7 @@ footer{padding:32px 5%;border-top:1px solid var(--border);display:flex;align-ite
 </main>
 
 <footer>
-  <span>© 2026 CyberGrad · cybergraduk@gmail.com</span>
+  <span>© 2026 CyberGrad</span>
   <span style="font-style:italic">"Guidance, not guarantees."</span>
   <span>Your data is handled in accordance with UK GDPR. We never sell or share your personal information.</span>
 </footer>
@@ -219,7 +219,13 @@ document.addEventListener("DOMContentLoaded",initDropdowns);
 var mainEl = document.querySelector('main');
 mainEl.style.opacity = '0';
 
+sb.auth.onAuthStateChange(function(event, session){
+  handleSession(session);
+});
 sb.auth.getSession().then(function(res){
+  handleSession(res.data.session);
+});
+function handleSession(session){
   var session = res.data.session;
   if(session){
     mainEl.style.opacity = '1';

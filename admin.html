@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — CyberGrad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060B16;--bg2:#0A1020;--bg3:#0F1829;
+  --teal:#00C896;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.20);
+  --text:#F0F6FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;
+  --red:#DC2626;--amber:#D97706;--blue:#3B82F6;
+  --font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* LAYOUT */
+.app{display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:50}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:18px 16px;border-bottom:1px solid var(--border);text-decoration:none}
+.s-lm{width:28px;height:28px;border-radius:6px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:11px;font-weight:800;color:#060B16}
+.s-lt{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--text);letter-spacing:-0.4px}
+.admin-badge{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);background:rgba(217,119,6,0.1);border:1px solid rgba(217,119,6,0.2);padding:2px 7px;border-radius:4px;margin-left:auto}
+.sidebar-nav{flex:1;padding:14px 10px}
+.nav-sec{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);padding:4px 8px 8px;margin-top:8px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--text-2);text-decoration:none;cursor:pointer;transition:background .15s,color .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover,.nav-item.active{background:var(--teal-dim);color:var(--text);border:1px solid var(--teal-b)}
+.nav-item svg{width:15px;height:15px;flex-shrink:0}
+.sidebar-footer{padding:14px 16px;border-top:1px solid var(--border)}
+.admin-info{font-size:12px;color:var(--text-2)}.admin-info strong{color:var(--teal);display:block;font-size:11px}
+.btn-logout{background:none;border:none;color:var(--text-3);font-family:var(--font-b);font-size:12px;cursor:pointer;margin-top:8px;padding:0;transition:color .2s}
+.btn-logout:hover{color:var(--text-2)}
+.main{margin-left:220px;flex:1;min-height:100vh}
+
+/* TOPBAR */
+.topbar{padding:20px 28px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar h1{font-family:var(--font-h);font-size:20px;font-weight:800;letter-spacing:-0.5px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.btn-refresh{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-2);padding:8px 14px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:500;cursor:pointer;transition:background .2s}
+.btn-refresh:hover{background:rgba(255,255,255,.08);color:var(--text)}
+.btn-export{display:flex;align-items:center;gap:6px;background:var(--teal);border:none;color:#060B16;padding:8px 16px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.btn-export:hover{opacity:.88}
+.last-updated{font-size:12px;color:var(--text-3)}
+
+/* STATS STRIP */
+.stats-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 28px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.stat-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.stat-value{font-family:var(--font-h);font-size:28px;font-weight:800;letter-spacing:-1px;color:var(--text)}
+.stat-value.teal{color:var(--teal)}
+.stat-sub{font-size:11px;color:var(--text-3);margin-top:4px}
+
+/* MAIN GRID */
+.content-grid{display:grid;grid-template-columns:1fr 300px;gap:16px;padding:0 28px 28px}
+
+/* STUDENTS TABLE */
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.panel-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.panel-title{font-family:var(--font-h);font-size:15px;font-weight:700;letter-spacing:-0.3px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter-input{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:12px;padding:7px 12px;outline:none;transition:border-color .2s}
+.filter-input:focus{border-color:var(--teal-b)}
+.filter-select{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:12px;padding:7px 12px;outline:none;cursor:pointer}
+.filter-select option{background:var(--bg2)}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);white-space:nowrap}
+td{padding:12px 16px;font-size:13px;color:var(--text-2);border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+td:first-child{color:var(--text);font-weight:500}
+tr:hover td{background:rgba(255,255,255,.02)}
+tr:last-child td{border-bottom:none}
+.plan-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;white-space:nowrap}
+.plan-badge.starter{color:var(--text-3);background:rgba(255,255,255,.06);border:1px solid var(--border)}
+.plan-badge.industry{color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b)}
+.plan-badge.elite{color:var(--amber);background:rgba(217,119,6,0.1);border:1px solid rgba(217,119,6,0.25)}
+.score-pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px}
+.score-pill.good{color:#00C896;background:rgba(0,200,150,0.1)}
+.score-pill.mid{color:var(--amber);background:rgba(217,119,6,0.1)}
+.score-pill.low{color:var(--red);background:rgba(220,38,38,0.1)}
+.score-pill.none{color:var(--text-3);background:rgba(255,255,255,.04)}
+.empty-state{padding:48px;text-align:center;color:var(--text-3);font-size:14px}
+
+/* RIGHT SIDEBAR */
+.right-col{display:flex;flex-direction:column;gap:14px}
+
+/* RECENT SIGNUPS */
+.signup-item{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.signup-item:last-child{border-bottom:none}
+.signup-av{width:32px;height:32px;border-radius:50%;background:var(--teal-dim);border:1px solid var(--teal-b);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:12px;font-weight:700;color:var(--teal);flex-shrink:0}
+.signup-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.signup-uni{font-size:11px;color:var(--text-2)}
+.signup-time{font-size:11px;color:var(--text-3);margin-left:auto;flex-shrink:0}
+.panel-body{padding:16px 20px}
+
+/* SOCIAL PROOF PANEL */
+.proof-stat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.proof-stat:last-child{margin-bottom:0}
+.proof-text{font-size:13px;color:var(--text);line-height:1.5;font-weight:500}
+.proof-sub{font-size:11px;color:var(--text-3);margin-top:4px}
+.btn-copy{background:none;border:1px solid var(--border);color:var(--text-3);font-family:var(--font-b);font-size:10px;font-weight:600;padding:4px 10px;border-radius:5px;cursor:pointer;margin-top:8px;transition:all .2s;display:flex;align-items:center;gap:5px}
+.btn-copy:hover{border-color:var(--teal-b);color:var(--teal)}
+.btn-copy.copied{border-color:var(--teal-b);color:var(--teal)}
+
+/* LOADING */
+.loading{display:flex;align-items:center;justify-content:center;padding:48px;gap:12px;color:var(--text-3);font-size:13px}
+.spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* COHORT PANEL */
+.cohort-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.cohort-row:last-child{border-bottom:none}
+.cohort-name{font-size:13px;font-weight:600;color:var(--text)}
+.cohort-meta{font-size:11px;color:var(--text-2);margin-top:2px}
+.cohort-fill{font-size:12px;font-weight:700;color:var(--teal)}
+.progress-bar{background:var(--border);border-radius:3px;height:4px;width:80px;overflow:hidden;margin-top:4px}
+.progress-fill{height:4px;background:var(--teal);border-radius:3px}
+
+@media(max-width:1100px){.stats-strip{grid-template-columns:repeat(3,1fr)}.content-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.stats-strip,.content-grid{padding-left:16px;padding-right:16px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">
+      <div class="s-lm">CG</div>
+      <span class="s-lt">CyberGrad</span>
+      <span class="admin-badge">Admin</span>
+    </a>
+    <nav class="sidebar-nav">
+      <div class="nav-sec">Admin</div>
+      <button class="nav-item active" onclick="showSection('overview')">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Overview
+      </button>
+      <button class="nav-item" onclick="showSection('students')">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Students
+      </button>
+      <button class="nav-item" onclick="showSection('proof')">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        Social Proof
+      </button>
+      <div class="nav-sec">Links</div>
+      <a class="nav-item" href="dashboard.html">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Student View
+      </a>
+      <a class="nav-item" href="index.html">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Live Site
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info">Logged in as<strong id="admin-email">rakeshelamaran98@gmail.com</strong></div>
+      <button class="btn-logout" onclick="logout()">Sign out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <h1 id="section-title">Overview</h1>
+      <div class="topbar-right">
+        <span class="last-updated" id="last-updated">Loading...</span>
+        <button class="btn-refresh" onclick="loadAll()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23,4 23,10 17,10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Refresh
+        </button>
+        <button class="btn-export" onclick="exportCSV()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- STATS STRIP -->
+    <div class="stats-strip">
+      <div class="stat-card">
+        <div class="stat-label">Total Signups</div>
+        <div class="stat-value teal" id="stat-total">—</div>
+        <div class="stat-sub">All time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Industry-Ready</div>
+        <div class="stat-value" id="stat-paid">—</div>
+        <div class="stat-sub">Paid students</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Revenue</div>
+        <div class="stat-value teal" id="stat-revenue">—</div>
+        <div class="stat-sub">£125 per student</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">CV Scores Submitted</div>
+        <div class="stat-value" id="stat-cv">—</div>
+        <div class="stat-sub">Across all students</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg CV Score</div>
+        <div class="stat-value" id="stat-avg">—</div>
+        <div class="stat-sub">Out of 100</div>
+      </div>
+    </div>
+
+    <!-- OVERVIEW SECTION -->
+    <div id="section-overview" class="content-grid">
+
+      <!-- STUDENTS TABLE (overview — last 20) -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Recent Students</div>
+          <div class="filters">
+            <input class="filter-input" type="text" id="ov-search" placeholder="Search name or email..." oninput="filterTable()" style="width:200px">
+            <select class="filter-select" id="ov-plan" onchange="filterTable()">
+              <option value="">All plans</option>
+              <option value="starter">Starter</option>
+              <option value="industry_ready">Industry-Ready</option>
+              <option value="elite">Elite</option>
+            </select>
+          </div>
+        </div>
+        <div id="students-table-wrap">
+          <div class="loading"><div class="spinner"></div> Loading students...</div>
+        </div>
+      </div>
+
+      <!-- RIGHT COL -->
+      <div class="right-col">
+
+        <!-- RECENT SIGNUPS -->
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">Recent Signups</div></div>
+          <div class="panel-body" id="recent-signups">
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- COHORT -->
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">Cohort 1</div></div>
+          <div class="panel-body" id="cohort-panel">
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- UNIVERSITIES BREAKDOWN -->
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">Top Universities</div></div>
+          <div class="panel-body" id="uni-breakdown">
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STUDENTS SECTION (full table) -->
+    <div id="section-students" style="display:none;padding:0 28px 28px">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">All Students</div>
+          <div class="filters">
+            <input class="filter-input" type="text" id="st-search" placeholder="Search..." oninput="filterFull()" style="width:180px">
+            <select class="filter-select" id="st-plan" onchange="filterFull()">
+              <option value="">All plans</option>
+              <option value="starter">Starter</option>
+              <option value="industry_ready">Industry-Ready</option>
+              <option value="elite">Elite</option>
+            </select>
+            <select class="filter-select" id="st-uni" onchange="filterFull()">
+              <option value="">All universities</option>
+            </select>
+            <select class="filter-select" id="st-year" onchange="filterFull()">
+              <option value="">All years</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+            </select>
+          </div>
+        </div>
+        <div id="full-table-wrap">
+          <div class="loading"><div class="spinner"></div> Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOCIAL PROOF SECTION -->
+    <div id="section-proof" style="display:none;padding:0 28px 28px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">Auto-Generated Proof Stats</div></div>
+          <div class="panel-body" id="proof-stats">
+            <div class="loading"><div class="spinner"></div> Generating...</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">LinkedIn Post Templates</div></div>
+          <div class="panel-body" id="linkedin-templates">
+            <div class="loading"><div class="spinner"></div> Generating...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end main -->
+</div><!-- end app -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
+const ADMIN_EMAIL  = 'rakeshelamaran98@gmail.com';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let allStudents = [];
+
+// ── AUTH GATE ──
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+  if (session.user.email !== ADMIN_EMAIL) {
+    window.location.href = 'dashboard.html';
+    return;
+  }
+  document.getElementById('admin-email').textContent = session.user.email;
+  await loadAll();
+}
+
+async function logout() {
+  await sb.auth.signOut();
+  window.location.href = 'login.html';
+}
+
+// ── LOAD ALL DATA ──
+async function loadAll() {
+  document.getElementById('last-updated').textContent = 'Refreshing...';
+  try {
+    const { data, error } = await sb
+      .from('students')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    allStudents = data || [];
+
+    updateStats();
+    renderStudentsTable(allStudents.slice(0, 50));
+    renderFullTable(allStudents);
+    renderRecentSignups(allStudents.slice(0, 8));
+    renderCohort(allStudents);
+    renderUniBreakdown(allStudents);
+    renderProofStats(allStudents);
+    renderLinkedinTemplates(allStudents);
+    populateUniFilter(allStudents);
+
+    const now = new Date();
+    document.getElementById('last-updated').textContent = `Updated ${now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
+  } catch (err) {
+    console.error('Load error:', err);
+    document.getElementById('last-updated').textContent = 'Error loading data';
+    document.getElementById('students-table-wrap').innerHTML = `<div class="empty-state">Error loading students: ${err.message}</div>`;
+  }
+}
+
+// ── STATS ──
+function updateStats() {
+  const total = allStudents.length;
+  const paid = allStudents.filter(s => s.plan === 'industry_ready' || s.plan === 'foundation').length;
+  const revenue = paid * 125;
+  const withScore = allStudents.filter(s => s.cv_score && s.cv_score > 0);
+  const avgScore = withScore.length > 0 ? Math.round(withScore.reduce((a, s) => a + s.cv_score, 0) / withScore.length) : 0;
+
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-paid').textContent = paid;
+  document.getElementById('stat-revenue').textContent = `£${revenue.toLocaleString()}`;
+  document.getElementById('stat-cv').textContent = withScore.length;
+  document.getElementById('stat-avg').textContent = avgScore > 0 ? avgScore + '/100' : '—';
+}
+
+// ── STUDENTS TABLE (overview) ──
+function renderStudentsTable(students) {
+  if (!students.length) {
+    document.getElementById('students-table-wrap').innerHTML = '<div class="empty-state">No students yet. Share your signup link to get started.</div>';
+    return;
+  }
+  document.getElementById('students-table-wrap').innerHTML = `
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>Name</th><th>Email</th><th>University</th><th>Course</th>
+        <th>Grad Year</th><th>Plan</th><th>CV Score</th><th>Signed Up</th>
+      </tr></thead>
+      <tbody>${students.map(s => studentRow(s)).join('')}</tbody>
+    </table></div>`;
+}
+
+function studentRow(s) {
+  const plan = s.plan || 'starter';
+  const planLabel = plan === 'industry_ready' || plan === 'foundation' ? 'Industry-Ready'
+    : plan === 'elite' ? 'Elite' : 'Starter';
+  const planCls = plan === 'industry_ready' || plan === 'foundation' ? 'industry'
+    : plan === 'elite' ? 'elite' : 'starter';
+  const score = s.cv_score;
+  const scorePill = score
+    ? `<span class="score-pill ${score >= 70 ? 'good' : score >= 50 ? 'mid' : 'low'}">${score}/100</span>`
+    : `<span class="score-pill none">Not checked</span>`;
+  const date = s.created_at ? new Date(s.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'2-digit'}) : '—';
+  const name = [s.first_name, s.last_name].filter(Boolean).join(' ') || s.email?.split('@')[0] || '—';
+
+  return `<tr>
+    <td>${escHtml(name)}</td>
+    <td style="font-size:12px">${escHtml(s.email || '—')}</td>
+    <td style="font-size:12px">${escHtml(s.university || '—')}</td>
+    <td style="font-size:12px">${escHtml(s.course || '—')}</td>
+    <td style="text-align:center">${s.graduation_year || '—'}</td>
+    <td><span class="plan-badge ${planCls}">${planLabel}</span></td>
+    <td>${scorePill}</td>
+    <td style="font-size:12px;white-space:nowrap">${date}</td>
+  </tr>`;
+}
+
+// ── FULL TABLE ──
+function renderFullTable(students) {
+  document.getElementById('full-table-wrap').innerHTML = `
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>Name</th><th>Email</th><th>University</th><th>Course</th><th>Country</th>
+        <th>Grad Year</th><th>Plan</th><th>CV Score</th><th>Signed Up</th>
+      </tr></thead>
+      <tbody id="full-tbody">${students.map(s => studentRowFull(s)).join('')}</tbody>
+    </table></div>
+    <div style="padding:12px 16px;font-size:12px;color:var(--text-3);border-top:1px solid var(--border)">${students.length} students total</div>`;
+}
+
+function studentRowFull(s) {
+  const plan = s.plan || 'starter';
+  const planLabel = plan === 'industry_ready' || plan === 'foundation' ? 'Industry-Ready'
+    : plan === 'elite' ? 'Elite' : 'Starter';
+  const planCls = plan === 'industry_ready' || plan === 'foundation' ? 'industry'
+    : plan === 'elite' ? 'elite' : 'starter';
+  const score = s.cv_score;
+  const scorePill = score
+    ? `<span class="score-pill ${score >= 70 ? 'good' : score >= 50 ? 'mid' : 'low'}">${score}/100</span>`
+    : `<span class="score-pill none">—</span>`;
+  const date = s.created_at ? new Date(s.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'2-digit'}) : '—';
+  const name = [s.first_name, s.last_name].filter(Boolean).join(' ') || s.email?.split('@')[0] || '—';
+
+  return `<tr data-plan="${plan}" data-uni="${s.university || ''}" data-year="${s.graduation_year || ''}" data-name="${name.toLowerCase()}" data-email="${(s.email||'').toLowerCase()}">
+    <td>${escHtml(name)}</td>
+    <td style="font-size:12px">${escHtml(s.email || '—')}</td>
+    <td style="font-size:12px">${escHtml(s.university || '—')}</td>
+    <td style="font-size:12px">${escHtml(s.course || '—')}</td>
+    <td style="font-size:12px">${escHtml(s.country || '—')}</td>
+    <td style="text-align:center">${s.graduation_year || '—'}</td>
+    <td><span class="plan-badge ${planCls}">${planLabel}</span></td>
+    <td>${scorePill}</td>
+    <td style="font-size:12px;white-space:nowrap">${date}</td>
+  </tr>`;
+}
+
+// ── FILTER ──
+function filterTable() {
+  const search = (document.getElementById('ov-search')?.value || '').toLowerCase();
+  const plan   = document.getElementById('ov-plan')?.value || '';
+  let filtered = allStudents.filter(s => {
+    const name = [s.first_name, s.last_name].filter(Boolean).join(' ').toLowerCase();
+    const email = (s.email || '').toLowerCase();
+    const matchSearch = !search || name.includes(search) || email.includes(search);
+    const matchPlan = !plan || s.plan === plan;
+    return matchSearch && matchPlan;
+  });
+  renderStudentsTable(filtered.slice(0, 50));
+}
+
+function filterFull() {
+  const search = (document.getElementById('st-search')?.value || '').toLowerCase();
+  const plan   = document.getElementById('st-plan')?.value || '';
+  const uni    = document.getElementById('st-uni')?.value || '';
+  const year   = document.getElementById('st-year')?.value || '';
+  const rows = document.querySelectorAll('#full-tbody tr');
+  let visible = 0;
+  rows.forEach(row => {
+    const matchSearch = !search || row.dataset.name?.includes(search) || row.dataset.email?.includes(search);
+    const matchPlan = !plan || row.dataset.plan === plan;
+    const matchUni = !uni || row.dataset.uni === uni;
+    const matchYear = !year || row.dataset.year === year;
+    const show = matchSearch && matchPlan && matchUni && matchYear;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+}
+
+function populateUniFilter(students) {
+  const unis = [...new Set(students.map(s => s.university).filter(Boolean))].sort();
+  const sel = document.getElementById('st-uni');
+  if (!sel) return;
+  unis.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u; opt.textContent = u;
+    sel.appendChild(opt);
+  });
+}
+
+// ── RECENT SIGNUPS ──
+function renderRecentSignups(students) {
+  if (!students.length) {
+    document.getElementById('recent-signups').innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:var(--text-3)">No signups yet.</div>';
+    return;
+  }
+  document.getElementById('recent-signups').innerHTML = students.map(s => {
+    const name = [s.first_name, s.last_name].filter(Boolean).join(' ') || s.email?.split('@')[0] || 'Student';
+    const initial = name[0].toUpperCase();
+    const ago = timeAgo(s.created_at);
+    const plan = s.plan || 'starter';
+    const planLabel = plan === 'industry_ready' || plan === 'foundation' ? 'Industry-Ready' : plan === 'elite' ? 'Elite' : 'Starter';
+    const planCol = plan === 'industry_ready' || plan === 'foundation' ? 'var(--teal)' : plan === 'elite' ? 'var(--amber)' : 'var(--text-3)';
+    return `<div class="signup-item">
+      <div class="signup-av">${escHtml(initial)}</div>
+      <div style="flex:1;min-width:0">
+        <div class="signup-name">${escHtml(name)}</div>
+        <div class="signup-uni">${escHtml(s.university || 'Unknown uni')} · <span style="color:${planCol};font-weight:600">${planLabel}</span></div>
+      </div>
+      <div class="signup-time">${ago}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── COHORT PANEL ──
+function renderCohort(students) {
+  const industryReady = students.filter(s => s.plan === 'industry_ready' || s.plan === 'foundation').length;
+  const maxSpots = 20;
+  const pct = Math.min(Math.round((industryReady / maxSpots) * 100), 100);
+  document.getElementById('cohort-panel').innerHTML = `
+    <div class="cohort-row">
+      <div>
+        <div class="cohort-name">Cohort 1</div>
+        <div class="cohort-meta">Industry-Ready students</div>
+        <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div style="text-align:right">
+        <div class="cohort-fill">${industryReady}/${maxSpots}</div>
+        <div style="font-size:11px;color:var(--text-3);margin-top:4px">${maxSpots - industryReady} spots left</div>
+      </div>
+    </div>
+    <div style="padding-top:12px;font-size:12px;color:var(--text-3)">
+      Starter accounts: <strong style="color:var(--text)">${students.length - industryReady}</strong>
+    </div>`;
+}
+
+// ── UNI BREAKDOWN ──
+function renderUniBreakdown(students) {
+  const uniCount = {};
+  students.forEach(s => { if (s.university) uniCount[s.university] = (uniCount[s.university] || 0) + 1; });
+  const sorted = Object.entries(uniCount).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const max = sorted[0]?.[1] || 1;
+
+  if (!sorted.length) {
+    document.getElementById('uni-breakdown').innerHTML = '<div style="font-size:13px;color:var(--text-3);text-align:center;padding:16px">No data yet.</div>';
+    return;
+  }
+
+  document.getElementById('uni-breakdown').innerHTML = sorted.map(([uni, count]) => {
+    const pct = Math.round((count / max) * 100);
+    return `<div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;color:var(--text)">${escHtml(uni)}</span>
+        <span style="font-size:12px;font-weight:600;color:var(--teal)">${count}</span>
+      </div>
+      <div style="background:var(--border);border-radius:3px;height:4px"><div style="background:var(--teal);height:4px;width:${pct}%;border-radius:3px"></div></div>
+    </div>`;
+  }).join('');
+}
+
+// ── SOCIAL PROOF STATS ──
+function renderProofStats(students) {
+  const total = students.length;
+  const unis = new Set(students.map(s => s.university).filter(Boolean)).size;
+  const countries = new Set(students.map(s => s.country).filter(Boolean)).size;
+  const withScore = students.filter(s => s.cv_score > 0);
+  const avgScore = withScore.length ? Math.round(withScore.reduce((a, s) => a + s.cv_score, 0) / withScore.length) : 0;
+  const paid = students.filter(s => s.plan === 'industry_ready' || s.plan === 'foundation').length;
+
+  const topUnis = Object.entries(
+    students.reduce((acc, s) => { if (s.university) acc[s.university] = (acc[s.university] || 0) + 1; return acc; }, {})
+  ).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([u]) => u).join(', ');
+
+  const stats = [
+    {
+      text: `${total} international cybersecurity graduates have used CyberGrad's CV Scorecard`,
+      sub: 'Use this when you hit 20+ signups'
+    },
+    {
+      text: `Students from ${unis} UK universities have checked their CVs — average score: ${avgScore}/100`,
+      sub: 'Shows breadth and the gap in CV quality'
+    },
+    {
+      text: `Most students score under 60/100 on their first CV check — and they don't know why`,
+      sub: 'Great hook for LinkedIn posts'
+    },
+    {
+      text: `${paid} students have joined the Industry-Ready programme from ${countries > 0 ? countries + ' countries' : 'across the UK'}`,
+      sub: 'Social proof for paid conversion'
+    },
+    {
+      text: topUnis ? `Top universities represented: ${topUnis}` : 'Growing cohort across UK universities',
+      sub: 'Name-drop credibility for LinkedIn'
+    }
+  ];
+
+  document.getElementById('proof-stats').innerHTML = stats.map(s => `
+    <div class="proof-stat">
+      <div class="proof-text">"${s.text}"</div>
+      <div class="proof-sub">${s.sub}</div>
+      <button class="btn-copy" onclick="copyText(this, '${s.text.replace(/'/g, "\\'")}')">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>`).join('');
+}
+
+// ── LINKEDIN TEMPLATES ──
+function renderLinkedinTemplates(students) {
+  const total = students.length;
+  const paid = students.filter(s => s.plan === 'industry_ready' || s.plan === 'foundation').length;
+  const withScore = students.filter(s => s.cv_score > 0);
+  const avgScore = withScore.length ? Math.round(withScore.reduce((a, s) => a + s.cv_score, 0) / withScore.length) : 58;
+
+  const templates = [
+    `I built a free CV scoring tool specifically for international cybersecurity graduates in the UK.\n\n${total > 0 ? total + ' students' : 'Students'} have already used it.\n\nAverage score: ${avgScore}/100.\n\nMost don't know what's wrong with their CV. Now they do.\n\nCheck yours: cyber-grad.co.uk\n\n#cybersecurity #UKjobs #internationalstudents`,
+    `The UK cybersecurity job market is not hard to break into.\n\nBut you need to know how it actually works.\n\nMost international MSc graduates apply the wrong way, to the wrong roles, with CVs that get filtered before a human reads them.\n\nCyberGrad exists to fix that.\n\nPractical industry knowledge beyond your degree.\n\ncyber-grad.co.uk`,
+    `Running Cohort 1 of CyberGrad - a structured 4-week programme for international cybersecurity graduates navigating the UK job market.\n\n${paid > 0 ? paid + ' students' : 'A small group'} in so far. Spots are limited to 20.\n\nIf you're an international MSc student in UK cyber struggling to get interviews, this was built for you.\n\nDetails: cyber-grad.co.uk/pricing`
+  ];
+
+  document.getElementById('linkedin-templates').innerHTML = templates.map((t, i) => `
+    <div class="proof-stat">
+      <div class="proof-text" style="font-size:12px;white-space:pre-line">${escHtml(t)}</div>
+      <button class="btn-copy" onclick="copyText(this, \`${t.replace(/`/g, '\\`')}\`)">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy post
+      </button>
+    </div>`).join('');
+}
+
+// ── COPY ──
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.innerHTML = '<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── EXPORT CSV ──
+function exportCSV() {
+  if (!allStudents.length) return;
+  const headers = ['Name','Email','University','Course','Country','Grad Year','Plan','CV Score','Signed Up'];
+  const rows = allStudents.map(s => [
+    [s.first_name, s.last_name].filter(Boolean).join(' ') || s.email?.split('@')[0],
+    s.email || '',
+    s.university || '',
+    s.course || '',
+    s.country || '',
+    s.graduation_year || '',
+    s.plan || 'starter',
+    s.cv_score || '',
+    s.created_at ? new Date(s.created_at).toLocaleDateString('en-GB') : ''
+  ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(','));
+
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `cybergrad-students-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── NAV ──
+function showSection(name) {
+  ['overview', 'students', 'proof'].forEach(s => {
+    document.getElementById(`section-${s}`).style.display = s === name ? (s === 'overview' ? 'grid' : 'block') : 'none';
+  });
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  const titles = { overview: 'Overview', students: 'All Students', proof: 'Social Proof Generator' };
+  document.getElementById('section-title').textContent = titles[name] || 'Admin';
+}
+
+// ── HELPERS ──
+function timeAgo(dateStr) {
+  if (!dateStr) return '—';
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  return `${days}d ago`;
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
