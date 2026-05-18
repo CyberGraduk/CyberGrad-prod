@@ -1,47 +1,37 @@
-CyberGrad — V2.3 Changes
+CyberGrad — V2.4 Changes
 ========================
 Date: May 2026
 
-CV CHECKER — MAJOR REBUILD
-- Role selector added as Step 1 before CV paste (7 roles: SOC, Pentest, AppSec, GRC, Cloud, DevSecOps, General)
-- Each role has its own keyword list — ATS scoring is now role-specific, not generic
-- Missing keywords listed explicitly: "Your CV is missing: SIEM, incident response, threat intelligence..."
-- Priority fixes now show: What was found, why it matters, exact fix — all specific to that student's CV
-- Score comparison added: "Most students score 45-58 on first check. You scored X."
-- Share your score button: pre-written LinkedIn post generated with actual score and role
-- renderFullReport updated: priority items show Bad (what was found) + Fix (exact step) per item
-- Returning user retake tracking: previous score shown if logged in
+ROOT CAUSE FIX — Generic PDF priorities
 
-ISSUE 1 — Dashboard
-- Sidebar: Resources section added with Sectors & Domains and Roles to Apply nav items
-- Foundation → Industry-Ready throughout dashboard
-- CV Checker → CV Scorecard in sidebar
-- Footer email removed
+The problem: cv-checker.html was sending categories to the PDF API
+with only {name, score, max} — stripping out the items array entirely.
+So the PDF had no desc or fix text to show, falling back to whatever
+generic text was hardcoded in send-report.js.
 
-ISSUE 2 — Session fix + T&C
-- sectors.html and roles.html: now uses onAuthStateChange + getSession combined
-  This fixes the issue where magic link users land on page but session hasn't loaded yet
-- signup.html: T&C checkbox added (required before submit)
-- T&C modal with 6 clear points: what CyberGrad provides, no guarantees, payments, GDPR, community, access
-- "I agree" button in modal auto-ticks the checkbox
+THE FIX (cv-checker.html line ~1040):
+categories now sent with full items array:
+  categories: cvResults.categories.map(c => ({
+    name, score, max,
+    items: c.items.map(i => ({ status, title, desc, fix }))
+  }))
 
-ISSUE 3 — Footer email removed
-- "Built 2026 · cybergraduk@gmail.com" removed from all page footers
-- Email contact references in FAQ body kept (correct)
+desc = what was actually found in this student's CV
+fix  = the specific action for this student's CV
 
-ISSUE 4 — Signup status dropdown updated
-- Options: Currently studying (Bachelors), Currently studying (Masters),
-  Recently Graduated (0-6 months), Graduated 6+ Months Ago
+PDF PRIORITY SECTION (send-report.js):
+Each priority fix now shows 3 layers:
+1. Title (bold) — the check that failed
+2. Finding (grey) — what was actually found/missing in THIS CV
+3. Fix: (teal prefix) — the specific action for THIS CV
 
-ISSUE 5 — Campus Ambassador FAQ
-- Short version: "Spread the word, earn rewards for every student you bring in,
-  get a verifiable LinkedIn credential. Details shared after joining."
+This means:
+- Student with 2 keywords sees: "Only 2 of 18 SOC Analyst keywords found..."
+- Student with 0 keywords sees: "Zero SOC Analyst keywords detected. Auto-rejected..."
+- Not the same generic message for everyone
+
+Also: role sent in payload for PDF header context.
 
 FILES CHANGED
-- cv-checker.html (role selector, specific findings, share button, comparison text)
-- dashboard.html (Resources sidebar, Industry-Ready rename, footer)
-- signup.html (T&C checkbox, modal, status options)
-- sectors.html (session fix)
-- roles.html (session fix)
-- index.html (Campus Ambassador FAQ)
-- All pages (footer email removal)
+- cv-checker.html (categories payload fix, priorities to 6)
+- api/send-report.js (priority section shows desc + fix separately)

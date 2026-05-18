@@ -200,8 +200,9 @@ async function generatePDF({ name, firstName, email, university, score, categori
 
   for (let i = 0; i < (priorities || []).slice(0, 6).length; i++) {
     const fix = priorities[i];
-    const label = sanitiseText(fix.title || fix.label || `Fix ${i + 1}`);
-    const detail = sanitiseText(fix.fix || fix.detail || '');
+    const label   = sanitiseText(fix.title || fix.label || `Fix ${i + 1}`);
+    const finding = sanitiseText(fix.desc || '');  // what was actually found in THIS CV
+    const action  = sanitiseText(fix.fix || fix.detail || ''); // specific action for THIS CV
 
     // Badge
     p1.drawRectangle({ x: 24, y: y - 1, width: 15, height: 15, color: teal, borderRadius: 3 });
@@ -209,14 +210,30 @@ async function generatePDF({ name, firstName, email, university, score, categori
 
     // Title
     p1.drawText(label.substring(0, 65), { x: 46, y: y + 2, size: 9.5, font: fontBold, color: dark });
-    y -= 14;
+    y -= 13;
 
-    // Detail wrapped
-    if (detail) {
-      const detailLines = wrapText(detail, fontReg, 8, 490);
-      for (const line of detailLines.slice(0, 2)) {
+    // Finding — what was detected in this specific CV
+    if (finding) {
+      const findingLines = wrapText(finding, fontReg, 8, 490);
+      for (const line of findingLines.slice(0, 2)) {
+        if (y < 50) break;
         p1.drawText(line, { x: 46, y, size: 8, font: fontReg, color: grey });
-        y -= 10;
+        y -= 9;
+      }
+    }
+
+    // Fix action with teal "Fix:" prefix
+    if (action) {
+      if (y > 50) {
+        const fixLabel = 'Fix: ';
+        const fixLabelW = fontBold.widthOfTextAtSize(fixLabel, 8);
+        p1.drawText(fixLabel, { x: 46, y, size: 8, font: fontBold, color: teal });
+        const actionLines = wrapText(action, fontReg, 8, 490 - fixLabelW);
+        for (let l = 0; l < Math.min(actionLines.length, 2); l++) {
+          if (y < 50) break;
+          p1.drawText(actionLines[l], { x: 46 + (l === 0 ? fixLabelW : 0), y, size: 8, font: fontReg, color: dark });
+          y -= 9;
+        }
       }
     }
     y -= 6;

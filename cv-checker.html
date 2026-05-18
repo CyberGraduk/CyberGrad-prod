@@ -1026,7 +1026,7 @@ async function unlockReport(e){
   // Build data for email
   const allFails=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
   const allWarns=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='warn'&&i.fix));
-  const priorities=[...allFails,...allWarns].slice(0,5);
+  const priorities=[...allFails,...allWarns].slice(0,6);
   const band=getBand(cvResults.total).label;
 
   // Call send-report API
@@ -1035,9 +1035,18 @@ async function unlockReport(e){
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        name,email,university:uni,status,
+        name,email,university:uni,status,role:selectedRole,
         score:cvResults.total,band,
-        categories:cvResults.categories.map(c=>({name:c.name,score:c.score,max:c.max})),
+        // Send FULL categories including items so PDF can show specific findings
+        categories:cvResults.categories.map(c=>({
+          name:c.name,score:c.score,max:c.max,
+          items:c.items.map(i=>({
+            status:i.status,
+            title:i.title,
+            desc:i.desc,   // specific finding for this student's CV
+            fix:i.fix      // specific fix for this student's CV
+          }))
+        })),
         priorities
       })
     });
