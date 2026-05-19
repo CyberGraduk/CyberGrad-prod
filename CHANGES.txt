@@ -1,50 +1,72 @@
-CyberGrad — V2.6 Changes
+CyberGrad — V2.8 Changes
 ========================
 Date: May 2026
 
-ISSUE 1 — Status dropdown updated in cv-checker gate form
-- Bachelors, Masters, Recently Graduated (0-6 months), Graduated 6+ Months Ago
-- Matches signup.html options exactly
+WHY CYBERGRAD SECTION — Full rewrite (index.html)
+- Removed Rakesh personal story card entirely
+- 4 new value-focused cards, short hooks, no fluff:
+  1. "You're applying the wrong way" — hundreds of apps, zero responses
+  2. "Security clearance will block you" — govt roles off-limits on Graduate Visa
+  3. "Wrong role, wasted months" — generic CV gets filtered
+  4. "UK interviews are not what you expect" — competency-based, nobody tells you
+- Grid updated to 4 columns, 2 columns on tablet, 1 on mobile
+- SVG icons, no emojis
 
-CV SCAN COUNTER — cv-checker page
-- Live counter below hero: "5+ CVs scanned"
-- Pulls real count from Supabase students table where cv_score > 0
-- Adds 5 base floor so never shows zero
-- Rounds to clean display: 5+, 10+, 25+, 50+, 100+ etc.
+FAQ — Reordered + 4 weeks answer updated (index.html)
+New order (most looked first):
+  1. Do you guarantee I'll get a job? (biggest concern)
+  2. What happens in the 4 weeks?
+  3. Who is CyberGrad for?
+  4. How many students in a cohort?
+  5. Want to know more? Book a call.
+  6. I'm still studying. Can I join?
+  7. What is the CV Scorecard and is it free?
+  8. Industry-Ready vs Elite?
+  9. What time zone?
+  10. Campus Ambassador?
+  11. Can I upgrade later?
+  12. Refund policy?
 
-NAV — Resources renamed to Tools (all pages)
-- Resources dropdown → Tools dropdown everywhere
+4 weeks answer changed from detailed week-by-week to:
+"A structured 4-week agenda covering CV, LinkedIn, job search strategy,
+interview preparation, and UK industry insights. Guidance provided at
+every step. Full agenda shared after joining."
 
-FAQ — Cohort size updated
-- "20 students maximum per cohort. Quality over volume."
-- "Once 20 is full, it is full."
+ADMIN AUTH FIX (admin.html)
+- No longer immediately redirects on no session
+- Uses onAuthStateChange + 2 second fallback timeout
+- Fixes issue where navigating to admin.html after dashboard login redirected to login.html
 
-FOUNDING COHORT — replaces Trial Launch
-- "Trial Launch" replaced with "Founding Cohort" on index and all pages
-- Hero tag: "Founding Cohort — Now Open"
+ADMIN LINK IN DASHBOARD (dashboard.html)
+- "Admin Panel" link added to sidebar
+- Only visible when logged in as rakeshelamaran98@gmail.com
+- Hidden for all other users
 
-JOIN WAITLIST — inline name + email form
-- Elite card on index.html and pricing.html
-- Full name + email inputs
-- Button: "Notify me when Elite launches"
-- Success: "You're on the list. We'll notify you as soon as Elite launches."
-- Saves to Supabase waitlist table
-- NOTE: Create 'waitlist' table in Supabase:
-  id (uuid), name (text), email (text), plan (text), created_at (timestamp)
+DASHBOARD MAGIC LINK URL CLEAN (dashboard.html)
+- Uses onAuthStateChange to detect SIGNED_IN event
+- Cleans URL from /dashboard.html#access_token=... to /dashboard.html immediately
 
-ABOUT PAGE — Home tab removed from nav (logo already links home)
+PDF ENCODING FIX (api/send-report.js)
+- sanitiseText() strengthened with aggressive character replacement
+- Handles: arrows, dashes, curly quotes, ellipsis, math symbols, bullets,
+  checkmarks, non-breaking spaces, pound sign, copyright, trademark
+- Should fix "WinAnsi cannot encode" crash
 
-PDF REPORT — Calmer colours + FOMO CTA (from V2.5 — included)
-- All colours desaturated: muted green/red/blue/amber
-- CTA: "Most students figure this out the hard way..." soft FOMO tone
-
-VERSION TAG — footer
-- v2.6 is live (small muted text, index.html footer)
+VERSION TAG
+- v2.8 is live in index.html footer
 
 FILES CHANGED
-- cv-checker.html (status dropdown, scan counter)
-- index.html (waitlist form, Founding Cohort, Tools nav, version tag)
-- pricing.html (waitlist form, Tools nav)
-- about.html (Home tab removed, Tools nav)
-- all other pages (Tools nav rename)
-- api/send-report.js (calm colours, FOMO CTA from V2.5)
+- index.html (Why CyberGrad rewrite, FAQ reorder, version tag)
+- admin.html (auth fix)
+- dashboard.html (admin link, URL clean)
+- api/send-report.js (encoding fix)
+
+SUPABASE ACTION REQUIRED
+Create waitlist table for Elite interest signups:
+  create table waitlist (
+    id uuid default gen_random_uuid() primary key,
+    name text not null,
+    email text not null,
+    plan text default 'elite',
+    created_at timestamptz default now()
+  );

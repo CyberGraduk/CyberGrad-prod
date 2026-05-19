@@ -322,14 +322,37 @@ let allStudents = [];
 
 // ── AUTH GATE ──
 async function init() {
+  // First try getSession
   const { data: { session } } = await sb.auth.getSession();
-  if (!session) { window.location.href = 'login.html'; return; }
-  if (session.user.email !== ADMIN_EMAIL) {
-    window.location.href = 'dashboard.html';
+  if (session) {
+    if (session.user.email !== ADMIN_EMAIL) {
+      window.location.href = 'dashboard.html';
+      return;
+    }
+    document.getElementById('admin-email').textContent = session.user.email;
+    await loadAll();
     return;
   }
-  document.getElementById('admin-email').textContent = session.user.email;
-  await loadAll();
+
+  // If no session yet, listen for auth state change (handles page reload timing)
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (session) {
+      if (session.user.email !== ADMIN_EMAIL) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+      document.getElementById('admin-email').textContent = session.user.email;
+      await loadAll();
+    } else {
+      window.location.href = 'login.html';
+    }
+  });
+
+  // Wait 2 seconds for session to restore from localStorage before giving up
+  setTimeout(async () => {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) window.location.href = 'login.html';
+  }, 2000);
 }
 
 async function logout() {

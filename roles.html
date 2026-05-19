@@ -26,7 +26,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;ali
 .dropdown-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
 .dropdown-item.active{color:var(--teal)}
 
-main{max-width:1000px;margin:0 auto;padding:96px 5% 80px}
+main{max-width:1000px;margin:0 auto;padding:96px 5% 80px;opacity:0;transition:opacity 0.3s ease}
 .page-tag{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
 h1{font-family:var(--font-h);font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1.5px;margin-bottom:14px}
 .page-sub{font-size:17px;color:var(--text-2);max-width:600px;line-height:1.7;margin-bottom:48px}
@@ -264,19 +264,13 @@ function initDropdowns(){
 document.addEventListener("DOMContentLoaded",initDropdowns);
 
 var mainEl = document.querySelector('main');
-mainEl.style.opacity = '0';
+var gateShown = false;
 
-sb.auth.onAuthStateChange(function(event, session){
-  handleSession(session);
-});
-sb.auth.getSession().then(function(res){
-  handleSession(res.data.session);
-});
-function handleSession(session){
-  var session = res.data.session;
-  if(session){
+function handleSession(session) {
+  if (gateShown) return;
+  gateShown = true;
+  if (session) {
     mainEl.style.opacity = '1';
-    mainEl.style.transition = 'opacity 0.3s ease';
   } else {
     mainEl.innerHTML = '<div style="text-align:center;padding:100px 24px;max-width:480px;margin:0 auto">'
       + '<div style="width:64px;height:64px;background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">'
@@ -288,7 +282,17 @@ function handleSession(session){
       + '<a href="login.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid #131D30;color:#8896B3;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:600;text-decoration:none">Log in</a>'
       + '</div></div>';
     mainEl.style.opacity = '1';
-    mainEl.style.transition = 'opacity 0.3s ease';
+  }
+}
+
+sb.auth.getSession().then(function(res) {
+  handleSession(res.data.session);
+});
+
+sb.auth.onAuthStateChange(function(event, session) {
+  if (event === 'SIGNED_IN') {
+    gateShown = false;
+    handleSession(session);
   }
 });
 </script>

@@ -130,6 +130,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
       <!-- V1.2 — Marketplace removed from sidebar
       <a class="nav-item" href="marketplace.html">Marketplace</a>
       -->
+      <!-- Admin link — only shown for admin email, set by JS -->
+      <a class="nav-item" href="admin.html" id="admin-nav-link" style="display:none;color:var(--amber)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Admin Panel
+      </a>
     </nav>
     <div class="sidebar-footer">
       <div class="user-row">
@@ -284,21 +289,28 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 async function handleAuth() {
   setLoading(true);
   try {
-    if (window.location.hash && window.location.hash.includes('access_token')) {
-      const { data, error } = await sb.auth.getSession();
-      if (error) throw error;
-      if (data.session) {
-        window.history.replaceState(null, '', '/dashboard.html');
-        await loadUser(data.session.user);
+    // Listen for auth state change — fires when magic link hash is consumed
+    sb.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        window.history.replaceState(null, '', window.location.pathname);
+        await loadUser(session.user);
         return;
       }
-    }
+    });
+
+    // Also check existing session
     const { data: { session }, error } = await sb.auth.getSession();
+    if (error) throw error;
     if (session?.user) {
-      window.history.replaceState(null, '', '/dashboard.html');
+      window.history.replaceState(null, '', window.location.pathname);
       await loadUser(session.user);
-    } else {
-      window.location.href = 'login.html';
+    } else if (!window.location.hash.includes('access_token')) {
+      // Only redirect if no token in URL — give onAuthStateChange time to fire
+      setTimeout(() => {
+        sb.auth.getSession().then(({ data: { session } }) => {
+          if (!session) window.location.href = 'login.html';
+        });
+      }, 2000);
     }
   } catch (err) {
     console.error(err);
@@ -328,6 +340,12 @@ async function loadUser(user) {
   document.getElementById('topbar-name').textContent = firstName;
   document.getElementById('user-name').textContent = fullName;
   document.getElementById('user-av').textContent = firstName[0].toUpperCase();
+
+  // Show admin link only for admin email
+  if (user.email === 'rakeshelamaran98@gmail.com') {
+    const adminLink = document.getElementById('admin-nav-link');
+    if (adminLink) adminLink.style.display = 'flex';
+  }
 
   const cvScore = localStorage.getItem('cg_cv_score');
   if (cvScore) {

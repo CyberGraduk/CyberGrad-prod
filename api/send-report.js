@@ -59,18 +59,40 @@ module.exports = async function handler(req, res) {
   }
 };
 
-// ── SANITISE (WinAnsi safe) ──
+// ── SANITISE (WinAnsi safe) — aggressive version ──
 function sanitiseText(str) {
   if (!str) return '';
   return String(str)
-    .replace(/[\u2192\u25BA\u25B6]/g, '->')
-    .replace(/[\u2190\u25C4\u25C0]/g, '<-')
-    .replace(/\u2013/g, '-').replace(/\u2014/g, '-')
-    .replace(/\u2018|\u2019/g, "'")
-    .replace(/\u201C|\u201D/g, '"')
-    .replace(/\u2026/g, '...').replace(/\u00D7/g, 'x')
-    .replace(/\u2022/g, '-').replace(/\u2713/g, 'v')
-    .replace(/[^\x00-\xFF]/g, '');
+    // Arrows
+    .replace(/[\u2192\u21D2\u25BA\u25B6\u2794\u27A1]/g, '->')
+    .replace(/[\u2190\u21D0\u25C4\u25C0]/g, '<-')
+    .replace(/[\u2194\u2195]/g, '<->')
+    // Dashes
+    .replace(/[\u2013\u2014\u2015\u2212]/g, '-')
+    // Quotes
+    .replace(/[\u2018\u2019\u02BC\u0060]/g, "'")
+    .replace(/[\u201C\u201D\u00AB\u00BB]/g, '"')
+    // Ellipsis
+    .replace(/\u2026/g, '...')
+    // Math / symbols
+    .replace(/\u00D7/g, 'x')
+    .replace(/\u00F7/g, '/')
+    .replace(/\u00B1/g, '+/-')
+    .replace(/\u00B0/g, ' degrees')
+    .replace(/\u00A3/g, 'PS')  // pound sign — not in WinAnsi position pdf-lib expects
+    .replace(/\u20AC/g, 'EUR')
+    .replace(/\u00A9/g, '(c)')
+    .replace(/\u00AE/g, '(R)')
+    .replace(/\u2122/g, '(TM)')
+    // Bullets / checkmarks
+    .replace(/[\u2022\u2023\u25E6\u2043]/g, '-')
+    .replace(/[\u2713\u2714\u2611]/g, 'v')
+    .replace(/[\u2717\u2718\u2612]/g, 'x')
+    // Spaces
+    .replace(/[\u00A0\u2002\u2003\u2009]/g, ' ')
+    // Strip anything outside printable ASCII + basic Latin-1
+    .replace(/[^\x20-\x7E\xA1-\xFF]/g, '')
+    .trim();
 }
 
 // ── WRAP TEXT ──
