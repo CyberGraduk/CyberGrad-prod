@@ -245,7 +245,7 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
     <span class="nav-lt">CyberGrad</span>
   </a>
   <ul class="nav-links">
-    <li class="dropdown"><button class="dropdown-toggle">Resources <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="dropdown-menu"><a href="cv-checker.html" class="dropdown-item">CV Scorecard</a><a href="sectors.html" class="dropdown-item">Sectors &amp; Domains</a><a href="roles.html" class="dropdown-item">Roles to Apply</a></div></li>
+    <li class="dropdown"><button class="dropdown-toggle">Tools <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="dropdown-menu"><a href="cv-checker.html" class="dropdown-item">CV Scorecard</a><a href="sectors.html" class="dropdown-item">Sectors &amp; Domains</a><a href="roles.html" class="dropdown-item">Roles to Apply</a></div></li>
     <!-- V1.1 — Marketplace removed from nav, do not delete -->
     <!-- <li><a href="marketplace.html">Marketplace</a></li> -->
     <li><a href="pricing.html">Pricing</a></li>
@@ -261,7 +261,7 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
   <div class="hero-glow"></div>
   <div class="hero-glow-2"></div>
   <div class="hero-inner" style="margin:0 auto">
-    <div class="hero-tag"><span class="tag-dot"></span>Trial Launch — Cohort 1 Now Open</div>
+    <div class="hero-tag"><span class="tag-dot"></span>Founding Cohort — Now Open</div>
     <h1>The insider guide<br>nobody gives you.<br><em>Until now.</em></h1>
     <p class="hero-sub" style="margin-left:auto;margin-right:auto">Free tools, resources, and a structured programme for international cybersecurity students navigating the UK job market. Built by someone who lived through exactly what you're facing.</p>
 
@@ -455,9 +455,19 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
           <li>Building a Portfolio</li>
         </ul>
       -->
-      <div class="coming-soon-block">
-        <div class="cs-text">Full details dropping soon.<br>Join the waitlist to be notified first.</div>
-        <a href="signup.html" class="pc-btn primary" style="margin-top:20px">Join waitlist</a>
+      <div class="coming-soon-block" style="align-items:stretch;padding:16px 0 4px">
+        <div class="cs-text" style="margin-bottom:16px">Full details dropping soon.<br>Join the waitlist to be notified first.</div>
+        <div id="wl-form-wrap">
+          <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+            <input type="text" id="wl-name" placeholder="Full name" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:10px 14px;outline:none;width:100%" onfocus="this.style.borderColor='rgba(0,200,150,.3)'" onblur="this.style.borderColor='var(--border)'">
+            <input type="email" id="wl-email" placeholder="Email address" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:10px 14px;outline:none;width:100%" onfocus="this.style.borderColor='rgba(0,200,150,.3)'" onblur="this.style.borderColor='var(--border)'">
+            <button onclick="joinWaitlist()" style="background:var(--teal);color:#060B16;border:none;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:11px;cursor:pointer;width:100%">Notify me when Elite launches</button>
+          </div>
+        </div>
+        <div id="wl-success" style="display:none;text-align:center;padding:12px 0">
+          <p style="font-size:14px;font-weight:700;color:var(--teal);margin-bottom:4px">You're on the list.</p>
+          <p style="font-size:13px;color:var(--text-2)">We'll notify you as soon as Elite launches.</p>
+        </div>
       </div>
     </div>
 
@@ -632,7 +642,7 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
 
     <div class="faq-item">
       <button class="faq-btn" onclick="toggleFaq(this)">How many students are in a cohort?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="faq-body"><p>15 to 20 students per cohort. We keep it small deliberately. While CyberGrad is built for cybersecurity and IT MSc graduates, we welcome students from other backgrounds too as long as you have a genuine interest in cybersecurity. We pick carefully. Small cohort means real accountability and real community, not just another group chat.</p></div>
+      <div class="faq-body"><p>20 students maximum per cohort. We keep it at 20 deliberately — quality over volume. Every student gets real attention, real community, and a cohort small enough that everyone knows each other. While CyberGrad is built for cybersecurity and IT MSc graduates, we welcome students from other backgrounds with a genuine interest in cybersecurity. We pick carefully. Once 20 is full, it is full.</p></div>
     </div>
 
     <div class="faq-item">
@@ -703,6 +713,7 @@ footer{padding:56px 5% 40px;border-top:1px solid var(--border)}
     <span>© 2026 CyberGrad</span>
     <span class="footer-tagline">"Guidance, not guarantees."</span>
     <span style="font-size:12px;color:var(--text-3)">Your data is handled in accordance with UK GDPR. We never sell or share your personal information.</span>
+    <span style="font-size:11px;color:var(--text-3);opacity:0.5">v2.6 is live</span>
   </div>
 </footer>
 
@@ -736,6 +747,19 @@ function animateCounter(from, to, el) {
     if (current < to) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
+}
+
+/* WAITLIST */
+async function joinWaitlist() {
+  const name = document.getElementById('wl-name')?.value?.trim();
+  const email = document.getElementById('wl-email')?.value?.trim();
+  if (!name || !email) { alert('Please enter your name and email.'); return; }
+  if (!email.includes('@')) { alert('Please enter a valid email address.'); return; }
+  try {
+    await sb.from('waitlist').insert([{ name, email, plan: 'elite', created_at: new Date().toISOString() }]);
+  } catch(e) { /* silent — show success regardless */ }
+  document.getElementById('wl-form-wrap').style.display = 'none';
+  document.getElementById('wl-success').style.display = 'block';
 }
 
 /* FAQ */

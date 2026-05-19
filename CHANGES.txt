@@ -1,37 +1,50 @@
-CyberGrad — V2.4 Changes
+CyberGrad — V2.6 Changes
 ========================
 Date: May 2026
 
-ROOT CAUSE FIX — Generic PDF priorities
+ISSUE 1 — Status dropdown updated in cv-checker gate form
+- Bachelors, Masters, Recently Graduated (0-6 months), Graduated 6+ Months Ago
+- Matches signup.html options exactly
 
-The problem: cv-checker.html was sending categories to the PDF API
-with only {name, score, max} — stripping out the items array entirely.
-So the PDF had no desc or fix text to show, falling back to whatever
-generic text was hardcoded in send-report.js.
+CV SCAN COUNTER — cv-checker page
+- Live counter below hero: "5+ CVs scanned"
+- Pulls real count from Supabase students table where cv_score > 0
+- Adds 5 base floor so never shows zero
+- Rounds to clean display: 5+, 10+, 25+, 50+, 100+ etc.
 
-THE FIX (cv-checker.html line ~1040):
-categories now sent with full items array:
-  categories: cvResults.categories.map(c => ({
-    name, score, max,
-    items: c.items.map(i => ({ status, title, desc, fix }))
-  }))
+NAV — Resources renamed to Tools (all pages)
+- Resources dropdown → Tools dropdown everywhere
 
-desc = what was actually found in this student's CV
-fix  = the specific action for this student's CV
+FAQ — Cohort size updated
+- "20 students maximum per cohort. Quality over volume."
+- "Once 20 is full, it is full."
 
-PDF PRIORITY SECTION (send-report.js):
-Each priority fix now shows 3 layers:
-1. Title (bold) — the check that failed
-2. Finding (grey) — what was actually found/missing in THIS CV
-3. Fix: (teal prefix) — the specific action for THIS CV
+FOUNDING COHORT — replaces Trial Launch
+- "Trial Launch" replaced with "Founding Cohort" on index and all pages
+- Hero tag: "Founding Cohort — Now Open"
 
-This means:
-- Student with 2 keywords sees: "Only 2 of 18 SOC Analyst keywords found..."
-- Student with 0 keywords sees: "Zero SOC Analyst keywords detected. Auto-rejected..."
-- Not the same generic message for everyone
+JOIN WAITLIST — inline name + email form
+- Elite card on index.html and pricing.html
+- Full name + email inputs
+- Button: "Notify me when Elite launches"
+- Success: "You're on the list. We'll notify you as soon as Elite launches."
+- Saves to Supabase waitlist table
+- NOTE: Create 'waitlist' table in Supabase:
+  id (uuid), name (text), email (text), plan (text), created_at (timestamp)
 
-Also: role sent in payload for PDF header context.
+ABOUT PAGE — Home tab removed from nav (logo already links home)
+
+PDF REPORT — Calmer colours + FOMO CTA (from V2.5 — included)
+- All colours desaturated: muted green/red/blue/amber
+- CTA: "Most students figure this out the hard way..." soft FOMO tone
+
+VERSION TAG — footer
+- v2.6 is live (small muted text, index.html footer)
 
 FILES CHANGED
-- cv-checker.html (categories payload fix, priorities to 6)
-- api/send-report.js (priority section shows desc + fix separately)
+- cv-checker.html (status dropdown, scan counter)
+- index.html (waitlist form, Founding Cohort, Tools nav, version tag)
+- pricing.html (waitlist form, Tools nav)
+- about.html (Home tab removed, Tools nav)
+- all other pages (Tools nav rename)
+- api/send-report.js (calm colours, FOMO CTA from V2.5)

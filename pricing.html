@@ -120,7 +120,7 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
     <span class="nav-lt">CyberGrad</span>
   </a>
   <ul class="nav-links">
-    <li class="dropdown"><button class="dropdown-toggle">Resources <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="dropdown-menu"><a href="cv-checker.html" class="dropdown-item">CV Scorecard</a><a href="sectors.html" class="dropdown-item">Sectors &amp; Domains</a><a href="roles.html" class="dropdown-item">Roles to Apply</a></div></li>
+    <li class="dropdown"><button class="dropdown-toggle">Tools <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="dropdown-menu"><a href="cv-checker.html" class="dropdown-item">CV Scorecard</a><a href="sectors.html" class="dropdown-item">Sectors &amp; Domains</a><a href="roles.html" class="dropdown-item">Roles to Apply</a></div></li>
     <!-- <li><a href="marketplace.html">Marketplace</a></li> V1.1 — removed, marketplace hidden -->
     <li><a href="pricing.html" style="color:var(--teal)">Pricing</a></li>
     <li><a href="about.html">About</a></li>
@@ -199,9 +199,19 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
       <!-- FEATURES HIDDEN — COMING SOON
         <ul class="feat-list">...</ul>
       -->
-      <div style="text-align:center;padding:24px 0 8px;flex:1;display:flex;flex-direction:column;align-items:center">
-        <div style="font-size:14px;color:var(--text-2);line-height:1.65">Full details dropping soon.<br>Join the waitlist to be notified first.</div>
-        <a href="signup.html" class="card-btn primary" style="margin-top:20px">Join waitlist</a>
+      <div style="padding:16px 0 4px;flex:1;display:flex;flex-direction:column;width:100%">
+        <div style="font-size:14px;color:var(--text-2);line-height:1.65;margin-bottom:16px;text-align:center">Full details dropping soon.<br>Join the waitlist to be notified first.</div>
+        <div id="pr-wl-form">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <input type="text" id="pr-wl-name" placeholder="Full name" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:10px 14px;outline:none;width:100%" onfocus="this.style.borderColor='rgba(0,200,150,.3)'" onblur="this.style.borderColor='var(--border)'">
+            <input type="email" id="pr-wl-email" placeholder="Email address" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:10px 14px;outline:none;width:100%" onfocus="this.style.borderColor='rgba(0,200,150,.3)'" onblur="this.style.borderColor='var(--border)'">
+            <button onclick="joinWaitlistPr()" style="background:var(--teal);color:#060B16;border:none;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:11px;cursor:pointer;width:100%">Notify me when Elite launches</button>
+          </div>
+        </div>
+        <div id="pr-wl-success" style="display:none;text-align:center;padding:12px 0">
+          <p style="font-size:14px;font-weight:700;color:var(--teal);margin-bottom:4px">You're on the list.</p>
+          <p style="font-size:13px;color:var(--text-2)">We'll notify you as soon as Elite launches.</p>
+        </div>
       </div>
     </div>
 
@@ -313,6 +323,18 @@ function togglePrFound(){
   const btn=document.getElementById('pr-found-toggle');
   if(f.style.display==='none'){s.style.display='none';f.style.display='block';btn.textContent='Show less ↑';}
   else{s.style.display='block';f.style.display='none';btn.textContent='View all features ↓';}
+}
+
+/* WAITLIST */
+const _sb = supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
+async function joinWaitlistPr() {
+  const name = document.getElementById('pr-wl-name')?.value?.trim();
+  const email = document.getElementById('pr-wl-email')?.value?.trim();
+  if (!name || !email) { alert('Please enter your name and email.'); return; }
+  if (!email.includes('@')) { alert('Please enter a valid email.'); return; }
+  try { await _sb.from('waitlist').insert([{ name, email, plan: 'elite', created_at: new Date().toISOString() }]); } catch(e) {}
+  document.getElementById('pr-wl-form').style.display = 'none';
+  document.getElementById('pr-wl-success').style.display = 'block';
 }
 </script>
 </body>

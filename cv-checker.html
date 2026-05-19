@@ -309,6 +309,10 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
     <div class="hero-tag"><span class="tag-dot"></span>Targeting: <strong id="role-display" style="color:var(--teal)">SOC Analyst</strong> <button onclick="backToRole()" style="background:none;border:none;color:var(--text-3);font-size:12px;cursor:pointer;margin-left:8px;text-decoration:underline;font-family:var(--font-b)">change</button></div>
     <h1>Paste your CV below</h1>
     <p class="hero-sub">Copy everything from your CV and paste it. The more complete the text, the more accurate your score.</p>
+    <div id="scan-counter" style="display:inline-flex;align-items:center;gap:8px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:100px;padding:6px 16px;font-size:13px;font-weight:600;color:var(--teal);margin-bottom:8px">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+      <span id="scan-count-text">5+ CVs scanned</span>
+    </div>
   </div>
 
   <div class="checker-wrap">
@@ -432,10 +436,10 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
           </div>
           <select class="form-select" id="sg-status" required>
             <option value="" disabled selected>Your current status</option>
-            <option>Currently studying</option>
-            <option>Final year</option>
-            <option>Recently graduated</option>
-            <option>Graduated 6+ months ago</option>
+            <option>Currently studying (Bachelors)</option>
+            <option>Currently studying (Masters)</option>
+            <option>Recently Graduated (0-6 months)</option>
+            <option>Graduated 6+ Months Ago</option>
           </select>
           <select class="form-select" id="sg-uni" required>
             <option value="" disabled selected>Your university</option>
@@ -1285,6 +1289,25 @@ function downloadPDF(){
 
   doc.save(`CyberGrad-CV-Report-${userData.name.replace(/\s+/g,'-')}.pdf`);
 }
+
+// CV SCAN COUNTER — live from Supabase, minimum 5+
+async function loadScanCounter() {
+  try {
+    const { count } = await sb
+      .from('students')
+      .select('*', { count: 'exact', head: true })
+      .gt('cv_score', 0);
+    const real = count || 0;
+    const total = real + 5; // 5 base floor
+    const display = total < 10 ? '5+'
+      : total < 25 ? `${Math.floor(total/5)*5}+`
+      : total < 100 ? `${Math.floor(total/10)*10}+`
+      : `${Math.floor(total/50)*50}+`;
+    const el = document.getElementById('scan-count-text');
+    if (el) el.textContent = `${display} CVs scanned`;
+  } catch(e) { /* silent fail */ }
+}
+loadScanCounter();
 
 function showFullReport(){
   document.getElementById('check-email-screen').style.display='none';

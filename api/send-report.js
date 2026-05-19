@@ -127,17 +127,25 @@ async function generatePDF({ name, firstName, email, university, score, categori
   const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
   const fontReg  = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-  const teal  = rgb(0, 0.784, 0.588);
-  const dark  = rgb(0.024, 0.043, 0.086);
-  const white = rgb(1, 1, 1);
-  const grey  = rgb(0.53, 0.54, 0.7);
+  const teal      = rgb(0, 0.784, 0.588);    // score hero only
+  const dark      = rgb(0.024, 0.043, 0.086);
+  const white     = rgb(1, 1, 1);
+  const grey      = rgb(0.53, 0.54, 0.7);
   const lightgrey = rgb(0.88, 0.88, 0.92);
-  const red   = rgb(0.863, 0.149, 0.149);
-  const amber = rgb(0.851, 0.467, 0.024);
-  const blue  = rgb(0.231, 0.51, 0.965);
-  const green = teal;
+  const textDark  = rgb(0.12, 0.14, 0.18);   // body text — near black
+  const textMid   = rgb(0.38, 0.40, 0.48);   // secondary text
+  const textLight = rgb(0.60, 0.62, 0.70);   // labels
 
-  const scoreCol = score >= 80 ? teal : score >= 60 ? blue : score >= 40 ? amber : red;
+  // Calm semantic colours — desaturated
+  const passCol   = rgb(0.12, 0.52, 0.35);   // muted green
+  const failCol   = rgb(0.65, 0.22, 0.22);   // muted red
+  const warnCol   = rgb(0.62, 0.40, 0.10);   // muted amber
+  const fixCol    = rgb(0.22, 0.38, 0.62);   // muted blue
+
+  const scoreCol = score >= 80 ? teal
+    : score >= 60 ? rgb(0.22, 0.38, 0.62)
+    : score >= 40 ? rgb(0.62, 0.40, 0.10)
+    : rgb(0.65, 0.22, 0.22);
   const bandLabel = sanitiseText(band || getBandLabel(score));
 
   // ════════════════════════════════════════
@@ -204,9 +212,9 @@ async function generatePDF({ name, firstName, email, university, score, categori
     const finding = sanitiseText(fix.desc || '');  // what was actually found in THIS CV
     const action  = sanitiseText(fix.fix || fix.detail || ''); // specific action for THIS CV
 
-    // Badge
-    p1.drawRectangle({ x: 24, y: y - 1, width: 15, height: 15, color: teal, borderRadius: 3 });
-    p1.drawText(String(i + 1), { x: 29, y: y + 2, size: 8, font: fontBold, color: dark });
+    // Badge — muted teal
+    p1.drawRectangle({ x: 24, y: y - 1, width: 15, height: 15, color: rgb(0.039, 0.063, 0.122), borderRadius: 3 });
+    p1.drawText(String(i + 1), { x: 29, y: y + 2, size: 8, font: fontBold, color: teal });
 
     // Title
     p1.drawText(label.substring(0, 65), { x: 46, y: y + 2, size: 9.5, font: fontBold, color: dark });
@@ -227,7 +235,7 @@ async function generatePDF({ name, firstName, email, university, score, categori
       if (y > 50) {
         const fixLabel = 'Fix: ';
         const fixLabelW = fontBold.widthOfTextAtSize(fixLabel, 8);
-        p1.drawText(fixLabel, { x: 46, y, size: 8, font: fontBold, color: teal });
+        p1.drawText(fixLabel, { x: 46, y, size: 8, font: fontBold, color: fixCol });
         const actionLines = wrapText(action, fontReg, 8, 490 - fixLabelW);
         for (let l = 0; l < Math.min(actionLines.length, 2); l++) {
           if (y < 50) break;
@@ -241,15 +249,15 @@ async function generatePDF({ name, firstName, email, university, score, categori
 
   y -= 8;
 
-  // CTA BLOCK — product language, no personal reference
-  if (y > 100) {
-    const ctaH = 58;
-    p1.drawRectangle({ x: 24, y: y - ctaH, width: W - 48, height: ctaH, color: rgb(0.039, 0.063, 0.122), borderRadius: 6 });
-    p1.drawText('Ready to fix these issues?', { x: 44, y: y - 16, size: 11, font: fontBold, color: white });
-    p1.drawText('The CyberGrad Industry-Ready System - 4 weeks, live sessions, UK Sponsorship Radar, Cohort Community.', { x: 44, y: y - 29, size: 8, font: fontReg, color: grey });
-    p1.drawText('Early bird: PS125 one-time. No subscription.', { x: 44, y: y - 41, size: 8, font: fontReg, color: grey });
-    p1.drawRectangle({ x: 44, y: y - 55, width: 150, height: 14, color: teal, borderRadius: 3 });
-    p1.drawText('cyber-grad.co.uk/checkout', { x: 50, y: y - 50, size: 8, font: fontBold, color: dark });
+  // CTA BLOCK — soft FOMO, no hard sell
+  if (y > 80) {
+    const ctaH = 62;
+    p1.drawRectangle({ x: 24, y: y - ctaH, width: W - 48, height: ctaH, color: rgb(0.06, 0.08, 0.12), borderRadius: 6 });
+    p1.drawLine({ start: { x: 24, y: y - 3 }, end: { x: 24, y: y - ctaH + 3 }, thickness: 2, color: teal });
+    p1.drawText('Most students figure this out the hard way.', { x: 40, y: y - 16, size: 10, font: fontBold, color: white });
+    p1.drawText('Months of wrong applications, no responses, no idea why. The 4-week Industry-Ready', { x: 40, y: y - 29, size: 8, font: fontReg, color: rgb(0.7, 0.72, 0.8) });
+    p1.drawText('programme exists so you don\'t have to learn it the hard way.', { x: 40, y: y - 40, size: 8, font: fontReg, color: rgb(0.7, 0.72, 0.8) });
+    p1.drawText('Explore if interested: cyber-grad.co.uk/pricing', { x: 40, y: y - 55, size: 8, font: fontReg, color: teal });
   }
 
   // ════════════════════════════════════════
@@ -272,19 +280,19 @@ async function generatePDF({ name, firstName, email, university, score, categori
   const col1X = 24, col2X = 210, col3X = 390;
   const colW = 165;
 
-  p2.drawText('WHAT IS GOOD', { x: col1X, y, size: 7.5, font: fontBold, color: green });
-  p2.drawText('WHAT IS WRONG', { x: col2X, y, size: 7.5, font: fontBold, color: red });
-  p2.drawText('HOW TO FIX IT', { x: col3X, y, size: 7.5, font: fontBold, color: blue });
+  p2.drawText('WHAT IS GOOD', { x: col1X, y, size: 7.5, font: fontBold, color: passCol });
+  p2.drawText('WHAT IS WRONG', { x: col2X, y, size: 7.5, font: fontBold, color: failCol });
+  p2.drawText('HOW TO FIX IT', { x: col3X, y, size: 7.5, font: fontBold, color: fixCol });
   y -= 8;
   p2.drawLine({ start: { x: 24, y }, end: { x: W - 24, y }, thickness: 0.3, color: lightgrey });
   y -= 10;
 
   for (const cat of (categories || [])) {
     const pct = cat.score / cat.max;
-    const catCol = pct >= 0.75 ? green : pct >= 0.5 ? amber : red;
+    const catCol = pct >= 0.75 ? passCol : pct >= 0.5 ? warnCol : failCol;
 
-    // Category label
-    p2.drawRectangle({ x: 24, y: y - 2, width: W - 48, height: 16, color: rgb(0.039, 0.063, 0.122), borderRadius: 3 });
+    // Category label — subtle dark bar
+    p2.drawRectangle({ x: 24, y: y - 2, width: W - 48, height: 16, color: rgb(0.08, 0.10, 0.14), borderRadius: 3 });
     p2.drawText(sanitiseText(cat.name), { x: 30, y: y + 2, size: 9, font: fontBold, color: white });
     p2.drawText(`${cat.score}/${cat.max}`, { x: W - 60, y: y + 2, size: 9, font: fontBold, color: catCol });
     y -= 20;
@@ -296,39 +304,39 @@ async function generatePDF({ name, firstName, email, university, score, categori
     const maxRows = Math.max(passItems.length, failItems.length, fixItems.length, 1);
     const startY = y;
 
-    // Draw each row
     for (let r = 0; r < maxRows; r++) {
       const rowY = startY - r * 22;
       if (rowY < 50) break;
 
-      // Good column
+      // Good column — muted green marker
       if (passItems[r]) {
         const title = sanitiseText(passItems[r].title || '');
-        p2.drawText('v', { x: col1X, y: rowY, size: 8, font: fontBold, color: green });
+        p2.drawText('v', { x: col1X, y: rowY, size: 8, font: fontBold, color: passCol });
         const goodLines = wrapText(title, fontReg, 7.5, colW - 10);
         for (let l = 0; l < Math.min(goodLines.length, 2); l++) {
-          p2.drawText(goodLines[l], { x: col1X + 10, y: rowY - l * 8, size: 7.5, font: fontReg, color: dark });
+          p2.drawText(goodLines[l], { x: col1X + 10, y: rowY - l * 8, size: 7.5, font: fontReg, color: textDark });
         }
       }
 
-      // Bad column
+      // Bad column — muted red marker
       if (failItems[r]) {
         const item = failItems[r];
         const badText = sanitiseText(item.desc || item.title || '');
-        p2.drawText('x', { x: col2X, y: rowY, size: 8, font: fontBold, color: item.status === 'fail' ? red : amber });
+        const badMarkerCol = item.status === 'fail' ? failCol : warnCol;
+        p2.drawText('x', { x: col2X, y: rowY, size: 8, font: fontBold, color: badMarkerCol });
         const badLines = wrapText(badText, fontReg, 7.5, colW - 10);
         for (let l = 0; l < Math.min(badLines.length, 2); l++) {
-          p2.drawText(badLines[l], { x: col2X + 10, y: rowY - l * 8, size: 7.5, font: fontReg, color: dark });
+          p2.drawText(badLines[l], { x: col2X + 10, y: rowY - l * 8, size: 7.5, font: fontReg, color: textDark });
         }
       }
 
-      // Fix column
+      // Fix column — muted blue marker
       if (fixItems[r]) {
         const fixText = sanitiseText(fixItems[r].fix || '');
-        p2.drawText('->', { x: col3X, y: rowY, size: 8, font: fontBold, color: blue });
+        p2.drawText('->', { x: col3X, y: rowY, size: 8, font: fontBold, color: fixCol });
         const fixLines = wrapText(fixText, fontReg, 7.5, colW - 12);
         for (let l = 0; l < Math.min(fixLines.length, 2); l++) {
-          p2.drawText(fixLines[l], { x: col3X + 14, y: rowY - l * 8, size: 7.5, font: fontReg, color: dark });
+          p2.drawText(fixLines[l], { x: col3X + 14, y: rowY - l * 8, size: 7.5, font: fontReg, color: textDark });
         }
       }
     }
@@ -342,15 +350,14 @@ async function generatePDF({ name, firstName, email, university, score, categori
     }
   }
 
-  // CTA at bottom of page 2
+  // Page 2 CTA
   if (y > 80) {
-    const ctaH = 52;
-    p2.drawRectangle({ x: 24, y: y - ctaH, width: W - 48, height: ctaH, color: rgb(0.039, 0.063, 0.122), borderRadius: 6 });
-    p2.drawText('The CyberGrad Industry-Ready System', { x: 44, y: y - 14, size: 10, font: fontBold, color: white });
-    p2.drawText('Practical industry knowledge beyond your degree. 4 weeks. Live sessions. UK Sponsorship Radar.', { x: 44, y: y - 27, size: 8, font: fontReg, color: grey });
-    p2.drawText('No job guarantees. No subscription. Early bird: PS125.', { x: 44, y: y - 38, size: 8, font: fontReg, color: grey });
-    p2.drawRectangle({ x: 44, y: y - 50, width: 150, height: 12, color: teal, borderRadius: 3 });
-    p2.drawText('cyber-grad.co.uk/checkout', { x: 50, y: y - 46, size: 8, font: fontBold, color: dark });
+    const ctaH = 50;
+    p2.drawRectangle({ x: 24, y: y - ctaH, width: W - 48, height: ctaH, color: rgb(0.06, 0.08, 0.12), borderRadius: 6 });
+    p2.drawLine({ start: { x: 24, y: y - 3 }, end: { x: 24, y: y - ctaH + 3 }, thickness: 2, color: teal });
+    p2.drawText('Most students figure this out the hard way.', { x: 40, y: y - 14, size: 9.5, font: fontBold, color: white });
+    p2.drawText('The Industry-Ready programme exists so you don\'t have to. Explore if interested:', { x: 40, y: y - 27, size: 8, font: fontReg, color: rgb(0.7, 0.72, 0.8) });
+    p2.drawText('cyber-grad.co.uk/pricing', { x: 40, y: y - 41, size: 8, font: fontReg, color: teal });
   }
 
   return await pdfDoc.save();
