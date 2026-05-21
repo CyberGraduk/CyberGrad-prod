@@ -1,72 +1,22 @@
-CyberGrad — V2.8 Changes
+CyberGrad — V3.0 Changes
 ========================
 Date: May 2026
 
-WHY CYBERGRAD SECTION — Full rewrite (index.html)
-- Removed Rakesh personal story card entirely
-- 4 new value-focused cards, short hooks, no fluff:
-  1. "You're applying the wrong way" — hundreds of apps, zero responses
-  2. "Security clearance will block you" — govt roles off-limits on Graduate Visa
-  3. "Wrong role, wasted months" — generic CV gets filtered
-  4. "UK interviews are not what you expect" — competency-based, nobody tells you
-- Grid updated to 4 columns, 2 columns on tablet, 1 on mobile
-- SVG icons, no emojis
+1. DUPLICATE WHY CYBERGRAD REMOVED (index.html)
+- Old section before FAQ (with "Three reasons CyberGrad exists...") removed
+- Only one Why CyberGrad section remains — the new one after Problem section
 
-FAQ — Reordered + 4 weeks answer updated (index.html)
-New order (most looked first):
-  1. Do you guarantee I'll get a job? (biggest concern)
-  2. What happens in the 4 weeks?
-  3. Who is CyberGrad for?
-  4. How many students in a cohort?
-  5. Want to know more? Book a call.
-  6. I'm still studying. Can I join?
-  7. What is the CV Scorecard and is it free?
-  8. Industry-Ready vs Elite?
-  9. What time zone?
-  10. Campus Ambassador?
-  11. Can I upgrade later?
-  12. Refund policy?
+2. AUTH CALLBACK PAGE (auth-callback.html — NEW FILE)
+- New page that handles magic link token silently
+- Shows "Signing you in..." spinner
+- Processes Supabase session
+- Redirects to clean dashboard.html with no token in URL
+- REQUIRED: Add to Supabase → Authentication → URL Configuration → Redirect URLs:
+  https://www.cyber-grad.co.uk/auth-callback.html
 
-4 weeks answer changed from detailed week-by-week to:
-"A structured 4-week agenda covering CV, LinkedIn, job search strategy,
-interview preparation, and UK industry insights. Guidance provided at
-every step. Full agenda shared after joining."
-
-ADMIN AUTH FIX (admin.html)
-- No longer immediately redirects on no session
-- Uses onAuthStateChange + 2 second fallback timeout
-- Fixes issue where navigating to admin.html after dashboard login redirected to login.html
-
-ADMIN LINK IN DASHBOARD (dashboard.html)
-- "Admin Panel" link added to sidebar
-- Only visible when logged in as rakeshelamaran98@gmail.com
-- Hidden for all other users
-
-DASHBOARD MAGIC LINK URL CLEAN (dashboard.html)
-- Uses onAuthStateChange to detect SIGNED_IN event
-- Cleans URL from /dashboard.html#access_token=... to /dashboard.html immediately
-
-PDF ENCODING FIX (api/send-report.js)
-- sanitiseText() strengthened with aggressive character replacement
-- Handles: arrows, dashes, curly quotes, ellipsis, math symbols, bullets,
-  checkmarks, non-breaking spaces, pound sign, copyright, trademark
-- Should fix "WinAnsi cannot encode" crash
-
-VERSION TAG
-- v2.8 is live in index.html footer
+3. VERSION TAG
+- v3.0 is live in index.html footer
 
 FILES CHANGED
-- index.html (Why CyberGrad rewrite, FAQ reorder, version tag)
-- admin.html (auth fix)
-- dashboard.html (admin link, URL clean)
-- api/send-report.js (encoding fix)
-
-SUPABASE ACTION REQUIRED
-Create waitlist table for Elite interest signups:
-  create table waitlist (
-    id uuid default gen_random_uuid() primary key,
-    name text not null,
-    email text not null,
-    plan text default 'elite',
-    created_at timestamptz default now()
-  );
+- index.html (duplicate section removed, version tag)
+- auth-callback.html (NEW)

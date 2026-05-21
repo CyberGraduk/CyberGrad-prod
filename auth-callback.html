@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberGrad — Signing you in...</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#060B16;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Plus Jakarta Sans',sans-serif}
+.wrap{text-align:center}
+.logo{width:44px;height:44px;background:#00C896;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:800;color:#060B16}
+.msg{font-size:15px;color:#8896B3}
+.spinner{width:20px;height:20px;border:2px solid #131D30;border-top-color:#00C896;border-radius:50%;animation:spin .7s linear infinite;margin:16px auto 0}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">CG</div>
+  <div class="msg">Signing you in...</div>
+  <div class="spinner"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient(
+  'https://oglsolxcvchgmjcprrwa.supabase.co',
+  'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE'
+);
+
+// Process the token from the hash, then redirect cleanly
+async function processAuth() {
+  try {
+    // getSession processes the hash token automatically
+    const { data, error } = await sb.auth.getSession();
+    if (data?.session) {
+      // Clean redirect — no hash, no token
+      window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
+    } else {
+      // No session — try exchangeCodeForSession for PKCE flow
+      const hash = window.location.hash;
+      if (hash) {
+        // Wait for onAuthStateChange to fire
+        sb.auth.onAuthStateChange((event, session) => {
+          if (session) {
+            window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
+          }
+        });
+        // Fallback after 3 seconds
+        setTimeout(() => {
+          window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
+        }, 3000);
+      } else {
+        window.location.replace('https://www.cyber-grad.co.uk/login.html');
+      }
+    }
+  } catch(e) {
+    window.location.replace('https://www.cyber-grad.co.uk/login.html');
+  }
+}
+
+processAuth();
+</script>
+</body>
+</html>

@@ -217,37 +217,45 @@ document.addEventListener("DOMContentLoaded",initDropdowns);
 
 // Gate — content hidden by CSS (opacity:0), only revealed after session confirmed
 var mainEl = document.querySelector('main');
-var gateShown = false;
+var contentShown = false;
 
-function handleSession(session) {
-  if (gateShown) return; // prevent double-render
-  gateShown = true;
-  if (session) {
-    mainEl.style.opacity = '1';
-  } else {
-    mainEl.innerHTML = '<div style="text-align:center;padding:100px 24px;max-width:480px;margin:0 auto">'
-      + '<div style="width:64px;height:64px;background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">'
-      + '<svg width="28" height="28" fill="none" stroke="#00C896" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>'
-      + '<h2 style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.8px;margin-bottom:12px;color:#F0F6FF">Free with a CyberGrad account.</h2>'
-      + '<p style="font-size:15px;color:#8896B3;line-height:1.7;margin-bottom:28px">Create a free account to access Sectors & Domains, Roles to Apply, and the CV Scorecard. No payment needed.</p>'
-      + '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'
-      + '<a href="signup.html" style="display:inline-flex;align-items:center;gap:8px;background:#00C896;color:#060B16;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:700;text-decoration:none">Create free account</a>'
-      + '<a href="login.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid #131D30;color:#8896B3;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:600;text-decoration:none">Log in</a>'
-      + '</div></div>';
-    mainEl.style.opacity = '1';
-  }
+function showContent() {
+  if (contentShown) return;
+  contentShown = true;
+  mainEl.style.opacity = '1';
 }
 
-// Check session immediately
-sb.auth.getSession().then(function(res) {
-  handleSession(res.data.session);
+function showGate() {
+  if (contentShown) return;
+  contentShown = true;
+  mainEl.innerHTML = '<div style="text-align:center;padding:100px 24px;max-width:480px;margin:0 auto">'
+    + '<div style="width:64px;height:64px;background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">'
+    + '<svg width="28" height="28" fill="none" stroke="#00C896" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>'
+    + '<h2 style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.8px;margin-bottom:12px;color:#F0F6FF">Free with a CyberGrad account.</h2>'
+    + '<p style="font-size:15px;color:#8896B3;line-height:1.7;margin-bottom:28px">Create a free account to access Sectors & Domains, Roles to Apply, and the CV Scorecard. No payment needed.</p>'
+    + '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'
+    + '<a href="signup.html" style="display:inline-flex;align-items:center;gap:8px;background:#00C896;color:#060B16;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:700;text-decoration:none">Create free account</a>'
+    + '<a href="login.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid #131D30;color:#8896B3;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:600;text-decoration:none">Log in</a>'
+    + '</div></div>';
+  mainEl.style.opacity = '1';
+}
+
+// onAuthStateChange fires reliably — use this as primary check
+sb.auth.onAuthStateChange(function(event, session) {
+  if (session) {
+    showContent();
+  }
 });
 
-// Also listen for auth state changes (handles magic link redirect)
-sb.auth.onAuthStateChange(function(event, session) {
-  if (event === 'SIGNED_IN') {
-    gateShown = false; // allow re-render on sign in
-    handleSession(session);
+// Also try getSession — if session already in localStorage this resolves instantly
+sb.auth.getSession().then(function(res) {
+  if (res.data.session) {
+    showContent();
+  } else {
+    // Wait 1.5s for onAuthStateChange to fire before showing gate
+    setTimeout(function() {
+      if (!contentShown) showGate();
+    }, 1500);
   }
 });
 </script>

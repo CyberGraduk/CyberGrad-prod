@@ -286,6 +286,12 @@ const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// ── CLEAN URL IMMEDIATELY ──
+// Remove access_token hash before anything else loads
+if (window.location.hash && window.location.hash.includes('access_token')) {
+  window.history.replaceState(null, '', window.location.pathname);
+}
+
 async function handleAuth() {
   setLoading(true);
   try {
