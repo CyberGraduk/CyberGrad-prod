@@ -1012,18 +1012,24 @@ function renderResults(r){
 
 // Auto-unlock for logged-in users — skip gate entirely
 async function autoUnlockForLoggedInUser(cvText){
-  // Hide gate card
+  // Hide gate card — show score saved confirmation
   const gateCard=document.getElementById('gate-card');
   if(gateCard){
     gateCard.innerHTML=`<div style="text-align:center;padding:20px 0">
-      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;padding:10px 18px;font-size:13px;color:var(--teal);font-weight:600">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;padding:10px 18px;font-size:13px;color:var(--teal);font-weight:600;margin-bottom:12px">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-        Sending your PDF report to ${userData.email}...
+        Score saved to your dashboard
+      </div>
+      <div>
+        <button onclick="sendPDFReport()" id="send-pdf-btn" style="display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);color:var(--text-2);padding:10px 18px;border-radius:8px;font-family:var(--font-b);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--teal-b)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-2)'">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Send PDF report to ${userData.email}
+        </button>
       </div>
     </div>`;
   }
 
-  // Show full report
+  // Show full report immediately
   renderFullReport(cvResults,userData);
   runAiAnalysis(cvText,cvResults.total);
   document.getElementById('full-report').style.display='block';
@@ -1033,16 +1039,20 @@ async function autoUnlockForLoggedInUser(cvText){
     await sb.from('students').upsert({email:userData.email,cv_score:cvResults.total},{onConflict:'email'});
     localStorage.setItem('cg_cv_score',cvResults.total);
   }catch(e){}
+}
 
-  // Send PDF email automatically
+// Send PDF on button click
+async function sendPDFReport(){
+  const btn=document.getElementById('send-pdf-btn');
+  if(btn){btn.textContent='Sending...';btn.disabled=true;}
   try{
     const allFails=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
     const allWarns=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='warn'&&i.fix));
     const priorities=[...allFails,...allWarns].slice(0,6);
     const band=getBand(cvResults.total).label;
-    const name=userData.name.trim()||userData.email.split('@')[0];
+    const name=userData.name?.trim()||userData.email.split('@')[0];
 
-    await fetch('/api/send-report',{
+    const res=await fetch('/api/send-report',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -1055,17 +1065,15 @@ async function autoUnlockForLoggedInUser(cvText){
         priorities
       })
     });
-
-    // Update gate card message to confirmed
-    if(gateCard){
-      gateCard.innerHTML=`<div style="text-align:center;padding:16px 0">
-        <div style="display:inline-flex;align-items:center;gap:8px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;padding:10px 18px;font-size:13px;color:var(--teal);font-weight:600">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-          PDF report sent to ${userData.email}
-        </div>
-      </div>`;
+    if(btn){
+      btn.innerHTML='<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Sent to '+userData.email;
+      btn.style.color='var(--teal)';
+      btn.style.borderColor='var(--teal-b)';
     }
-  }catch(err){console.error('Auto PDF send failed:',err);}
+  }catch(err){
+    if(btn){btn.textContent='Failed — try again';btn.disabled=false;}
+    console.error('PDF send failed:',err);
+  }
 }
 
 async function unlockReport(e){

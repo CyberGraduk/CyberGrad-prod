@@ -31,28 +31,43 @@ const sb = supabase.createClient(
 // Process the token from the hash, then redirect cleanly
 async function processAuth() {
   try {
-    // getSession processes the hash token automatically
     const { data, error } = await sb.auth.getSession();
     if (data?.session) {
-      // Clean redirect — no hash, no token
-      window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
-    } else {
-      // No session — try exchangeCodeForSession for PKCE flow
-      const hash = window.location.hash;
-      if (hash) {
-        // Wait for onAuthStateChange to fire
-        sb.auth.onAuthStateChange((event, session) => {
-          if (session) {
-            window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
-          }
-        });
-        // Fallback after 3 seconds
-        setTimeout(() => {
-          window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
-        }, 3000);
+      // Check if student record exists in DB
+      const { data: student } = await sb
+        .from('students')
+        .select('email, first_name')
+        .eq('email', data.session.user.email)
+        .single();
+
+      if (student && student.first_name) {
+        // Existing student — go to dashboard
+        window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
       } else {
-        window.location.replace('https://www.cyber-grad.co.uk/login.html');
+        // No profile — redirect to signup to complete
+        window.location.replace('https://www.cyber-grad.co.uk/signup.html?complete=1');
       }
+    } else {
+      // No session yet — wait for onAuthStateChange
+      sb.auth.onAuthStateChange(async (event, session) => {
+        if (session) {
+          const { data: student } = await sb
+            .from('students')
+            .select('email, first_name')
+            .eq('email', session.user.email)
+            .single();
+
+          if (student && student.first_name) {
+            window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
+          } else {
+            window.location.replace('https://www.cyber-grad.co.uk/signup.html?complete=1');
+          }
+        }
+      });
+      // Fallback after 3 seconds
+      setTimeout(() => {
+        window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
+      }, 3000);
     }
   } catch(e) {
     window.location.replace('https://www.cyber-grad.co.uk/login.html');
