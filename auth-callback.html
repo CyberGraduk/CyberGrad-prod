@@ -33,35 +33,14 @@ async function processAuth() {
   try {
     const { data, error } = await sb.auth.getSession();
     if (data?.session) {
-      // Check if student record exists in DB
-      const { data: student } = await sb
-        .from('students')
-        .select('email, first_name')
-        .eq('email', data.session.user.email)
-        .single();
-
-      if (student && student.first_name) {
-        // Existing student — go to dashboard
-        window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
-      } else {
-        // No profile — redirect to signup to complete
-        window.location.replace('https://www.cyber-grad.co.uk/signup.html?complete=1');
-      }
+      // Session confirmed — always go to dashboard
+      // Dashboard handles incomplete profiles separately
+      window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
     } else {
       // No session yet — wait for onAuthStateChange
-      sb.auth.onAuthStateChange(async (event, session) => {
+      sb.auth.onAuthStateChange((event, session) => {
         if (session) {
-          const { data: student } = await sb
-            .from('students')
-            .select('email, first_name')
-            .eq('email', session.user.email)
-            .single();
-
-          if (student && student.first_name) {
-            window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
-          } else {
-            window.location.replace('https://www.cyber-grad.co.uk/signup.html?complete=1');
-          }
+          window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
         }
       });
       // Fallback after 3 seconds
