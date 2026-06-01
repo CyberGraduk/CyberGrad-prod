@@ -960,6 +960,22 @@ function catColour(s,m){const p=s/m;return p>=0.75?'#1A9E75':p>=0.5?'#D97706':'#
 function updateWordCount(ta){const w=ta.value.trim().split(/\s+/).filter(x=>x.length>0).length;document.getElementById('word-count').textContent=w;document.getElementById('btn-analyse').disabled=w<50;}
 
 let cvResults=null,userData=null;
+let loggedInUser=null; // store session user if logged in
+
+// Check if user is already logged in — if so, skip gate
+sb.auth.getSession().then(({data:{session}})=>{
+  if(session?.user){
+    loggedInUser=session.user;
+    const meta=session.user.user_metadata||{};
+    // Pre-fill userData from their account
+    userData={
+      name:(meta.first_name||'')+' '+(meta.last_name||''),
+      email:session.user.email,
+      status:meta.status||'',
+      uni:meta.university||''
+    };
+  }
+});
 
 async function runAnalysis(){
   const cvText=document.getElementById('cv-input').value.trim();
@@ -974,6 +990,11 @@ async function runAnalysis(){
   document.getElementById('step-results').style.display='block';
   renderResults(cvResults);
   setTimeout(()=>document.getElementById('step-results').scrollIntoView({behavior:'smooth',block:'start'}),100);
+
+  // If logged in — skip gate, show full report + send PDF automatically
+  if(loggedInUser && userData?.email){
+    setTimeout(()=>autoUnlockForLoggedInUser(cvText),800);
+  }
 }
 
 function renderResults(r){
@@ -987,6 +1008,64 @@ function renderResults(r){
   setTimeout(()=>{let c=0;const iv=setInterval(()=>{c=Math.min(c+2,r.total);document.getElementById('score-num').textContent=c;arc.style.strokeDashoffset=302-(302*c/100);if(c>=r.total)clearInterval(iv);},20);},200);
   document.getElementById('preview-grid').innerHTML=r.categories.map(cat=>{const pct=Math.round(cat.score/cat.max*100);const col=catColour(cat.score,cat.max);return`<div class="preview-cat"><div class="preview-cat-name">${cat.name}</div><div class="preview-score-row"><span class="preview-score" style="color:${col}">${cat.score}</span><span class="preview-max">/${cat.max}</span></div><div class="preview-bar"><div class="preview-fill" style="background:${col}" data-w="${pct}"></div></div></div>`;}).join('');
   setTimeout(()=>document.querySelectorAll('.preview-fill').forEach(b=>b.style.width=b.dataset.w+'%'),300);
+}
+
+// Auto-unlock for logged-in users — skip gate entirely
+async function autoUnlockForLoggedInUser(cvText){
+  // Hide gate card
+  const gateCard=document.getElementById('gate-card');
+  if(gateCard){
+    gateCard.innerHTML=`<div style="text-align:center;padding:20px 0">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;padding:10px 18px;font-size:13px;color:var(--teal);font-weight:600">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        Sending your PDF report to ${userData.email}...
+      </div>
+    </div>`;
+  }
+
+  // Show full report
+  renderFullReport(cvResults,userData);
+  runAiAnalysis(cvText,cvResults.total);
+  document.getElementById('full-report').style.display='block';
+
+  // Save score to Supabase
+  try{
+    await sb.from('students').upsert({email:userData.email,cv_score:cvResults.total},{onConflict:'email'});
+    localStorage.setItem('cg_cv_score',cvResults.total);
+  }catch(e){}
+
+  // Send PDF email automatically
+  try{
+    const allFails=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='fail'&&i.fix));
+    const allWarns=cvResults.categories.flatMap(c=>c.items.filter(i=>i.status==='warn'&&i.fix));
+    const priorities=[...allFails,...allWarns].slice(0,6);
+    const band=getBand(cvResults.total).label;
+    const name=userData.name.trim()||userData.email.split('@')[0];
+
+    await fetch('/api/send-report',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name,email:userData.email,university:userData.uni,status:userData.status,
+        role:selectedRole,score:cvResults.total,band,
+        categories:cvResults.categories.map(c=>({
+          name:c.name,score:c.score,max:c.max,
+          items:c.items.map(i=>({status:i.status,title:i.title,desc:i.desc,fix:i.fix}))
+        })),
+        priorities
+      })
+    });
+
+    // Update gate card message to confirmed
+    if(gateCard){
+      gateCard.innerHTML=`<div style="text-align:center;padding:16px 0">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;padding:10px 18px;font-size:13px;color:var(--teal);font-weight:600">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          PDF report sent to ${userData.email}
+        </div>
+      </div>`;
+    }
+  }catch(err){console.error('Auto PDF send failed:',err);}
 }
 
 async function unlockReport(e){

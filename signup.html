@@ -324,7 +324,7 @@ async function handleSignup(e) {
     const { error: authError } = await sb.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: 'https://www.cyber-grad.co.uk/auth-callback.html',
+        emailRedirectTo: 'https://www.cyber-grad.co.uk/dashboard.html',
         data: { first_name: fname, last_name: lname, university: uni, status }
       }
     });

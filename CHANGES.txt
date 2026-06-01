@@ -1,22 +1,30 @@
-CyberGrad — V3.0 Changes
+CyberGrad — V3.1 Changes
 ========================
-Date: May 2026
+Date: May/June 2026
 
-1. DUPLICATE WHY CYBERGRAD REMOVED (index.html)
-- Old section before FAQ (with "Three reasons CyberGrad exists...") removed
-- Only one Why CyberGrad section remains — the new one after Problem section
+1. HOW IT WORKS — Updated 4 steps (index.html)
+   01: Book a 1-1 Session — Ask your questions, get it cleared
+   02: Choose your Plan — Industry-Ready £125 early bird
+   03: Join your Cohort — 20 students, 4 weeks
+   04: Get Industry-Ready — CV, LinkedIn, applications, interviews
 
-2. AUTH CALLBACK PAGE (auth-callback.html — NEW FILE)
-- New page that handles magic link token silently
-- Shows "Signing you in..." spinner
-- Processes Supabase session
-- Redirects to clean dashboard.html with no token in URL
-- REQUIRED: Add to Supabase → Authentication → URL Configuration → Redirect URLs:
-  https://www.cyber-grad.co.uk/auth-callback.html
+2. CV CHECKER — Logged-in users skip gate (cv-checker.html)
+   - On page load: checks if user has active Supabase session
+   - If logged in: after analysis, gate is bypassed entirely
+   - Full report shown on screen automatically
+   - PDF sent automatically to their registered email
+   - CV score saved to Supabase students table
+   - Gate card replaced with "PDF report sent to [email]" confirmation
+   - If not logged in: normal gate flow unchanged
 
-3. VERSION TAG
-- v3.0 is live in index.html footer
+3. DASHBOARD — Re-check button (dashboard.html)
+   - "Re-check my CV" button with SVG icon when score exists
+   - Links to cv-checker.html — no gate since they're logged in
+
+VERSION TAG
+- v3.1 is live in index.html footer
 
 FILES CHANGED
-- index.html (duplicate section removed, version tag)
-- auth-callback.html (NEW)
+- index.html (how it works, version tag)
+- cv-checker.html (logged-in bypass, auto PDF send)
+- dashboard.html (re-check button)

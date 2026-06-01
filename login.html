@@ -98,7 +98,7 @@ async function handleLogin(e) {
   try {
     const { error } = await sb.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: 'https://www.cyber-grad.co.uk/auth-callback.html' }
+      options: { emailRedirectTo: 'https://www.cyber-grad.co.uk/dashboard.html' }
     });
     if (error) throw error;
     document.getElementById('sent-email').textContent = email;
