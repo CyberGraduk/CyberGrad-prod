@@ -1,51 +1,53 @@
-CyberGrad — V3.2 Changes
+CyberGrad — V3.3 Changes
 ========================
 Date: June 2026
 
-1. PROBLEM SECTION (index.html)
-   "Your MSc gave you technical skills" → "Your academics gave you technical skills"
+1. DASHBOARD — First name greeting
+   Already pulling firstName from session/Supabase correctly
+   "Hello, [name]." works when session has user_metadata.first_name
 
-2. INDUSTRY-READY PRICING (index.html)
-   Added "Personalised 1-1 Roadmap" as first feature in both short and full lists
-   Added "And much more." at end of full list
+2. CV CHECKER — PDF button fixed
+   Button label: "Send PDF to my email" (no email shown)
+   sendPDFReport() always fetches fresh session email — never uses cached
+   Fixes bug where user X sees user Y's email on button
 
-3. LOGO (all pages)
-   logo.png integrated into all navbar nav-logo areas
-   Replaces CG badge + text with actual logo image
+3. CV CHECKER — What next prompt
+   After non-logged-in user gets report, shows:
+   "Create a free account to save your score, access Sectors & Domains..."
+   + "Create free account →" button
 
-4. LINKEDIN (all page footers)
-   https://www.linkedin.com/company/cybergrad/ added to footer
+4. LINKEDIN FOOTER — Fixed properly
+   LinkedIn SVG icon + text link in footer across all pages
+   Correct URL: https://www.linkedin.com/company/cybergrad/
 
-5. emailRedirectTo FIXED (login.html + signup.html)
-   Both now point to auth-callback.html — NOT dashboard.html
+5. ABOUT PAGE — "Built by Rakesh Elamaran" removed from footer
 
-6. AUTH CALLBACK (auth-callback.html)
-   Now checks if student record exists in Supabase students table
-   If student record exists with first_name → dashboard.html
-   If no record → signup.html?complete=1 to complete profile
-   Prevents bare auth users landing on dashboard with no data
+6. CHECKOUT — £129 → £125 in plan price display
 
-7. CV CHECKER — PDF BUTTON (cv-checker.html)
-   Removed automatic PDF send for logged-in users
-   Replaced with "Send PDF report to [email]" button
-   Student clicks when ready — not automatic
-   Score still saved to Supabase and localStorage automatically
-   Full report still shown on screen automatically
+7. SUCCESS.HTML — "Foundation plan" → "Industry-Ready plan"
 
-VERSION TAG
-- v3.2 is live in index.html footer
+8. SECTORS + ROLES — Back to Dashboard button in nav
+
+9. FAQ — "What happens after 4 weeks?" added to index.html
+   "The programme ends, the community does not. One payment, permanent access."
+
+10. PRICING PAGE — Full FAQ section added (synced with index.html)
+    8 questions matching index FAQ
+
+11. emailRedirectTo — Fixed in login.html + signup.html → auth-callback.html
+
+VERSION TAG — v3.3 is live
 
 FILES CHANGED
-- index.html (problem line, pricing, logo, LinkedIn, version)
-- auth-callback.html (student record check)
-- cv-checker.html (PDF button instead of auto-send)
-- login.html (emailRedirectTo fix, logo)
-- signup.html (emailRedirectTo fix, logo)
-- pricing.html (logo, LinkedIn)
-- about.html (logo, LinkedIn)
-- sectors.html (logo, LinkedIn)
-- roles.html (logo, LinkedIn)
-- checkout.html (logo, LinkedIn)
-- success.html (logo, LinkedIn)
-- dashboard.html (logo)
-- logo.png (NEW — CyberGrad logo image)
+- cv-checker.html (PDF button, what next prompt)
+- index.html (LinkedIn footer, FAQ addition, version tag)
+- dashboard.html (admin link)
+- pricing.html (FAQ section added)
+- about.html (Built by removed)
+- checkout.html (£129 → £125)
+- success.html (Foundation → Industry-Ready)
+- sectors.html (back button)
+- roles.html (back button)
+- login.html (emailRedirectTo)
+- signup.html (emailRedirectTo)
+- All pages (LinkedIn footer)

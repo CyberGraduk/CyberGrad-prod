@@ -291,6 +291,36 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
 </div>
 -->
 
+<section style="max-width:720px;margin:0 auto;padding:60px 5% 80px">
+  <div style="text-align:center;margin-bottom:40px">
+    <div style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:12px">FAQ</div>
+    <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.8px">Common questions.</h2>
+  </div>
+  <div id="pr-faq-list">
+    <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">Do you guarantee I'll get a job?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>No, and we won't pretend otherwise. CyberGrad is practical industry knowledge beyond your degree, not a placement service. Anyone promising job guarantees is lying to you.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">What happens in the 4 weeks?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>A structured 4-week agenda covering CV, LinkedIn, job search strategy, interview preparation, and UK industry insights. Full agenda shared after joining.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">What happens after the 4 weeks?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>The programme ends, the community does not. One payment, permanent access. Keep asking questions, support others, stay connected.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">How many students are in a cohort?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>20 students maximum per cohort. Quality over volume. Once 20 is full, it is full.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">I'm still studying. Can I join?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>Yes, and honestly the earlier the better. The free CV Scorecard is available to everyone immediately.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">What's the difference between Industry-Ready and Elite?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>Industry-Ready gives you the group sessions, resources, and community. Elite adds 1-to-1 CV review, LinkedIn review, mock interview, and job application strategy. Elite is coming soon.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">Can I upgrade from Industry-Ready to Elite later?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>Yes. Email cybergraduk@gmail.com and we'll sort it, cohort availability permitting.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">Is there a refund policy?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>If you have a genuine concern after joining, email cybergraduk@gmail.com directly and we'll talk.</p></div></div>
+  </div>
+</section>
+
+<style>
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;background:none;border:none;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;text-align:left}
+.faq-icon{width:18px;height:18px;flex-shrink:0;color:var(--text-3);transition:transform .25s}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .3s ease,padding-bottom .3s}
+.faq-body p{font-size:14px;color:var(--text-2);line-height:1.75;padding-bottom:18px}
+.faq-item.open .faq-icon{transform:rotate(180deg)}
+.faq-item.open .faq-body{max-height:200px}
+</style>
+<script>
+function toggleFaq(btn){const item=btn.parentElement;item.classList.toggle('open');}
+</script>
+
 <footer>
   <span>© 2026 CyberGrad</span>
   <span style="font-style:italic">"Guidance, not guarantees."</span>
