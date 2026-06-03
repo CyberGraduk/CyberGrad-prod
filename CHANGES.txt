@@ -1,34 +1,33 @@
-CyberGrad — V3.4 Changes
+CyberGrad — V3.5 Changes
 ========================
 Date: June 2026
 
-1. AUTH FLOW — Enterprise grade login validation
-   login.html: Before sending magic link, checks students table
-   If email not found → "No account found. Create one first." error shown
-   Signup link shown below error
-   No magic link sent to unregistered emails
-   
-2. AUTH CALLBACK — Profile completeness check
-   After magic link verified, checks students table for first_name
-   If complete profile → dashboard.html
-   If incomplete/missing → signup.html?complete=1
-   
-3. SIGNUP — Complete profile mode (?complete=1)
-   Detected via URL param after magic link for incomplete profiles
-   Email field hidden (pre-filled from session)
-   Heading changes to "Complete your profile"
-   On submit → saves name to students table + user_metadata
-   
-4. LINKEDIN FOOTER — Fixed across all pages
-   All pages now point to: https://www.linkedin.com/company/cybergrad/
-   Fixed generic linkedin.com links
-   Contact section in footer also fixed
+1. DASHBOARD — Name fix
+   Always queries students table first for first_name
+   Falls back to user_metadata if students table blocked
+   If still no name — shows inline banner with first + last name inputs
+   Banner inserts after topbar, visible immediately
+   Save button updates students table + user_metadata
+   Banner disappears after save
 
-VERSION TAG — v3.4 is live
+2. DASHBOARD — Logout fixed
+   Was redirecting to index.html
+   Now redirects to login.html
+
+3. LOGIN — Cross-tab magic link detection
+   onAuthStateChange listener added
+   If user clicks magic link in another tab, login page auto-redirects to dashboard
+   No more stuck "Check your inbox" screen
+
+4. SUPABASE ACTION REQUIRED
+   Run this to allow login page to check if email exists:
+   create policy "Anyone can check if email exists"
+     on students for select
+     using (true);
+
+VERSION TAG — v3.5 is live
 
 FILES CHANGED
-- login.html (email pre-check, error message, signup link)
-- auth-callback.html (profile check, handleSession function)
-- signup.html (complete=1 mode detection)
-- All pages (LinkedIn URL fixed)
+- dashboard.html (name fix, logout fix, cross-tab detection)
+- login.html (cross-tab detection)
 - index.html (version tag)

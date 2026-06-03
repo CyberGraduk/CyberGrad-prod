@@ -292,6 +292,39 @@ if (window.location.hash && window.location.hash.includes('access_token')) {
   window.history.replaceState(null, '', window.location.pathname);
 }
 
+function showCompleteProfileBanner(email) {
+  if (document.getElementById('complete-profile-banner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'complete-profile-banner';
+  banner.style.cssText = 'background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:14px 20px;margin:0 0 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap';
+  banner.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="18" height="18" fill="none" stroke="#00C896" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span style="font-size:13px;color:var(--text-2)">Add your name to personalise your dashboard.</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <input type="text" id="inline-name" placeholder="Your first name" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:8px 12px;outline:none;width:160px">
+      <button onclick="saveInlineName('${email}')" style="background:var(--teal);color:#060B16;border:none;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap">Save</button>
+    </div>`;
+  const main = document.querySelector('.dash-content') || document.querySelector('.main-content') || document.getElementById('dash-main');
+  if (main) main.insertAdjacentElement('afterbegin', banner);
+}
+
+async function saveInlineName(email) {
+  const nameInput = document.getElementById('inline-name');
+  const firstName = nameInput?.value?.trim();
+  if (!firstName) { nameInput.style.borderColor = 'rgba(220,38,38,.5)'; return; }
+  try {
+    await sb.from('students').upsert({ email, first_name: firstName }, { onConflict: 'email' });
+    await sb.auth.updateUser({ data: { first_name: firstName } });
+    document.getElementById('topbar-name').textContent = firstName;
+    const av = document.getElementById('user-av');
+    if (av) av.textContent = firstName[0].toUpperCase();
+    const banner = document.getElementById('complete-profile-banner');
+    if (banner) banner.remove();
+  } catch(e) { console.error('Save name failed:', e); }
+}
+
 async function handleAuth() {
   setLoading(true);
   try {
@@ -332,7 +365,7 @@ async function loadUser(user) {
   if (!firstName) {
     const { data } = await sb.from('students').select('first_name,last_name,cv_score').eq('email', user.email).single();
     if (data) {
-      firstName = data.first_name || user.email.split('@')[0];
+      firstName = data.first_name || '';
       fullName = (data.first_name + ' ' + (data.last_name || '')).trim();
       if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
     }
@@ -340,7 +373,13 @@ async function loadUser(user) {
     fullName = (meta.first_name + ' ' + (meta.last_name || '')).trim();
   }
 
-  if (!firstName) firstName = user.email.split('@')[0];
+  // If still no name — show complete profile banner
+  if (!firstName) {
+    showCompleteProfileBanner(user.email);
+    firstName = user.email.split('@')[0];
+    fullName = firstName;
+  }
+
   if (!fullName) fullName = firstName;
 
   document.getElementById('topbar-name').textContent = firstName;
@@ -368,6 +407,117 @@ async function loadUser(user) {
   setLoading(false);
 }
 
+async function loadUser(user) {
+  const meta = user.user_metadata || {};
+  let firstName = meta.first_name || '';
+  let lastName = meta.last_name || '';
+  let fullName = '';
+
+  // Always try students table regardless of metadata
+  try {
+    const { data } = await sb
+      .from('students')
+      .select('first_name, last_name, cv_score')
+      .eq('email', user.email)
+      .single();
+
+    if (data?.first_name) {
+      firstName = data.first_name;
+      lastName = data.last_name || '';
+      fullName = (firstName + ' ' + lastName).trim();
+      if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
+    }
+  } catch(e) {
+    // RLS or network error — fall back to metadata
+    if (meta.first_name) {
+      firstName = meta.first_name;
+      lastName = meta.last_name || '';
+      fullName = (firstName + ' ' + lastName).trim();
+    }
+  }
+
+  // Still no name — show inline banner to collect it
+  if (!firstName) {
+    firstName = '';
+    showCompleteProfileBanner(user.email);
+  }
+
+  if (!fullName) fullName = firstName || 'Student';
+
+  document.getElementById('topbar-name').textContent = firstName || 'there';
+  document.getElementById('user-name').textContent = fullName || 'Student';
+  document.getElementById('user-av').textContent = (firstName || 'S')[0].toUpperCase();
+
+  // Admin link
+  if (user.email === 'rakeshelamaran98@gmail.com') {
+    const adminLink = document.getElementById('admin-nav-link');
+    if (adminLink) adminLink.style.display = 'flex';
+  }
+
+  // CV Score
+  const cvScore = localStorage.getItem('cg_cv_score');
+  if (cvScore) {
+    const score = parseInt(cvScore);
+    const col = score >= 80 ? '#00C896' : score >= 60 ? '#3b82f6' : score >= 40 ? '#d97706' : '#dc2626';
+    document.getElementById('cv-score-content').innerHTML = `
+      <div class="cv-score-big" style="color:${col}">${score}</div>
+      <div class="cv-score-sub">out of 100</div>
+      <div class="cv-bar"><div class="cv-fill" style="width:0%;background:${col}" id="cv-fill-bar"></div></div>
+      <a href="cv-checker.html" class="btn-check" style="margin-top:12px">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        Re-check my CV
+      </a>`;
+    setTimeout(() => { const b = document.getElementById('cv-fill-bar'); if(b) b.style.width = score + '%'; }, 300);
+  }
+
+  setLoading(false);
+}
+
+function showCompleteProfileBanner(email) {
+  if (document.getElementById('complete-profile-banner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'complete-profile-banner';
+  banner.style.cssText = 'background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap';
+  banner.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="16" height="16" fill="none" stroke="#00C896" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span style="font-size:13px;color:var(--text-2)">Add your name to personalise your dashboard.</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <input type="text" id="inline-fname" placeholder="First name" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:8px 12px;outline:none;width:130px">
+      <input type="text" id="inline-lname" placeholder="Last name" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:8px 12px;outline:none;width:130px">
+      <button onclick="saveInlineName('${email}')" style="background:var(--teal);color:#060B16;border:none;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap">Save</button>
+    </div>`;
+  // Insert at top of main content area
+  const topbar = document.querySelector('.topbar');
+  if (topbar) topbar.insertAdjacentElement('afterend', banner);
+}
+
+async function saveInlineName(email) {
+  const fname = document.getElementById('inline-fname')?.value?.trim();
+  const lname = document.getElementById('inline-lname')?.value?.trim() || '';
+  if (!fname) {
+    const el = document.getElementById('inline-fname');
+    if (el) el.style.borderColor = 'rgba(220,38,38,.5)';
+    return;
+  }
+  try {
+    await sb.from('students').upsert(
+      { email, first_name: fname, last_name: lname },
+      { onConflict: 'email' }
+    );
+    await sb.auth.updateUser({ data: { first_name: fname, last_name: lname } });
+    document.getElementById('topbar-name').textContent = fname;
+    document.getElementById('user-name').textContent = (fname + ' ' + lname).trim();
+    const av = document.getElementById('user-av');
+    if (av) av.textContent = fname[0].toUpperCase();
+    const banner = document.getElementById('complete-profile-banner');
+    if (banner) banner.remove();
+  } catch(e) {
+    console.error('Save name failed:', e);
+  }
+}
+
 function setLoading(on) {
   const m = document.querySelector('.main');
   if (m) { m.style.opacity = on ? '0' : '1'; m.style.transition = 'opacity 0.3s ease'; }
@@ -375,10 +525,18 @@ function setLoading(on) {
 
 async function logout() {
   await sb.auth.signOut();
-  localStorage.removeItem('cg_user');
   localStorage.removeItem('cg_cv_score');
-  window.location.href = 'index.html';
+  localStorage.removeItem('cg_user');
+  window.location.href = 'login.html';
 }
+
+// Cross-tab magic link detection
+// If user clicks magic link in another tab, this tab redirects automatically
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN' && session && window.location.pathname.includes('login')) {
+    window.location.href = 'dashboard.html';
+  }
+});
 
 window.addEventListener('DOMContentLoaded', handleAuth);
 </script>
