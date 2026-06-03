@@ -148,7 +148,8 @@ function resend() {
   setTimeout(() => btn.textContent = 'Resend link', 3000);
 }
 
-// Cross-tab detection — if magic link clicked in another tab, redirect this tab
+// Cross-tab detection — only redirect on fresh SIGNED_IN event
+// NOT on existing session (allows switching users after logout)
 sb.auth.onAuthStateChange((event, session) => {
   if (event === 'SIGNED_IN' && session) {
     window.location.href = 'https://www.cyber-grad.co.uk/dashboard.html';

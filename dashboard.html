@@ -193,10 +193,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
           <div class="lock-icon">
             <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
-          <h3>Unlock with Foundation</h3>
-          <p>CV template, LinkedIn checklist, job search strategy guide, interview questions pack — all included in Foundation (£129).</p>
+          <h3>Unlock with Industry-Ready</h3>
           <a href="checkout.html" class="btn-unlock">
-            Upgrade to Industry-Ready — £129
+            Upgrade to Industry-Ready — £125
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -219,7 +218,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
               <span class="upgrade-item">UK resources</span>
             </div>
           </div>
-          <a href="checkout.html" class="btn-upgrade">Get Industry-Ready — £129 →</a>
+          <a href="checkout.html" class="btn-upgrade">Get Industry-Ready — £125 →</a>
         </div>
       </div>
 
@@ -409,36 +408,49 @@ async function loadUser(user) {
 
 async function loadUser(user) {
   const meta = user.user_metadata || {};
-  let firstName = meta.first_name || '';
-  let lastName = meta.last_name || '';
+  let firstName = '';
+  let lastName = '';
   let fullName = '';
 
-  // Always try students table regardless of metadata
+  // 1. Check localStorage first — fastest, set during signup
   try {
-    const { data } = await sb
-      .from('students')
-      .select('first_name, last_name, cv_score')
-      .eq('email', user.email)
-      .single();
+    const cached = JSON.parse(localStorage.getItem('cg_user') || '{}');
+    if (cached.firstName && cached.email === user.email) {
+      firstName = cached.firstName;
+      fullName = cached.name || firstName;
+    }
+  } catch(e) {}
 
-    if (data?.first_name) {
-      firstName = data.first_name;
-      lastName = data.last_name || '';
-      fullName = (firstName + ' ' + lastName).trim();
-      if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
-    }
-  } catch(e) {
-    // RLS or network error — fall back to metadata
-    if (meta.first_name) {
-      firstName = meta.first_name;
-      lastName = meta.last_name || '';
-      fullName = (firstName + ' ' + lastName).trim();
-    }
+  // 2. Check user_metadata from Supabase session
+  if (!firstName && meta.first_name) {
+    firstName = meta.first_name;
+    lastName = meta.last_name || '';
+    fullName = (firstName + ' ' + lastName).trim();
   }
 
-  // Still no name — show inline banner to collect it
+  // 3. Query students table
   if (!firstName) {
-    firstName = '';
+    try {
+      const { data } = await sb
+        .from('students')
+        .select('first_name, last_name, cv_score')
+        .eq('email', user.email)
+        .single();
+      if (data?.first_name) {
+        firstName = data.first_name;
+        lastName = data.last_name || '';
+        fullName = (firstName + ' ' + lastName).trim();
+        if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
+        // Cache for next time
+        localStorage.setItem('cg_user', JSON.stringify({
+          firstName, name: fullName, email: user.email
+        }));
+      }
+    } catch(e) {}
+  }
+
+  // 4. Still no name — show banner to collect it
+  if (!firstName) {
     showCompleteProfileBanner(user.email);
   }
 
@@ -524,9 +536,15 @@ function setLoading(on) {
 }
 
 async function logout() {
-  await sb.auth.signOut();
-  localStorage.removeItem('cg_cv_score');
-  localStorage.removeItem('cg_user');
+  try {
+    await sb.auth.signOut({ scope: 'local' });
+  } catch(e) {}
+  // Clear all local storage keys Supabase uses
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith('sb-') || key.startsWith('supabase') || key === 'cg_user' || key === 'cg_cv_score') {
+      localStorage.removeItem(key);
+    }
+  });
   window.location.href = 'login.html';
 }
 

@@ -963,22 +963,37 @@ function catColour(s,m){const p=s/m;return p>=0.75?'#1A9E75':p>=0.5?'#D97706':'#
 function updateWordCount(ta){const w=ta.value.trim().split(/\s+/).filter(x=>x.length>0).length;document.getElementById('word-count').textContent=w;document.getElementById('btn-analyse').disabled=w<50;}
 
 let cvResults=null,userData=null;
-let loggedInUser=null; // store session user if logged in
+let loggedInUser=null;
+let sessionChecked=false;
 
-// Check if user is already logged in — if so, skip gate
-sb.auth.getSession().then(({data:{session}})=>{
-  if(session?.user){
-    loggedInUser=session.user;
-    const meta=session.user.user_metadata||{};
-    // Pre-fill userData from their account
-    userData={
-      name:(meta.first_name||'')+' '+(meta.last_name||''),
-      email:session.user.email,
-      status:meta.status||'',
-      uni:meta.university||''
-    };
-  }
-});
+// Check session on load and store result
+async function checkSession(){
+  try {
+    const {data:{session}} = await sb.auth.getSession();
+    if(session?.user){
+      loggedInUser=session.user;
+      const meta=session.user.user_metadata||{};
+      // Try to get name from localStorage first (most reliable)
+      let firstName='', lastName='';
+      try{
+        const cached=JSON.parse(localStorage.getItem('cg_user')||'{}');
+        if(cached.firstName && cached.email===session.user.email){
+          firstName=cached.firstName;
+          lastName=cached.name?.split(' ').slice(1).join(' ')||'';
+        }
+      }catch(e){}
+      if(!firstName && meta.first_name) firstName=meta.first_name;
+      userData={
+        name:(firstName+' '+(lastName||meta.last_name||'')).trim()||session.user.email.split('@')[0],
+        email:session.user.email,
+        status:meta.status||'',
+        uni:meta.university||''
+      };
+    }
+  }catch(e){}
+  sessionChecked=true;
+}
+checkSession();
 
 async function runAnalysis(){
   const cvText=document.getElementById('cv-input').value.trim();
@@ -988,13 +1003,29 @@ async function runAnalysis(){
   const steps=['ls-1','ls-2','ls-3','ls-4','ls-5','ls-6'];
   for(let i=0;i<steps.length;i++){await delay(500+i*380);if(i>0)document.getElementById(steps[i-1]).className='ls done';document.getElementById(steps[i]).className='ls active';}
   await delay(500);
+
+  // Make sure session check has completed
+  if(!sessionChecked){
+    try{
+      const {data:{session}}=await sb.auth.getSession();
+      if(session?.user){
+        loggedInUser=session.user;
+        const meta=session.user.user_metadata||{};
+        let firstName='';
+        try{const c=JSON.parse(localStorage.getItem('cg_user')||'{}');if(c.firstName&&c.email===session.user.email)firstName=c.firstName;}catch(e){}
+        if(!firstName&&meta.first_name)firstName=meta.first_name;
+        userData={name:(firstName||session.user.email.split('@')[0]),email:session.user.email,status:meta.status||'',uni:meta.university||''};
+      }
+    }catch(e){}
+  }
+
   cvResults=scoreCv(cvText);
   document.getElementById('step-loading').style.display='none';
   document.getElementById('step-results').style.display='block';
   renderResults(cvResults);
   setTimeout(()=>document.getElementById('step-results').scrollIntoView({behavior:'smooth',block:'start'}),100);
 
-  // If logged in — skip gate, show full report + send PDF automatically
+  // If logged in — skip gate, show full report
   if(loggedInUser && userData?.email){
     setTimeout(()=>autoUnlockForLoggedInUser(cvText),800);
   }
@@ -1037,11 +1068,17 @@ async function autoUnlockForLoggedInUser(cvText){
   runAiAnalysis(cvText,cvResults.total);
   document.getElementById('full-report').style.display='block';
 
-  // Save score to Supabase
+  // Save score to Supabase and localStorage
   try{
-    await sb.from('students').upsert({email:userData.email,cv_score:cvResults.total},{onConflict:'email'});
+    const {data:{session}} = await sb.auth.getSession();
+    if(session?.user){
+      await sb.from('students').upsert(
+        {email:session.user.email, cv_score:cvResults.total},
+        {onConflict:'email'}
+      );
+    }
     localStorage.setItem('cg_cv_score',cvResults.total);
-  }catch(e){}
+  }catch(e){ localStorage.setItem('cg_cv_score',cvResults.total); }
 }
 
 async function sendPDFReport(){

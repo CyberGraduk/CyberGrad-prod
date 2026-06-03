@@ -351,15 +351,15 @@ async function handleSignup(e) {
     });
     if (authError) throw authError;
 
-    /* 2. Insert student row (ignore duplicate — they may already exist) */
+    /* 2. Insert student row */
     await sb.from('students').upsert({
       email,
       first_name: fname,
       last_name: lname,
       university: uni,
       status,
-      plan: 'free'
-    }, { onConflict: 'email', ignoreDuplicates: true });
+      plan: 'starter'
+    }, { onConflict: 'email' });
 
     /* 3. Save to localStorage for dashboard personalisation */
     localStorage.setItem('cg_user', JSON.stringify({

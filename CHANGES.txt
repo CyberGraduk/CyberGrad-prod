@@ -1,33 +1,40 @@
-CyberGrad — V3.5 Changes
+CyberGrad — V3.7 Changes
 ========================
 Date: June 2026
 
-1. DASHBOARD — Name fix
-   Always queries students table first for first_name
-   Falls back to user_metadata if students table blocked
-   If still no name — shows inline banner with first + last name inputs
-   Banner inserts after topbar, visible immediately
-   Save button updates students table + user_metadata
-   Banner disappears after save
+FIX 1 — Logout fully clears session
+  sb.auth.signOut({ scope: 'local' }) clears local session only
+  All localStorage keys starting with sb-, supabase, cg_user, cg_cv_score cleared
+  Redirects to login.html
+  login.html no longer auto-redirects existing sessions — only redirects on fresh SIGNED_IN event
+  This allows switching between users after logout
 
-2. DASHBOARD — Logout fixed
-   Was redirecting to index.html
-   Now redirects to login.html
+FIX 2 — CV Checker full report not showing
+  Root cause: getSession() was async but runAnalysis() fired before it resolved
+  loggedInUser was null when user clicked Analyse despite being logged in
+  Fix: checkSession() runs on page load as async function
+  runAnalysis() waits for session if not yet resolved
+  Full report now shows correctly for logged-in users
 
-3. LOGIN — Cross-tab magic link detection
-   onAuthStateChange listener added
-   If user clicks magic link in another tab, login page auto-redirects to dashboard
-   No more stuck "Check your inbox" screen
+FIX 3 — CV Score saving to Supabase
+  autoUnlockForLoggedInUser now fetches fresh session for upsert
+  Score saved to students table with correct email from live session
+  localStorage backup always set
 
-4. SUPABASE ACTION REQUIRED
-   Run this to allow login page to check if email exists:
-   create policy "Anyone can check if email exists"
-     on students for select
-     using (true);
+FIX 4 — Dashboard "Unlock with Foundation"
+  Changed to "Unlock with Industry-Ready"
+  Removed repeated description text
+  Price updated to £125 everywhere on dashboard
+  
+FIX 5 — Hello name not working (TC-02 existing user login)
+  checkSession() now checks localStorage cg_user first (fastest)
+  Falls back to user_metadata, then students table
+  userData.name populated before analysis runs
 
-VERSION TAG — v3.5 is live
+VERSION TAG — v3.7 is live
 
 FILES CHANGED
-- dashboard.html (name fix, logout fix, cross-tab detection)
-- login.html (cross-tab detection)
+- dashboard.html (logout fix, unlock text, price fix)
+- cv-checker.html (session timing fix, score save fix)
+- login.html (no auto-redirect on existing session)
 - index.html (version tag)
