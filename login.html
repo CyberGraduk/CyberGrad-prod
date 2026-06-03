@@ -57,6 +57,10 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bo
           <label>Email address</label>
           <input type="email" class="fi" id="login-email" placeholder="you@email.com" required autofocus>
         </div>
+        <div id="login-error" style="display:none;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:4px"></div>
+        <div id="login-no-account" style="display:none;text-align:center;margin-top:8px;font-size:13px;color:var(--text-2)">
+          Don't have an account? <a href="signup.html" style="color:var(--teal);text-decoration:none;font-weight:600">Create one free →</a>
+        </div>
         <button type="submit" class="btn-submit" id="login-btn">
           <span id="login-btn-txt">Send magic link</span>
           <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -92,10 +96,34 @@ async function handleLogin(e) {
   const email = document.getElementById('login-email').value.trim();
   const btn = document.getElementById('login-btn');
   const txt = document.getElementById('login-btn-txt');
+  const errEl = document.getElementById('login-error');
+
   btn.disabled = true;
-  txt.textContent = 'Sending...';
+  txt.textContent = 'Checking...';
+  if (errEl) errEl.style.display = 'none';
 
   try {
+    // PRE-CHECK — does this email have an account?
+    const { data: student, error: checkErr } = await sb
+      .from('students')
+      .select('email')
+      .eq('email', email)
+      .single();
+
+    if (!student) {
+      // No account found — show message, do NOT send magic link
+      if (errEl) {
+        errEl.textContent = 'No account found with this email. Create one first.';
+        errEl.style.display = 'block';
+      }
+      const noAccEl = document.getElementById('login-no-account');
+      if (noAccEl) noAccEl.style.display = 'block';
+      btn.disabled = false;
+      txt.textContent = 'Send magic link';
+      return;
+    }
+
+    // Account exists — send magic link
     const { error } = await sb.auth.signInWithOtp({
       email,
       options: { emailRedirectTo: 'https://www.cyber-grad.co.uk/auth-callback.html' }
@@ -105,8 +133,12 @@ async function handleLogin(e) {
     document.getElementById('step-form').classList.remove('active');
     document.getElementById('step-email').classList.add('active');
   } catch (err) {
-    txt.textContent = 'Something went wrong — try again';
+    if (errEl) {
+      errEl.textContent = 'Something went wrong — try again.';
+      errEl.style.display = 'block';
+    }
     btn.disabled = false;
+    txt.textContent = 'Send magic link';
   }
 }
 

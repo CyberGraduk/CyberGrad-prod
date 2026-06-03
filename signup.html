@@ -295,6 +295,27 @@ const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+/* ── COMPLETE PROFILE MODE (?complete=1) ── */
+// Fires when user verified magic link but has no name in DB yet
+async function checkCompleteMode() {
+  const params = new URLSearchParams(window.location.search);
+  if (!params.get('complete')) return;
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+
+  // Pre-fill email (hidden) and switch heading
+  const emailEl = document.getElementById('sg-email');
+  if (emailEl) { emailEl.value = session.user.email; emailEl.closest('.fg').style.display = 'none'; }
+
+  const heading = document.querySelector('.card-title');
+  if (heading) heading.textContent = 'Complete your profile';
+
+  const sub = document.querySelector('.card-sub');
+  if (sub) sub.textContent = 'Just a few details so we can personalise your dashboard.';
+}
+checkCompleteMode();
+
 /* ── COUNTER (from DB) ── */
 async function loadCount() {
   const { count } = await sb.from('students').select('*', { count: 'exact', head: true });

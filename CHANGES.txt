@@ -1,53 +1,34 @@
-CyberGrad — V3.3 Changes
+CyberGrad — V3.4 Changes
 ========================
 Date: June 2026
 
-1. DASHBOARD — First name greeting
-   Already pulling firstName from session/Supabase correctly
-   "Hello, [name]." works when session has user_metadata.first_name
+1. AUTH FLOW — Enterprise grade login validation
+   login.html: Before sending magic link, checks students table
+   If email not found → "No account found. Create one first." error shown
+   Signup link shown below error
+   No magic link sent to unregistered emails
+   
+2. AUTH CALLBACK — Profile completeness check
+   After magic link verified, checks students table for first_name
+   If complete profile → dashboard.html
+   If incomplete/missing → signup.html?complete=1
+   
+3. SIGNUP — Complete profile mode (?complete=1)
+   Detected via URL param after magic link for incomplete profiles
+   Email field hidden (pre-filled from session)
+   Heading changes to "Complete your profile"
+   On submit → saves name to students table + user_metadata
+   
+4. LINKEDIN FOOTER — Fixed across all pages
+   All pages now point to: https://www.linkedin.com/company/cybergrad/
+   Fixed generic linkedin.com links
+   Contact section in footer also fixed
 
-2. CV CHECKER — PDF button fixed
-   Button label: "Send PDF to my email" (no email shown)
-   sendPDFReport() always fetches fresh session email — never uses cached
-   Fixes bug where user X sees user Y's email on button
-
-3. CV CHECKER — What next prompt
-   After non-logged-in user gets report, shows:
-   "Create a free account to save your score, access Sectors & Domains..."
-   + "Create free account →" button
-
-4. LINKEDIN FOOTER — Fixed properly
-   LinkedIn SVG icon + text link in footer across all pages
-   Correct URL: https://www.linkedin.com/company/cybergrad/
-
-5. ABOUT PAGE — "Built by Rakesh Elamaran" removed from footer
-
-6. CHECKOUT — £129 → £125 in plan price display
-
-7. SUCCESS.HTML — "Foundation plan" → "Industry-Ready plan"
-
-8. SECTORS + ROLES — Back to Dashboard button in nav
-
-9. FAQ — "What happens after 4 weeks?" added to index.html
-   "The programme ends, the community does not. One payment, permanent access."
-
-10. PRICING PAGE — Full FAQ section added (synced with index.html)
-    8 questions matching index FAQ
-
-11. emailRedirectTo — Fixed in login.html + signup.html → auth-callback.html
-
-VERSION TAG — v3.3 is live
+VERSION TAG — v3.4 is live
 
 FILES CHANGED
-- cv-checker.html (PDF button, what next prompt)
-- index.html (LinkedIn footer, FAQ addition, version tag)
-- dashboard.html (admin link)
-- pricing.html (FAQ section added)
-- about.html (Built by removed)
-- checkout.html (£129 → £125)
-- success.html (Foundation → Industry-Ready)
-- sectors.html (back button)
-- roles.html (back button)
-- login.html (emailRedirectTo)
-- signup.html (emailRedirectTo)
-- All pages (LinkedIn footer)
+- login.html (email pre-check, error message, signup link)
+- auth-callback.html (profile check, handleSession function)
+- signup.html (complete=1 mode detection)
+- All pages (LinkedIn URL fixed)
+- index.html (version tag)
