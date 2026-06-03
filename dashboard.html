@@ -358,32 +358,59 @@ async function handleAuth() {
 
 async function loadUser(user) {
   const meta = user.user_metadata || {};
-  let firstName = meta.first_name || '';
+  let firstName = '';
+  let lastName = '';
   let fullName = '';
 
-  if (!firstName) {
-    const { data } = await sb.from('students').select('first_name,last_name,cv_score').eq('email', user.email).single();
-    if (data) {
-      firstName = data.first_name || '';
-      fullName = (data.first_name + ' ' + (data.last_name || '')).trim();
-      if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
+  // 1. Check localStorage first
+  try {
+    const cached = JSON.parse(localStorage.getItem('cg_user') || '{}');
+    if (cached.firstName && cached.email === user.email) {
+      firstName = cached.firstName;
+      fullName = cached.name || firstName;
     }
-  } else {
-    fullName = (meta.first_name + ' ' + (meta.last_name || '')).trim();
+  } catch(e) {}
+
+  // 2. Check user_metadata
+  if (!firstName && meta.first_name) {
+    firstName = meta.first_name;
+    lastName = meta.last_name || '';
+    fullName = (firstName + ' ' + lastName).trim();
   }
 
-  // If still no name — show complete profile banner
+  // 3. Always query students table — most reliable source
+  try {
+    const { data, error } = await sb.from('students')
+      .select('first_name, last_name, cv_score')
+      .eq('email', user.email)
+      .single();
+    if (data && data.first_name) {
+      firstName = data.first_name;
+      lastName = data.last_name || '';
+      fullName = (firstName + ' ' + lastName).trim();
+      if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
+      // Cache for next time
+      localStorage.setItem('cg_user', JSON.stringify({
+        firstName, name: fullName, email: user.email
+      }));
+    }
+  } catch(e) {
+    console.error('Students table query failed:', e);
+  }
+
+  // 4. Still no name — show banner
   if (!firstName) {
     showCompleteProfileBanner(user.email);
-    firstName = user.email.split('@')[0];
-    fullName = firstName;
+    firstName = 'there';
+    fullName = '';
   }
 
   if (!fullName) fullName = firstName;
 
+  // Apply to DOM
   document.getElementById('topbar-name').textContent = firstName;
-  document.getElementById('user-name').textContent = fullName;
-  document.getElementById('user-av').textContent = firstName[0].toUpperCase();
+  document.getElementById('user-name').textContent = fullName || 'Student';
+  document.getElementById('user-av').textContent = (firstName !== 'there' ? firstName[0] : 'S').toUpperCase();
 
   // Show admin link only for admin email
   if (user.email === 'rakeshelamaran98@gmail.com') {
