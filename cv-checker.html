@@ -553,8 +553,9 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
           <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6"><strong style="color:var(--text)">What's next?</strong> Create a free account to save your score, access Sectors & Domains, Roles to Apply, and skip this form next time you check your CV.</p>
           <a href="signup.html" style="display:inline-flex;align-items:center;gap:7px;background:rgba(0,200,150,0.1);border:1px solid var(--teal-b);color:var(--teal);padding:9px 18px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;text-decoration:none">Create free account →</a>
         </div>
+      </div><!-- end check-email-screen -->
 
-      <!-- FULL REPORT — shown when student clicks "View on screen" -->
+      <!-- FULL REPORT — shown for logged-in users or when student clicks "View on screen" -->
       <div id="full-report">
 
         <!-- PRIORITY ACTIONS -->
@@ -1097,7 +1098,7 @@ async function sendPDFReport(){
     const priorities=[...allFails,...allWarns].slice(0,6);
     const band=getBand(cvResults.total).label;
 
-    await fetch('/api/send-report',{
+    const res = await fetch('/api/send-report',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -1111,8 +1112,11 @@ async function sendPDFReport(){
         priorities
       })
     });
+    const result = await res.json();
+    console.log('Send report response:', res.status, result);
+    if(!res.ok) throw new Error(result.detail || result.error || 'API error');
     if(btn){
-      btn.innerHTML='<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Sent to '+freshEmail;
+      btn.innerHTML='<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Sent — check your inbox';
       btn.style.color='var(--teal)';
       btn.style.borderColor='var(--teal-b)';
     }
