@@ -31,19 +31,22 @@ const sb = supabase.createClient(
 // Process the token from the hash, then redirect cleanly
 async function processAuth() {
   try {
+    // Check the type from URL hash
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.replace('#', '?'));
+    const type = params.get('type');
+
     const { data, error } = await sb.auth.getSession();
 
     if (data?.session) {
-      await handleSession(data.session);
+      await handleSession(data.session, type);
     } else {
-      // Wait for onAuthStateChange
       sb.auth.onAuthStateChange(async (event, session) => {
-        if (session) await handleSession(session);
+        if (session) await handleSession(session, type);
       });
-      // Fallback after 3 seconds
       setTimeout(async () => {
         const { data: { session } } = await sb.auth.getSession();
-        if (session) await handleSession(session);
+        if (session) await handleSession(session, type);
         else window.location.replace('https://www.cyber-grad.co.uk/login.html');
       }, 3000);
     }
@@ -52,9 +55,16 @@ async function processAuth() {
   }
 }
 
-async function handleSession(session) {
+async function handleSession(session, type) {
   try {
-    // Check if student row exists at all
+    // signup confirmation — always go to dashboard directly
+    // student row is being inserted by signup.html separately
+    if (type === 'signup' || type === 'recovery') {
+      window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
+      return;
+    }
+
+    // magic link login — check if student row exists
     const { data: student } = await sb
       .from('students')
       .select('email')
@@ -62,10 +72,8 @@ async function handleSession(session) {
       .single();
 
     if (student) {
-      // Row exists — go to dashboard
       window.location.replace('https://www.cyber-grad.co.uk/dashboard.html');
     } else {
-      // No row at all — complete profile first
       window.location.replace('https://www.cyber-grad.co.uk/signup.html?complete=1');
     }
   } catch(e) {
