@@ -202,49 +202,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
       </div>
 
       <!-- UPGRADE -->
-      <div class="card card-upgrade">
-        <div class="card-title">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg>
-          Ready for more?
-        </div>
-        <div class="upgrade-inner">
-          <div class="upgrade-text">
-            <h3>Join the Industry-Ready programme</h3>
-            <p>4 live group sessions, 2 personal 1-to-1 sessions, UK Sponsorship Radar, WhatsApp community, and all resources — in one structured programme.</p>
-            <div class="upgrade-items">
-              <span class="upgrade-item">4× live sessions</span>
-              <span class="upgrade-item">2× 1-to-1</span>
-              <span class="upgrade-item">WhatsApp community</span>
-              <span class="upgrade-item">UK resources</span>
-            </div>
-          </div>
-          <a href="checkout.html" class="btn-upgrade">Get Industry-Ready — £125 →</a>
-        </div>
-      </div>
-
-      <!-- COMMUNITY -->
-      <div class="card card-community">
-        <div class="card-title">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Community
-        </div>
-        <div class="community-item">
-          <div class="comm-left">
-            <div class="comm-icon" style="background:rgba(37,211,102,0.12)">
-              <svg width="16" height="16" fill="none" stroke="#25d366" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div>
-              <div class="comm-name">WhatsApp Group</div>
-              <div class="comm-desc">Cohort community</div>
-            </div>
-          </div>
-          <a href="#" class="btn-join">Join →</a>
-        </div>
-        <!-- V1.2 — CyberBridge removed, do not delete
-        <div class="community-item">CyberBridge...</div>
-        -->
-      </div>
-
       <!-- SECTORS CARD -->
       <div class="card" style="grid-column:span 6">
         <div class="card-title">
@@ -398,10 +355,10 @@ async function loadUser(user) {
     console.error('Students table query failed:', e);
   }
 
-  // 4. Still no name — show banner
+  // 4. Still no name — show banner + use "Grad" as friendly fallback
   if (!firstName) {
     showCompleteProfileBanner(user.email);
-    firstName = 'there';
+    firstName = 'Grad';
     fullName = '';
   }
 
@@ -410,7 +367,7 @@ async function loadUser(user) {
   // Apply to DOM
   document.getElementById('topbar-name').textContent = firstName;
   document.getElementById('user-name').textContent = fullName || 'Student';
-  document.getElementById('user-av').textContent = (firstName !== 'there' ? firstName[0] : 'S').toUpperCase();
+  document.getElementById('user-av').textContent = (firstName !== 'Grad' ? firstName[0] : 'G').toUpperCase();
 
   // Show admin link only for admin email
   if (user.email === 'rakeshelamaran98@gmail.com') {

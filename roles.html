@@ -49,7 +49,7 @@ footer{padding:32px 5%;border-top:1px solid var(--border);display:flex;align-ite
 <body>
 <nav>
   <a href="index.html" class="nav-logo"><img src="logo.png" alt="CyberGrad" style="height:36px;width:auto"></a>
-  <a href="dashboard.html" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-2);padding:8px 14px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:500;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='var(--teal-b)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-2)'">
+  <a href="dashboard.html" id="back-dashboard-btn" style="display:none;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-2);padding:8px 14px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:500;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,150,.3)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-2)'">
     <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     Back to Dashboard
   </a>
@@ -274,6 +274,8 @@ function showContent() {
   if (contentShown) return;
   contentShown = true;
   mainEl.style.opacity = '1';
+  const backBtn = document.getElementById('back-dashboard-btn');
+  if (backBtn) backBtn.style.display = 'inline-flex';
 }
 
 function showGate() {

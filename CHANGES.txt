@@ -1,40 +1,32 @@
-CyberGrad — V3.7 Changes
+CyberGrad — V3.8 Changes
 ========================
 Date: June 2026
 
-FIX 1 — Logout fully clears session
-  sb.auth.signOut({ scope: 'local' }) clears local session only
-  All localStorage keys starting with sb-, supabase, cg_user, cg_cv_score cleared
-  Redirects to login.html
-  login.html no longer auto-redirects existing sessions — only redirects on fresh SIGNED_IN event
-  This allows switching between users after logout
+FIX 1 — CV Checker SyntaxError (critical)
+  Root cause: Old autoUnlockForLoggedInUser function body was left dangling
+  outside any function after refactor. await at top level of <script> tag
+  is a SyntaxError — crashed entire JS file.
+  Result: selectRole was never defined, role buttons did nothing.
+  Fix: Removed dangling code block entirely.
 
-FIX 2 — CV Checker full report not showing
-  Root cause: getSession() was async but runAnalysis() fired before it resolved
-  loggedInUser was null when user clicked Analyse despite being logged in
-  Fix: checkSession() runs on page load as async function
-  runAnalysis() waits for session if not yet resolved
-  Full report now shows correctly for logged-in users
+FIX 2 — Dashboard greeting fallback
+  "Hello, there." → "Hello, Grad."
+  Matches brand identity, feels intentional not broken.
 
-FIX 3 — CV Score saving to Supabase
-  autoUnlockForLoggedInUser now fetches fresh session for upsert
-  Score saved to students table with correct email from live session
-  localStorage backup always set
+FIX 3 — Dashboard cleanup
+  Removed "Join the Industry-Ready programme" card
+  Removed "Community / WhatsApp Group" card
 
-FIX 4 — Dashboard "Unlock with Foundation"
-  Changed to "Unlock with Industry-Ready"
-  Removed repeated description text
-  Price updated to £125 everywhere on dashboard
-  
-FIX 5 — Hello name not working (TC-02 existing user login)
-  checkSession() now checks localStorage cg_user first (fastest)
-  Falls back to user_metadata, then students table
-  userData.name populated before analysis runs
+FIX 4 — Sectors & Roles back button
+  "Back to Dashboard" now hidden by default
+  Only shows when user is logged in (showContent() reveals it)
+  Unauthenticated users see gate screen with no back button
 
-VERSION TAG — v3.7 is live
+VERSION TAG — v3.8 is live
 
 FILES CHANGED
-- dashboard.html (logout fix, unlock text, price fix)
-- cv-checker.html (session timing fix, score save fix)
-- login.html (no auto-redirect on existing session)
+- cv-checker.html (SyntaxError fix)
+- dashboard.html (greeting, removed cards)
+- sectors.html (back button auth-gated)
+- roles.html (back button auth-gated)
 - index.html (version tag)
