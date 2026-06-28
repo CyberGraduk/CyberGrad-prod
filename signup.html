@@ -351,6 +351,13 @@ async function handleSignup(e) {
     });
     if (authError) throw authError;
 
+    /* 1b. Also update user metadata if user already exists */
+    try {
+      await sb.auth.updateUser({
+        data: { first_name: fname, last_name: lname, university: uni, status }
+      });
+    } catch(e) { /* silent — user may not be authenticated yet */ }
+
     /* 2. Insert student row */
     await sb.from('students').upsert({
       email,

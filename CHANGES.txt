@@ -1,32 +1,37 @@
-CyberGrad — V3.8 Changes
+CyberGrad — V3.9 Changes
 ========================
 Date: June 2026
 
-FIX 1 — CV Checker SyntaxError (critical)
-  Root cause: Old autoUnlockForLoggedInUser function body was left dangling
-  outside any function after refactor. await at top level of <script> tag
-  is a SyntaxError — crashed entire JS file.
-  Result: selectRole was never defined, role buttons did nothing.
-  Fix: Removed dangling code block entirely.
+FIX 1 — Dashboard greeting (root cause found)
+  TWO loadUser() functions were defined — second overrode first
+  Second had firstName || 'there' fallback
+  Fixed: single loadUser() with 4-source name resolution:
+  1. getUser() — freshest user_metadata
+  2. localStorage cache
+  3. Session metadata
+  4. students table query
+  After finding from students table, saves to user_metadata for future
+  Fallback: "Hello, Grad." never "Hello, there."
 
-FIX 2 — Dashboard greeting fallback
-  "Hello, there." → "Hello, Grad."
-  Matches brand identity, feels intentional not broken.
+FIX 2 — Pricing
+  Starter: Added WhatsApp Community Access
+  Industry-Ready: "Everything in Starter" as first feature
+  Short list and full list both updated
 
-FIX 3 — Dashboard cleanup
-  Removed "Join the Industry-Ready programme" card
-  Removed "Community / WhatsApp Group" card
+FIX 3 — Topmate link updated everywhere
+  https://topmate.io/rakeshelamaran/2176589?coupon_code=UKCyb3r
+  Updated in index.html FAQ and pricing.html FAQ
 
-FIX 4 — Sectors & Roles back button
-  "Back to Dashboard" now hidden by default
-  Only shows when user is logged in (showContent() reveals it)
-  Unauthenticated users see gate screen with no back button
+FIX 4 — Signup saves name to user_metadata
+  signInWithOtp now passes data: { first_name, last_name, university, status }
+  Also calls updateUser() after OTP for existing users
+  Ensures getUser() returns name on next dashboard load
 
-VERSION TAG — v3.8 is live
+VERSION TAG — v3.9 is live
 
 FILES CHANGED
-- cv-checker.html (SyntaxError fix)
-- dashboard.html (greeting, removed cards)
-- sectors.html (back button auth-gated)
-- roles.html (back button auth-gated)
-- index.html (version tag)
+- dashboard.html (duplicate loadUser removed, getUser fix)
+- index.html (pricing, topmate link, version tag)
+- pricing.html (topmate link)
+- signup.html (user_metadata on signup)
+- api/send-report.js (green → passCol fix)

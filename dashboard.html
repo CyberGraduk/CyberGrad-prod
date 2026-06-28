@@ -319,100 +319,36 @@ async function loadUser(user) {
   let lastName = '';
   let fullName = '';
 
-  // 1. Check localStorage first
+  // 1. getUser() — freshest metadata
   try {
-    const cached = JSON.parse(localStorage.getItem('cg_user') || '{}');
-    if (cached.firstName && cached.email === user.email) {
-      firstName = cached.firstName;
-      fullName = cached.name || firstName;
-    }
-  } catch(e) {}
-
-  // 2. Check user_metadata
-  if (!firstName && meta.first_name) {
-    firstName = meta.first_name;
-    lastName = meta.last_name || '';
-    fullName = (firstName + ' ' + lastName).trim();
-  }
-
-  // 3. Always query students table — most reliable source
-  try {
-    const { data, error } = await sb.from('students')
-      .select('first_name, last_name, cv_score')
-      .eq('email', user.email)
-      .single();
-    if (data && data.first_name) {
-      firstName = data.first_name;
-      lastName = data.last_name || '';
+    const { data: { user: freshUser } } = await sb.auth.getUser();
+    const freshMeta = freshUser?.user_metadata || {};
+    if (freshMeta.first_name) {
+      firstName = freshMeta.first_name;
+      lastName = freshMeta.last_name || '';
       fullName = (firstName + ' ' + lastName).trim();
-      if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
-      // Cache for next time
-      localStorage.setItem('cg_user', JSON.stringify({
-        firstName, name: fullName, email: user.email
-      }));
-    }
-  } catch(e) {
-    console.error('Students table query failed:', e);
-  }
-
-  // 4. Still no name — show banner + use "Grad" as friendly fallback
-  if (!firstName) {
-    showCompleteProfileBanner(user.email);
-    firstName = 'Grad';
-    fullName = '';
-  }
-
-  if (!fullName) fullName = firstName;
-
-  // Apply to DOM
-  document.getElementById('topbar-name').textContent = firstName;
-  document.getElementById('user-name').textContent = fullName || 'Student';
-  document.getElementById('user-av').textContent = (firstName !== 'Grad' ? firstName[0] : 'G').toUpperCase();
-
-  // Show admin link only for admin email
-  if (user.email === 'rakeshelamaran98@gmail.com') {
-    const adminLink = document.getElementById('admin-nav-link');
-    if (adminLink) adminLink.style.display = 'flex';
-  }
-
-  const cvScore = localStorage.getItem('cg_cv_score');
-  if (cvScore) {
-    const score = parseInt(cvScore);
-    const col = score >= 80 ? '#00C896' : score >= 60 ? '#3b82f6' : score >= 40 ? '#d97706' : '#dc2626';
-    document.getElementById('cv-score-content').innerHTML = `
-      <div class="cv-score-big" style="color:${col}">${score}</div>
-      <div class="cv-score-sub">out of 100</div>
-      <div class="cv-bar"><div class="cv-fill" style="width:0%;background:${col}" id="cv-fill-bar"></div></div>
-      <a href="cv-checker.html" class="btn-check">Re-check my CV</a>`;
-    setTimeout(() => { const b = document.getElementById('cv-fill-bar'); if(b) b.style.width = score + '%'; }, 300);
-  }
-
-  setLoading(false);
-}
-
-async function loadUser(user) {
-  const meta = user.user_metadata || {};
-  let firstName = '';
-  let lastName = '';
-  let fullName = '';
-
-  // 1. Check localStorage first — fastest, set during signup
-  try {
-    const cached = JSON.parse(localStorage.getItem('cg_user') || '{}');
-    if (cached.firstName && cached.email === user.email) {
-      firstName = cached.firstName;
-      fullName = cached.name || firstName;
     }
   } catch(e) {}
 
-  // 2. Check user_metadata from Supabase session
+  // 2. Check localStorage cache
+  if (!firstName) {
+    try {
+      const cached = JSON.parse(localStorage.getItem('cg_user') || '{}');
+      if (cached.firstName && cached.email === user.email) {
+        firstName = cached.firstName;
+        fullName = cached.name || firstName;
+      }
+    } catch(e) {}
+  }
+
+  // 3. Check session metadata
   if (!firstName && meta.first_name) {
     firstName = meta.first_name;
     lastName = meta.last_name || '';
     fullName = (firstName + ' ' + lastName).trim();
   }
 
-  // 3. Query students table
+  // 4. Query students table
   if (!firstName) {
     try {
       const { data } = await sb
@@ -425,24 +361,25 @@ async function loadUser(user) {
         lastName = data.last_name || '';
         fullName = (firstName + ' ' + lastName).trim();
         if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
-        // Cache for next time
-        localStorage.setItem('cg_user', JSON.stringify({
-          firstName, name: fullName, email: user.email
-        }));
+        localStorage.setItem('cg_user', JSON.stringify({ firstName, name: fullName, email: user.email }));
+        // Save to metadata for future
+        sb.auth.updateUser({ data: { first_name: firstName, last_name: lastName } }).catch(()=>{});
       }
     } catch(e) {}
   }
 
-  // 4. Still no name — show banner to collect it
+  // 5. Still no name — show banner + Grad fallback
   if (!firstName) {
     showCompleteProfileBanner(user.email);
+    firstName = 'Grad';
+    fullName = '';
   }
 
-  if (!fullName) fullName = firstName || 'Student';
+  if (!fullName) fullName = firstName;
 
-  document.getElementById('topbar-name').textContent = firstName || 'there';
+  document.getElementById('topbar-name').textContent = firstName;
   document.getElementById('user-name').textContent = fullName || 'Student';
-  document.getElementById('user-av').textContent = (firstName || 'S')[0].toUpperCase();
+  document.getElementById('user-av').textContent = (firstName !== 'Grad' ? firstName[0] : 'G').toUpperCase();
 
   // Admin link
   if (user.email === 'rakeshelamaran98@gmail.com') {

@@ -1090,10 +1090,10 @@ function showFullReportForLoggedIn(cvText){
       sb.from('students').upsert(
         {email:session.user.email, cv_score:cvResults.total},
         {onConflict:'email'}
-      ).catch(()=>{});
+      ).then(()=>{}).catch(()=>{});
     }
     localStorage.setItem('cg_cv_score', cvResults.total);
-  });
+  }).catch(()=>{ localStorage.setItem('cg_cv_score', cvResults.total); });
 
   // Scroll to report
   setTimeout(()=>fullReport.scrollIntoView({behavior:'smooth',block:'start'}),300);

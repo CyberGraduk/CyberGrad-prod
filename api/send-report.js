@@ -209,7 +209,7 @@ async function generatePDF({ name, firstName, email, university, score, categori
   // Category bars
   for (const cat of (categories || [])) {
     const pct = cat.max > 0 ? Math.min(cat.score / cat.max, 1) : 0;
-    const catCol = pct >= 0.75 ? green : pct >= 0.5 ? amber : red;
+    const catCol = pct >= 0.75 ? passCol : pct >= 0.5 ? warnCol : failCol;
     const barX = 210, barW = 230;
 
     p1.drawText(sanitiseText(cat.name), { x: 24, y, size: 9.5, font: fontReg, color: dark });
