@@ -1,37 +1,51 @@
-CyberGrad — V3.9 Changes
+CyberGrad — V4.0 Changes
 ========================
-Date: June 2026
+Date: July 2026
 
-FIX 1 — Dashboard greeting (root cause found)
-  TWO loadUser() functions were defined — second overrode first
-  Second had firstName || 'there' fallback
-  Fixed: single loadUser() with 4-source name resolution:
-  1. getUser() — freshest user_metadata
-  2. localStorage cache
-  3. Session metadata
-  4. students table query
-  After finding from students table, saves to user_metadata for future
-  Fallback: "Hello, Grad." never "Hello, there."
+1. CV CHECKER — Non-logged-in gate form fix
+   After submitting gate form (name, email, university, status):
+   - Full Good/Bad/Fix report now shows on screen
+   - PDF sent to their email
+   - Confirmation banner shown
+   - "Create free account" prompt shown below
+   Previously: confirmation screen showed but full report was hidden
 
-FIX 2 — Pricing
-  Starter: Added WhatsApp Community Access
-  Industry-Ready: "Everything in Starter" as first feature
-  Short list and full list both updated
+2. DASHBOARD GREETING — Duplicate loadUser removed
+   Two loadUser() functions existed — second overrode first with 'there' fallback
+   Single clean function with 4-source resolution:
+   1. getUser() — freshest user_metadata
+   2. localStorage cache
+   3. Session metadata
+   4. Students table query
+   Fallback: "Hello, Grad." — never "Hello, there."
 
-FIX 3 — Topmate link updated everywhere
-  https://topmate.io/rakeshelamaran/2176589?coupon_code=UKCyb3r
-  Updated in index.html FAQ and pricing.html FAQ
+3. PRICING — Both pages updated
+   Starter: CV Scorecard, Sectors & Domains, Roles to Apply, WhatsApp Community Access
+   Industry-Ready: "Everything in Starter" + Personalised 1-1 Roadmap + full list
+   Updated on index.html AND pricing.html
 
-FIX 4 — Signup saves name to user_metadata
-  signInWithOtp now passes data: { first_name, last_name, university, status }
-  Also calls updateUser() after OTP for existing users
-  Ensures getUser() returns name on next dashboard load
+4. TOPMATE LINK — Updated everywhere
+   https://topmate.io/rakeshelamaran/2176589?coupon_code=UKCyb3r
+   Updated in: index.html FAQ, pricing.html FAQ, about.html
 
-VERSION TAG — v3.9 is live
+5. FOUNDER PHOTO — Added to about page
+   rakesh-photo.jpg (cropped from BSides Exeter conference photo)
+   Replaces "RE" text avatar
+
+6. SEND REPORT — green → passCol fix in send-report.js
+   Was causing 500 error on every PDF generation
+
+7. SIGNUP — saves name to user_metadata
+   signInWithOtp passes data: { first_name, last_name, university, status }
+
+VERSION TAG — v4.0 is live
 
 FILES CHANGED
-- dashboard.html (duplicate loadUser removed, getUser fix)
-- index.html (pricing, topmate link, version tag)
-- pricing.html (topmate link)
-- signup.html (user_metadata on signup)
-- api/send-report.js (green → passCol fix)
+- cv-checker.html (gate form shows report, session timing fix)
+- dashboard.html (single loadUser, getUser fix, Hello Grad)
+- index.html (pricing, topmate, version tag)
+- pricing.html (pricing update, topmate link, FAQ)
+- about.html (founder photo, topmate link)
+- signup.html (user_metadata save)
+- api/send-report.js (green → passCol)
+- rakesh-photo.jpg (NEW — founder photo)

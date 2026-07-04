@@ -1175,11 +1175,16 @@ async function unlockReport(e){
     university:uni,status,plan:'free',cv_score:cvResults.total
   },{onConflict:'email',ignoreDuplicates:false});
 
-  // Show CONFIRMATION SCREEN first — report is rendered but hidden
+  // Hide gate, render full report, show confirmation
   document.getElementById('gate-card').style.display='none';
   renderFullReport(cvResults,userData);
   runAiAnalysis(document.getElementById('cv-input').value,cvResults.total);
-  // Show confirmation screen
+
+  // Show full report
+  const fullReport=document.getElementById('full-report');
+  if(fullReport) fullReport.style.display='block';
+
+  // Show confirmation banner
   const confirmScreen=document.getElementById('check-email-screen');
   if(confirmScreen){
     confirmScreen.style.display='block';
