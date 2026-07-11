@@ -1,161 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dashboard — CyberGrad</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#060B16;--bg2:#0A1020;--bg3:#0F1829;
-  --teal:#00C896;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.20);
-  --text:#F0F6FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;
-  --font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;
-}
-body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;-webkit-font-smoothing:antialiased}
-.app{display:flex;min-height:100vh}
-
-/* SIDEBAR */
-.sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:50}
-.sidebar-logo{display:flex;align-items:center;gap:10px;padding:18px 16px;border-bottom:1px solid var(--border);text-decoration:none}
-.s-lm{width:28px;height:28px;border-radius:6px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:11px;font-weight:800;color:#060B16}
-.s-lt{font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
-.sidebar-nav{flex:1;padding:16px 10px}
-.nav-sec{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);padding:4px 8px 8px;margin-top:10px}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--text-2);text-decoration:none;cursor:pointer;transition:background .15s,color .15s;margin-bottom:2px;border:none;background:none;width:100%}
-.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text)}
-.nav-item.active{background:var(--teal-dim);color:var(--text);border:1px solid var(--teal-b)}
-.nav-item svg{width:15px;height:15px;flex-shrink:0}
-.sidebar-footer{padding:14px 16px;border-top:1px solid var(--border)}
-.user-row{display:flex;align-items:center;gap:10px}
-.user-av{width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:700;color:#060B16;flex-shrink:0}
-.user-name{font-size:13px;font-weight:600;color:var(--text);font-family:var(--font-b)}
-.user-plan{font-size:11px;color:var(--teal)}
-.btn-logout{background:none;border:none;color:var(--text-3);font-family:var(--font-b);font-size:12px;cursor:pointer;margin-top:8px;padding:0;transition:color .2s}
-.btn-logout:hover{color:var(--text-2)}
-
-/* MAIN */
-.main{margin-left:220px;flex:1}
-.topbar{padding:24px 32px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.topbar-left h1{font-family:var(--font-h);font-size:22px;font-weight:800;letter-spacing:-0.6px;margin-bottom:3px}
-.topbar-left h1 span{color:var(--teal)}
-.topbar-left p{font-size:13px;color:var(--text-2)}
-.free-badge{background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.5px;text-transform:uppercase}
-
-/* GRID */
-.grid{padding:28px 32px;display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:22px;transition:border-color .2s}
-.card:hover{border-color:rgba(255,255,255,.08)}
-.card-title{font-family:var(--font-b);font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.card-title svg{width:13px;height:13px;color:var(--teal)}
-
-/* CV SCORE */
-.card-cv{grid-column:span 4}
-.cv-score-big{font-family:var(--font-h);font-size:52px;font-weight:800;color:var(--teal);letter-spacing:-2px;line-height:1;margin-bottom:4px}
-.cv-score-sub{font-size:13px;color:var(--text-2);margin-bottom:16px}
-.cv-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:14px}
-.cv-fill{height:100%;border-radius:2px;background:var(--teal);transition:width 1.2s ease}
-.btn-check{width:100%;background:var(--teal);color:#060B16;border:none;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:10px;cursor:pointer;transition:opacity .2s;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:7px}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F8FAFC;--bg2:#fff;--text:#0F172A;--text-2:#475569;--text-3:#94A3B8;--border:#E2E8F0;--border-2:#CBD5E1;--blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--font:'Inter',-apple-system,sans-serif;--radius:8px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;flex:1;padding-top:64px}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-badge{width:34px;height:34px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.nav-badge span{color:#fff;font-size:13px;font-weight:800}
+.nav-name{font-size:17px;font-weight:800;color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.plan-badge{background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;border:1px solid var(--blue-border)}
+.nav-av{width:34px;height:34px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:#fff;position:fixed;top:64px;left:0;bottom:0;display:flex;flex-direction:column;overflow-y:auto}
+.aside-inner{padding:20px 0;flex:1}
+.aside-section{padding:8px 16px;margin-bottom:4px}
+.aside-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-3);padding:0 8px;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius);font-size:14px;font-weight:500;color:var(--text-2);cursor:pointer;transition:all .15s;text-decoration:none;margin-bottom:2px}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--blue-light);color:var(--blue);font-weight:600}
+.nav-item svg{flex-shrink:0}
+.aside-bottom{padding:16px;border-top:1px solid var(--border)}
+.btn-logout{width:100%;background:none;border:1px solid var(--border-2);color:var(--text-2);padding:9px 14px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-logout:hover{border-color:#FCA5A5;color:#DC2626;background:#FFF1F2}
+.main{flex:1;margin-left:240px;padding:32px;min-height:calc(100vh - 64px)}
+.topbar{margin-bottom:28px}
+.topbar h1{font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
+.topbar p{font-size:14px;color:var(--text-2)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px}
+.card-cv{grid-column:span 6}
+.card-resources{grid-column:span 6}
+.card-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3);margin-bottom:16px}
+.card-title svg{width:15px;height:15px;color:var(--blue)}
+.cv-score-big{font-size:52px;font-weight:800;line-height:1;margin-bottom:4px}
+.cv-score-sub{font-size:13px;color:var(--text-3);margin-bottom:14px}
+.cv-bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:16px}
+.cv-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.btn-check{display:inline-flex;align-items:center;gap:7px;background:var(--blue);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s}
 .btn-check:hover{opacity:.88}
-
-/* RESOURCES — locked for free users */
-.card-resources{grid-column:span 8}
-.resources-locked{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center}
-.lock-icon{width:44px;height:44px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
-.resources-locked h3{font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px}
-.resources-locked p{font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.6}
-.resource-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;opacity:.4;pointer-events:none;filter:blur(1px)}
-.resource-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:12px;display:flex;align-items:center;gap:10px}
-.r-icon{width:32px;height:32px;flex-shrink:0;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:7px;display:flex;align-items:center;justify-content:center}
-.r-name{font-size:12px;font-weight:600;color:var(--text)}
-.r-type{font-size:11px;color:var(--text-3)}
-.btn-unlock{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:10px 20px;cursor:pointer;text-decoration:none;transition:opacity .2s}
-.btn-unlock:hover{opacity:.88}
-
-/* UPGRADE */
-.card-upgrade{grid-column:span 8;background:linear-gradient(135deg,rgba(0,200,150,0.06),rgba(0,200,150,0.02));border:1px solid var(--teal-b)}
-.upgrade-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.upgrade-text h3{font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px}
-.upgrade-text p{font-size:13px;color:var(--text-2);line-height:1.55;max-width:360px}
-.upgrade-items{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap}
-.upgrade-item{font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:5px}
-.upgrade-item::before{content:'✓';color:var(--teal);font-weight:700}
-.btn-upgrade{background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:700;padding:12px 24px;cursor:pointer;white-space:nowrap;text-decoration:none;transition:opacity .2s;flex-shrink:0;display:inline-block}
-.btn-upgrade:hover{opacity:.88}
-
-/* COMMUNITY */
-.card-community{grid-column:span 4}
-.community-item{display:flex;align-items:center;justify-content:space-between;padding:12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px;margin-bottom:10px;transition:border-color .2s}
-.community-item:last-child{margin-bottom:0}
-.community-item:hover{border-color:var(--teal-b)}
-.comm-left{display:flex;align-items:center;gap:10px}
-.comm-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center}
-.comm-name{font-size:13px;font-weight:600;font-family:var(--font-b)}
-.comm-desc{font-size:11px;color:var(--text-2)}
-.btn-join{font-size:12px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:6px;padding:5px 12px;cursor:pointer;text-decoration:none;transition:background .2s}
-.btn-join:hover{background:rgba(0,200,150,.14)}
-
-@media(max-width:900px){.sidebar{display:none}.main{margin-left:0}.topbar,.grid{padding-left:20px;padding-right:20px}.grid{grid-template-columns:1fr}.card-cv,.card-resources,.card-community,.card-upgrade{grid-column:span 1}.resource-preview{grid-template-columns:1fr}}
+.resource-link{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+.resource-link:hover{border-color:var(--blue-border)}
+.resource-link:last-child{margin-bottom:0}
+.resource-icon{width:36px;height:36px;background:var(--blue-light);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.resource-name{font-size:13px;font-weight:600;color:var(--text)}
+.resource-type{font-size:11px;color:var(--text-3)}
+.resource-dl{margin-left:auto;color:var(--text-3);flex-shrink:0}
+.sector-card{grid-column:span 6}
+.roles-card{grid-column:span 6}
+.community-card{grid-column:span 12}
+.tag-chip{display:inline-flex;align-items:center;font-size:11px;font-weight:600;color:var(--blue);background:var(--blue-light);border:1px solid var(--blue-border);padding:3px 9px;border-radius:4px;margin-right:6px;margin-bottom:6px}
+.tag-chip.muted{color:var(--text-3);background:var(--bg);border-color:var(--border)}
+.wa-btn{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 20px;border-radius:var(--radius);font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s}
+.wa-btn:hover{opacity:.88}
+#admin-nav-link{display:none}
+.loading-overlay{position:fixed;inset:0;background:#F8FAFC;z-index:999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.loading-spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:14px;color:var(--text-3)}
+@media(max-width:900px){aside{display:none}.main{margin-left:0}.grid{grid-template-columns:1fr}.card-cv,.card-resources,.sector-card,.roles-card,.community-card{grid-column:span 1}}
 </style>
 </head>
 <body>
-<div class="app">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo">
-      <div class="s-lm">CG</div>
-      <span class="s-lt">CyberGrad</span>
-    </a>
-    <nav class="sidebar-nav">
-      <div class="nav-sec">Menu</div>
-      <a class="nav-item active" href="dashboard.html">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Dashboard
-      </a>
-      <a class="nav-item" href="cv-checker.html">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-        CV Scorecard
-      </a>
-      <div class="nav-sec">Resources</div>
-      <a class="nav-item" href="sectors.html">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Sectors & Domains
-      </a>
-      <a class="nav-item" href="roles.html">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-        Roles to Apply
-      </a>
-      <!-- V1.2 — Marketplace removed from sidebar
-      <a class="nav-item" href="marketplace.html">Marketplace</a>
-      -->
-      <!-- Admin link — only shown for admin email, set by JS -->
-      <a class="nav-item" href="admin.html" id="admin-nav-link" style="display:none;color:var(--amber)">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Admin Panel
-      </a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="user-row">
-        <div class="user-av" id="user-av">R</div>
-        <div>
-          <div class="user-name" id="user-name">Student</div>
-          <div class="user-plan">Starter</div>
+<div id="loading-overlay" class="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading your dashboard...</div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-badge"><span>CG</span></div>
+    <span class="nav-name">CyberGrad</span>
+  </a>
+  <div class="nav-right">
+    <span class="plan-badge" id="plan-badge">Starter</span>
+    <div class="nav-av" id="user-av">G</div>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside>
+    <div class="aside-inner">
+      <div class="aside-section">
+        <div class="aside-section-label">Dashboard</div>
+        <a href="dashboard.html" class="nav-item active">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Overview
+        </a>
+        <a href="cv-checker.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+          CV Scorecard
+        </a>
+      </div>
+      <div class="aside-section">
+        <div class="aside-section-label">Resources</div>
+        <a href="sectors.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg>
+          Sectors &amp; Domains
+        </a>
+        <a href="roles.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          Roles to Apply
+        </a>
+      </div>
+      <div class="aside-section">
+        <div class="aside-section-label">Academy</div>
+        <a href="pricing.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg>
+          Industry-Ready
+        </a>
+        <a href="dashboard.html" class="nav-item" id="admin-nav-link" style="color:#D97706">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Admin Panel
+        </a>
+      </div>
+    </div>
+    <div class="aside-bottom">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;background:var(--bg);border-radius:var(--radius)">
+        <div class="nav-av" style="width:32px;height:32px;font-size:13px" id="sidebar-av">G</div>
+        <div style="min-width:0">
+          <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="user-name">Student</div>
+          <div style="font-size:11px;color:var(--text-3)" id="user-email"></div>
         </div>
       </div>
-      <button class="btn-logout" onclick="logout()">← Log out</button>
+      <button class="btn-logout" onclick="logout()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Log out
+      </button>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="topbar">
-      <div class="topbar-left">
-        <h1>Hello, <span id="topbar-name">there</span>.</h1>
-        <p>Here's your CyberGrad dashboard.</p>
-      </div>
-      <span class="free-badge">Starter</span>
+      <h1>Hello, <span id="topbar-name">Grad</span>.</h1>
+      <p>Here is your CyberGrad dashboard.</p>
     </div>
 
     <div class="grid">
@@ -167,8 +154,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
           Your CV Score
         </div>
         <div id="cv-score-content">
-          <div style="text-align:center;padding:16px 0">
-            <div style="font-size:14px;color:var(--text-2);margin-bottom:16px">You haven't checked your CV yet. Get a score out of 100 and see exactly what to fix.</div>
+          <div style="text-align:center;padding:12px 0">
+            <div style="font-size:14px;color:var(--text-2);margin-bottom:16px;line-height:1.6">You have not checked your CV yet. Get a score out of 100 and see exactly what to fix for UK employers.</div>
             <a href="cv-checker.html" class="btn-check">
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
               Check my CV now
@@ -183,74 +170,60 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/></svg>
           Resources
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <a href="#" onclick="alert('CV Format template coming soon. Check back shortly.');return false;" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(0,200,150,.3)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="width:36px;height:36px;background:rgba(0,200,150,0.1);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-              <svg width="16" height="16" fill="none" stroke="#00C896" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">UK CV Format Template</div>
-              <div style="font-size:11px;color:var(--text-3)">Word · Editable · UK-specific</div>
-            </div>
-            <svg style="margin-left:auto;flex-shrink:0" width="14" height="14" fill="none" stroke="var(--text-3)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </a>
-          <a href="#" onclick="alert('Cover letter template coming soon. Check back shortly.');return false;" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(0,200,150,.3)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="width:36px;height:36px;background:rgba(0,200,150,0.1);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-              <svg width="16" height="16" fill="none" stroke="#00C896" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">Cover Letter Format</div>
-              <div style="font-size:11px;color:var(--text-3)">Word · Editable · UK-specific</div>
-            </div>
-            <svg style="margin-left:auto;flex-shrink:0" width="14" height="14" fill="none" stroke="var(--text-3)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </a>
+        <div class="resource-link" onclick="alert('CV Format template coming soon.')">
+          <div class="resource-icon"><svg width="16" height="16" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+          <div><div class="resource-name">UK CV Format Template</div><div class="resource-type">Word · Editable · UK-specific</div></div>
+          <svg class="resource-dl" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <div class="resource-link" onclick="alert('Cover letter template coming soon.')">
+          <div class="resource-icon"><svg width="16" height="16" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="resource-name">Cover Letter Format</div><div class="resource-type">Word · Editable · UK-specific</div></div>
+          <svg class="resource-dl" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </div>
       </div>
 
-      <!-- SECTORS CARD -->
-      <div class="card" style="grid-column:span 6">
+      <!-- SECTORS -->
+      <div class="card sector-card">
         <div class="card-title">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          Sectors & Domains
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg>
+          Sectors &amp; Domains
         </div>
-        <p style="font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.6">8 UK cybersecurity sectors ranked by sponsorship likelihood and graduate entry potential.</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-          <span style="font-size:11px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:3px 9px;border-radius:4px">Financial Services</span>
-          <span style="font-size:11px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:3px 9px;border-radius:4px">Technology</span>
-          <span style="font-size:11px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:3px 9px;border-radius:4px">Consulting</span>
-          <span style="font-size:11px;font-weight:600;color:var(--text-3);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:3px 9px;border-radius:4px">+5 more</span>
+        <p style="font-size:13px;color:var(--text-2);margin-bottom:14px;line-height:1.6">8 UK cybersecurity sectors ranked by sponsorship likelihood and Graduate Visa eligibility.</p>
+        <div style="margin-bottom:16px">
+          <span class="tag-chip">Financial Services</span>
+          <span class="tag-chip">Technology</span>
+          <span class="tag-chip">Consulting</span>
+          <span class="tag-chip muted">+5 more</span>
         </div>
-        <a href="sectors.html" class="btn-check" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:7px">View all sectors <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="sectors.html" class="btn-check" style="text-decoration:none;display:inline-flex">View all sectors →</a>
       </div>
 
-      <!-- ROLES CARD -->
-      <div class="card" style="grid-column:span 6">
+      <!-- ROLES -->
+      <div class="card roles-card">
         <div class="card-title">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
           Roles to Apply
         </div>
-        <p style="font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.6">10 UK cybersecurity roles with core skills for each. Know what to study and what to put on your CV.</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-          <span style="font-size:11px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:3px 9px;border-radius:4px">SOC Analyst</span>
-          <span style="font-size:11px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:3px 9px;border-radius:4px">AppSec</span>
-          <span style="font-size:11px;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b);padding:3px 9px;border-radius:4px">GRC</span>
-          <span style="font-size:11px;font-weight:600;color:var(--text-3);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:3px 9px;border-radius:4px">+7 more</span>
+        <p style="font-size:13px;color:var(--text-2);margin-bottom:14px;line-height:1.6">10 UK cybersecurity roles broken down. Which are realistic for international graduates right now.</p>
+        <div style="margin-bottom:16px">
+          <span class="tag-chip">SOC Analyst</span>
+          <span class="tag-chip">AppSec</span>
+          <span class="tag-chip">GRC</span>
+          <span class="tag-chip muted">+7 more</span>
         </div>
-        <a href="roles.html" class="btn-check" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:7px">View all roles <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="roles.html" class="btn-check" style="text-decoration:none;display:inline-flex">View all roles →</a>
       </div>
 
-      <!-- WHATSAPP COMMUNITY -->
-      <div class="card" style="grid-column:span 12">
+      <!-- COMMUNITY -->
+      <div class="card community-card">
         <div class="card-title">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           WhatsApp Community
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-          <div>
-            <p style="font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:0">Join the CyberGrad WhatsApp community — connect with other international cyber graduates navigating the UK job market.</p>
-          </div>
-          <a href="https://chat.whatsapp.com/CyberGradCommunity" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.25);color:#25d366;padding:10px 20px;border-radius:8px;font-family:var(--font-b);font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0">
-            <svg width="16" height="16" fill="#25d366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;margin:0">Join other international cybersecurity graduates navigating the UK job market. Ask questions, share updates, support each other.</p>
+          <a href="https://chat.whatsapp.com/CyberGradCommunity" target="_blank" class="wa-btn">
+            <svg width="16" height="16" fill="#fff" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
             Join Community
           </a>
         </div>
@@ -259,247 +232,117 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// ── CLEAN URL IMMEDIATELY ──
-// Remove access_token hash before anything else loads
-if (window.location.hash && window.location.hash.includes('access_token')) {
-  window.history.replaceState(null, '', window.location.pathname);
-}
-
-function showCompleteProfileBanner(email) {
-  if (document.getElementById('complete-profile-banner')) return;
-  const banner = document.createElement('div');
-  banner.id = 'complete-profile-banner';
-  banner.style.cssText = 'background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:14px 20px;margin:0 0 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap';
-  banner.innerHTML = `
-    <div style="display:flex;align-items:center;gap:10px">
-      <svg width="18" height="18" fill="none" stroke="#00C896" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span style="font-size:13px;color:var(--text-2)">Add your name to personalise your dashboard.</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px">
-      <input type="text" id="inline-name" placeholder="Your first name" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:8px 12px;outline:none;width:160px">
-      <button onclick="saveInlineName('${email}')" style="background:var(--teal);color:#060B16;border:none;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap">Save</button>
-    </div>`;
-  const main = document.querySelector('.dash-content') || document.querySelector('.main-content') || document.getElementById('dash-main');
-  if (main) main.insertAdjacentElement('afterbegin', banner);
-}
-
-async function saveInlineName(email) {
-  const nameInput = document.getElementById('inline-name');
-  const firstName = nameInput?.value?.trim();
-  if (!firstName) { nameInput.style.borderColor = 'rgba(220,38,38,.5)'; return; }
-  try {
-    await sb.from('students').upsert({ email, first_name: firstName }, { onConflict: 'email' });
-    await sb.auth.updateUser({ data: { first_name: firstName } });
-    document.getElementById('topbar-name').textContent = firstName;
-    const av = document.getElementById('user-av');
-    if (av) av.textContent = firstName[0].toUpperCase();
-    const banner = document.getElementById('complete-profile-banner');
-    if (banner) banner.remove();
-  } catch(e) { console.error('Save name failed:', e); }
-}
+const sb = supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
 
 async function handleAuth() {
-  setLoading(true);
-  try {
-    // Listen for auth state change — fires when magic link hash is consumed
-    sb.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        window.history.replaceState(null, '', window.location.pathname);
-        await loadUser(session.user);
-        return;
-      }
-    });
-
-    // Also check existing session
-    const { data: { session }, error } = await sb.auth.getSession();
-    if (error) throw error;
-    if (session?.user) {
-      window.history.replaceState(null, '', window.location.pathname);
-      await loadUser(session.user);
-    } else if (!window.location.hash.includes('access_token')) {
-      // Only redirect if no token in URL — give onAuthStateChange time to fire
-      setTimeout(() => {
-        sb.auth.getSession().then(({ data: { session } }) => {
-          if (!session) window.location.href = 'login.html';
-        });
-      }, 2000);
-    }
-  } catch (err) {
-    console.error(err);
-    window.location.href = 'login.html';
-  }
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+  await loadUser(session.user);
 }
 
 async function loadUser(user) {
-  const meta = user.user_metadata || {};
-  let firstName = '';
-  let lastName = '';
-  let fullName = '';
+  let firstName = '', fullName = '';
 
-  // 1. getUser() — freshest metadata
+  // 1. getUser — freshest metadata
   try {
-    const { data: { user: freshUser } } = await sb.auth.getUser();
-    const freshMeta = freshUser?.user_metadata || {};
-    if (freshMeta.first_name) {
-      firstName = freshMeta.first_name;
-      lastName = freshMeta.last_name || '';
-      fullName = (firstName + ' ' + lastName).trim();
-    }
+    const { data: { user: fu } } = await sb.auth.getUser();
+    const meta = fu?.user_metadata || {};
+    if (meta.first_name) { firstName = meta.first_name; fullName = (firstName+' '+(meta.last_name||'')).trim(); }
   } catch(e) {}
 
-  // 2. Check localStorage cache
+  // 2. localStorage cache
   if (!firstName) {
     try {
-      const cached = JSON.parse(localStorage.getItem('cg_user') || '{}');
-      if (cached.firstName && cached.email === user.email) {
-        firstName = cached.firstName;
-        fullName = cached.name || firstName;
-      }
+      const c = JSON.parse(localStorage.getItem('cg_user')||'{}');
+      if (c.firstName && c.email === user.email) { firstName = c.firstName; fullName = c.name || firstName; }
     } catch(e) {}
   }
 
-  // 3. Check session metadata
-  if (!firstName && meta.first_name) {
-    firstName = meta.first_name;
-    lastName = meta.last_name || '';
-    fullName = (firstName + ' ' + lastName).trim();
-  }
-
-  // 4. Query students table
+  // 3. Students table
   if (!firstName) {
     try {
-      const { data } = await sb
-        .from('students')
-        .select('first_name, last_name, cv_score')
-        .eq('email', user.email)
-        .single();
+      const { data } = await sb.from('students').select('first_name,last_name,cv_score').eq('email',user.email).single();
       if (data?.first_name) {
-        firstName = data.first_name;
-        lastName = data.last_name || '';
-        fullName = (firstName + ' ' + lastName).trim();
+        firstName = data.first_name; fullName = (firstName+' '+(data.last_name||'')).trim();
         if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
-        localStorage.setItem('cg_user', JSON.stringify({ firstName, name: fullName, email: user.email }));
-        // Save to metadata for future
-        sb.auth.updateUser({ data: { first_name: firstName, last_name: lastName } }).catch(()=>{});
+        localStorage.setItem('cg_user', JSON.stringify({firstName, name:fullName, email:user.email}));
+        sb.auth.updateUser({data:{first_name:firstName, last_name:data.last_name||''}}).catch(()=>{});
       }
     } catch(e) {}
   }
 
-  // 5. Still no name — show banner + Grad fallback
-  if (!firstName) {
-    showCompleteProfileBanner(user.email);
-    firstName = 'Grad';
-    fullName = '';
-  }
+  // 4. Banner fallback
+  if (!firstName) showNameBanner(user.email);
 
-  if (!fullName) fullName = firstName;
-
-  document.getElementById('topbar-name').textContent = firstName;
+  const initials = (firstName||'G')[0].toUpperCase();
+  document.getElementById('topbar-name').textContent = firstName || 'Grad';
   document.getElementById('user-name').textContent = fullName || 'Student';
-  document.getElementById('user-av').textContent = (firstName !== 'Grad' ? firstName[0] : 'G').toUpperCase();
+  document.getElementById('user-email').textContent = user.email;
+  document.getElementById('user-av').textContent = initials;
+  document.getElementById('sidebar-av').textContent = initials;
 
-  // Admin link
   if (user.email === 'rakeshelamaran98@gmail.com') {
-    const adminLink = document.getElementById('admin-nav-link');
-    if (adminLink) adminLink.style.display = 'flex';
+    document.getElementById('admin-nav-link').style.display = 'flex';
   }
 
   // CV Score
-  const cvScore = localStorage.getItem('cg_cv_score');
-  if (cvScore) {
-    const score = parseInt(cvScore);
-    const col = score >= 80 ? '#00C896' : score >= 60 ? '#3b82f6' : score >= 40 ? '#d97706' : '#dc2626';
+  const score = parseInt(localStorage.getItem('cg_cv_score')||'0');
+  if (score > 0) {
+    const col = score>=80?'#1E40AF':score>=60?'#0369A1':score>=40?'#D97706':'#DC2626';
     document.getElementById('cv-score-content').innerHTML = `
       <div class="cv-score-big" style="color:${col}">${score}</div>
       <div class="cv-score-sub">out of 100</div>
       <div class="cv-bar"><div class="cv-fill" style="width:0%;background:${col}" id="cv-fill-bar"></div></div>
-      <a href="cv-checker.html" class="btn-check" style="margin-top:12px">
+      <a href="cv-checker.html" class="btn-check" style="margin-top:12px;text-decoration:none">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         Re-check my CV
       </a>`;
-    setTimeout(() => { const b = document.getElementById('cv-fill-bar'); if(b) b.style.width = score + '%'; }, 300);
+    setTimeout(()=>{const b=document.getElementById('cv-fill-bar');if(b)b.style.width=score+'%'},300);
   }
 
-  setLoading(false);
+  document.getElementById('loading-overlay').style.display = 'none';
 }
 
-function showCompleteProfileBanner(email) {
-  if (document.getElementById('complete-profile-banner')) return;
-  const banner = document.createElement('div');
-  banner.id = 'complete-profile-banner';
-  banner.style.cssText = 'background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap';
-  banner.innerHTML = `
-    <div style="display:flex;align-items:center;gap:10px">
-      <svg width="16" height="16" fill="none" stroke="#00C896" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span style="font-size:13px;color:var(--text-2)">Add your name to personalise your dashboard.</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      <input type="text" id="inline-fname" placeholder="First name" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:8px 12px;outline:none;width:130px">
-      <input type="text" id="inline-lname" placeholder="Last name" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font-b);font-size:13px;padding:8px 12px;outline:none;width:130px">
-      <button onclick="saveInlineName('${email}')" style="background:var(--teal);color:#060B16;border:none;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap">Save</button>
-    </div>`;
-  // Insert at top of main content area
+function showNameBanner(email) {
   const topbar = document.querySelector('.topbar');
-  if (topbar) topbar.insertAdjacentElement('afterend', banner);
+  if (!topbar || document.getElementById('name-banner')) return;
+  const b = document.createElement('div');
+  b.id = 'name-banner';
+  b.style.cssText = 'background:var(--blue-light);border:1px solid var(--blue-border);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap';
+  b.innerHTML = `
+    <span style="font-size:13px;color:var(--blue)">Add your name to personalise your dashboard.</span>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <input type="text" id="inline-fname" placeholder="First name" style="padding:8px 12px;border:1px solid var(--border-2);border-radius:var(--radius);font-size:13px;color:var(--text);background:#fff;font-family:var(--font);width:130px;outline:none">
+      <input type="text" id="inline-lname" placeholder="Last name" style="padding:8px 12px;border:1px solid var(--border-2);border-radius:var(--radius);font-size:13px;color:var(--text);background:#fff;font-family:var(--font);width:130px;outline:none">
+      <button onclick="saveName('${email}')" style="background:var(--blue);color:#fff;border:none;padding:8px 16px;border-radius:var(--radius);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Save</button>
+    </div>`;
+  topbar.insertAdjacentElement('afterend', b);
 }
 
-async function saveInlineName(email) {
+async function saveName(email) {
   const fname = document.getElementById('inline-fname')?.value?.trim();
-  const lname = document.getElementById('inline-lname')?.value?.trim() || '';
-  if (!fname) {
-    const el = document.getElementById('inline-fname');
-    if (el) el.style.borderColor = 'rgba(220,38,38,.5)';
-    return;
-  }
-  try {
-    await sb.from('students').upsert(
-      { email, first_name: fname, last_name: lname },
-      { onConflict: 'email' }
-    );
-    await sb.auth.updateUser({ data: { first_name: fname, last_name: lname } });
-    document.getElementById('topbar-name').textContent = fname;
-    document.getElementById('user-name').textContent = (fname + ' ' + lname).trim();
-    const av = document.getElementById('user-av');
-    if (av) av.textContent = fname[0].toUpperCase();
-    const banner = document.getElementById('complete-profile-banner');
-    if (banner) banner.remove();
-  } catch(e) {
-    console.error('Save name failed:', e);
-  }
-}
-
-function setLoading(on) {
-  const m = document.querySelector('.main');
-  if (m) { m.style.opacity = on ? '0' : '1'; m.style.transition = 'opacity 0.3s ease'; }
+  const lname = document.getElementById('inline-lname')?.value?.trim()||'';
+  if (!fname) return;
+  await sb.from('students').upsert({email, first_name:fname, last_name:lname},{onConflict:'email'});
+  await sb.auth.updateUser({data:{first_name:fname, last_name:lname}});
+  localStorage.setItem('cg_user', JSON.stringify({firstName:fname, name:(fname+' '+lname).trim(), email}));
+  document.getElementById('topbar-name').textContent = fname;
+  document.getElementById('user-name').textContent = (fname+' '+lname).trim();
+  document.getElementById('user-av').textContent = fname[0].toUpperCase();
+  document.getElementById('sidebar-av').textContent = fname[0].toUpperCase();
+  document.getElementById('name-banner')?.remove();
 }
 
 async function logout() {
-  try {
-    await sb.auth.signOut({ scope: 'local' });
-  } catch(e) {}
-  // Clear all local storage keys Supabase uses
-  Object.keys(localStorage).forEach(key => {
-    if (key.startsWith('sb-') || key.startsWith('supabase') || key === 'cg_user' || key === 'cg_cv_score') {
-      localStorage.removeItem(key);
-    }
-  });
+  try { await sb.auth.signOut({scope:'local'}); } catch(e) {}
+  Object.keys(localStorage).forEach(k=>{if(k.startsWith('sb-')||k.startsWith('supabase')||k==='cg_user'||k==='cg_cv_score')localStorage.removeItem(k)});
   window.location.href = 'login.html';
 }
 
-// Cross-tab magic link detection
-// If user clicks magic link in another tab, this tab redirects automatically
-sb.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_IN' && session && window.location.pathname.includes('login')) {
-    window.location.href = 'dashboard.html';
-  }
-});
-
-window.addEventListener('DOMContentLoaded', handleAuth);
+handleAuth();
 </script>
 </body>
 </html>

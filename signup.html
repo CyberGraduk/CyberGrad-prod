@@ -1,354 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Create Free Account — CyberGrad</title>
+<meta name="description" content="Create your free CyberGrad account to access the CV Scorecard, resources, Sectors guide, Roles guide, and WhatsApp community.">
 <link rel="canonical" href="https://www.cyber-grad.co.uk/signup.html">
-<meta name="description" content="Create your free CyberGrad account to access the CV Scorecard, resources, and WhatsApp community.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#F1F5F9;
-  --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
-  --border:#E2E8F0;--border-2:#CBD5E1;
-  --blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--blue-dark:#1E3A8A;
-  --teal:#1E40AF;--teal-b:#BFDBFE;--teal-dim:#EFF6FF;--bg:#060B16;--bg-2:#0A1020;--teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);--text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;}
-body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;border-bottom:1px solid var(--border);background:rgba(8,13,24,0.92);position:sticky;top:0;z-index:10}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
-.nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
-.nav-right{font-size:14px;color:var(--text-2);text-decoration:none;transition:color .2s}
-.nav-right:hover{color:var(--text)}
-main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:48px 20px 80px;gap:48px;flex-wrap:wrap}
-
-/* LEFT — VALUE PROP */
-.left-col{max-width:360px;padding-top:8px}
-.left-tag{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
-.left-col h1{font-family:var(--font-h);font-size:clamp(28px,3.5vw,38px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
-.hl{color:var(--teal)}
-.left-col p{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px}
-.unlock-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.unlock-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:10px}
-.unlock-icon{font-size:18px;flex-shrink:0}
-.unlock-text{font-size:13px;color:var(--text-2);line-height:1.5}
-.unlock-text strong{color:var(--text);font-weight:600;display:block;margin-bottom:2px}
-.counter-pill{display:inline-flex;align-items:center;gap:10px;background:var(--bg-2);border:1px solid var(--border);border-radius:100px;padding:8px 16px}
-.c-dot{width:7px;height:7px;background:var(--teal);border-radius:50%;flex-shrink:0;box-shadow:0 0 0 0 rgba(26,158,117,.4);animation:livepulse 2s ease-out infinite}
-@keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(26,158,117,.4)}70%{box-shadow:0 0 0 8px rgba(26,158,117,0)}100%{box-shadow:0 0 0 0 rgba(26,158,117,0)}}
-.c-num{font-family:var(--font-h);font-size:17px;font-weight:800;color:var(--teal);letter-spacing:-0.5px}
-.c-lbl{font-size:13px;color:var(--text-2)}
-
-/* RIGHT — FORM CARD */
-.form-card{width:100%;max-width:420px;background:var(--bg-2);border:1px solid var(--border);border-radius:20px;padding:36px 32px}
-.form-title{font-family:var(--font-h);font-size:22px;font-weight:800;letter-spacing:-0.8px;margin-bottom:5px}
-.form-sub{font-size:14px;color:var(--text-2);margin-bottom:28px;line-height:1.6}
-
-.step-section{display:none}
-.step-section.active{display:block}
-
-.fg{margin-bottom:16px}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:7px;letter-spacing:0.2px}
-label .req{color:var(--teal)}
-.fi,.fs{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-b);font-size:15px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
-.fi::placeholder{color:var(--text-3)}
-.fi:focus,.fs:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)}
-.fs option{background:#1a2035}
-
-.btn-submit{width:100%;background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:14px;cursor:pointer;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s,transform .15s;letter-spacing:-0.2px}
-.btn-submit:hover{opacity:.88;transform:translateY(-1px)}
-.btn-submit:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.trust-note{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:12px;color:var(--text-3)}
-.form-footer{text-align:center;margin-top:18px;font-size:13px;color:var(--text-2)}
-.form-footer a{color:var(--teal);text-decoration:none}
-
-/* CHECK EMAIL STATE */
-.check-email{text-align:center;padding:8px 0}
-.email-icon{width:68px;height:68px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
-.check-email h2{font-family:var(--font-h);font-size:22px;font-weight:800;margin-bottom:8px;letter-spacing:-0.6px}
-.check-email p{font-size:14px;color:var(--text-2);margin-bottom:6px;line-height:1.6}
-.email-pill{background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:8px;padding:10px 16px;font-size:14px;color:var(--teal);text-align:center;margin:14px 0 22px;word-break:break-all;font-weight:500}
-.btn-demo{width:100%;background:rgba(26,158,117,0.12);color:var(--teal);border:1px solid var(--teal-b);border-radius:8px;font-family:var(--font-b);font-size:14px;font-weight:600;padding:13px;cursor:pointer;margin-top:4px;transition:background .2s}
-.btn-demo:hover{background:rgba(26,158,117,0.18)}
-.resend{text-align:center;margin-top:14px;font-size:13px;color:var(--text-2)}
-.resend button{background:none;border:none;color:var(--teal);font-family:var(--font-b);font-size:13px;cursor:pointer}
-
-@media(max-width:860px){main{flex-direction:column;align-items:center;padding:32px 20px 60px}.left-col{max-width:100%}}
-@media(max-width:480px){.form-card{padding:24px 18px}.fg-row{grid-template-columns:1fr}nav{padding:0 20px}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F8FAFC;--bg2:#fff;--text:#0F172A;--text-2:#475569;--text-3:#94A3B8;--border:#E2E8F0;--border-2:#CBD5E1;--blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--font:'Inter',-apple-system,sans-serif;--radius:8px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-badge{width:34px;height:34px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.nav-badge span{color:#fff;font-size:13px;font-weight:800}
+.nav-name{font-size:17px;font-weight:800;color:var(--text)}
+.main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:40px;width:100%;max-width:480px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-top:8px}
+.card-logo{width:44px;height:44px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.card-logo span{color:#fff;font-size:16px;font-weight:800}
+h1{font-size:22px;font-weight:800;text-align:center;margin-bottom:6px}
+.card-sub{font-size:14px;color:var(--text-2);text-align:center;margin-bottom:28px}
+.step{display:none}.step.active{display:block}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+.fi,.fs{width:100%;padding:11px 14px;border:1px solid var(--border-2);border-radius:var(--radius);font-family:var(--font);font-size:14px;color:var(--text);background:#fff;transition:border-color .2s;outline:none}
+.fi:focus,.fs:focus{border-color:var(--blue)}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{width:100%;background:var(--blue);color:#fff;border:none;padding:13px;border-radius:var(--radius);font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:6px}
+.btn:hover{opacity:.88}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.err{background:#FFF1F2;border:1px solid #FECDD3;border-radius:var(--radius);padding:10px 14px;font-size:13px;color:#BE123C;margin-bottom:14px;display:none}
+.tc-row{display:flex;align-items:flex-start;gap:10px;margin:14px 0}
+.tc-row input{margin-top:2px;flex-shrink:0;accent-color:var(--blue)}
+.tc-row label{font-size:12px;color:var(--text-2);line-height:1.5}
+.tc-row a{color:var(--blue);font-weight:600}
+.card-footer{text-align:center;margin-top:20px;font-size:13px;color:var(--text-2)}
+.card-footer a{color:var(--blue);font-weight:600}
+.inbox-icon{width:56px;height:56px;background:var(--blue-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.perks{background:var(--bg);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px}
+.perks p{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3);margin-bottom:8px}
+.perk{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.perk::before{content:'✓';color:var(--blue);font-weight:700;flex-shrink:0}
+footer{border-top:1px solid var(--border);padding:16px 5%;text-align:center;font-size:12px;color:var(--text-3);flex-shrink:0}
+footer a{color:var(--text-3);margin:0 8px}
+footer a:hover{color:var(--blue)}
 </style>
 </head>
 <body>
+
 <nav>
-  <a href="index.html" class="nav-logo"><img src="logo.png" alt="CyberGrad" style="height:36px;width:auto"></a>
-  <a href="login.html" class="nav-right">Already have an account? Log in →</a>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-badge"><span>CG</span></div>
+    <span class="nav-name">CyberGrad</span>
+  </a>
+  <a href="login.html" style="font-size:14px;color:var(--blue);font-weight:600">Already have an account? Log in →</a>
 </nav>
-<main>
 
-  <!-- LEFT: VALUE PROP -->
-  <div class="left-col">
-    <div class="left-tag">Free account</div>
-    <h1>Get the tools.<br>Fix your CV.<br><span class="hl">Land UK roles.</span></h1>
-    <p>Create your free account and access everything you need to understand the UK cybersecurity job market — instantly.</p>
-    <div class="unlock-list">
-      <div class="unlock-item">
-        <span class="unlock-icon">📧</span>
-        <div class="unlock-text"><strong>CV Checker + Email Report</strong> Score out of 100. Concise feedback sent to your inbox with a downloadable PDF.</div>
-      </div>
-      <!-- V1.2 — UK CV Template and LinkedIn guides removed from free tier
-      <div class="unlock-item">
-        <span class="unlock-icon">📄</span>
-        <div class="unlock-text"><strong>UK CV Template</strong>ATS-ready, UK-formatted, editable. Built for cybersecurity roles.</div>
-      </div>
-      <div class="unlock-item">
-        <span class="unlock-icon">🔗</span>
-        <div class="unlock-text"><strong>LinkedIn & Job Search Guides</strong>32-point checklist + structured 8-week UK job search plan.</div>
-      </div>
-      -->
-      <div class="unlock-item">
-        <span class="unlock-icon">💬</span>
-        <div class="unlock-text"><strong>WhatsApp Community</strong> Connect with other international students navigating the same journey.</div>
-      </div>
-    </div>
-    <div class="counter-pill">
-      <span class="c-dot"></span>
-      <span class="c-num" id="side-count">5</span>
-      <span class="c-lbl">students signed up and growing</span>
-    </div>
-  </div>
+<div class="main">
+  <div class="card">
+    <div class="card-logo"><span>CG</span></div>
+    <h1 id="card-title">Create your free account</h1>
+    <p class="card-sub" id="card-sub">Access the CV Scorecard, resources, and community. Free, forever.</p>
 
-  <!-- RIGHT: FORM -->
-  <div class="form-card">
+    <div id="step-form" class="step active">
+      <div class="perks">
+        <p>What you get free</p>
+        <div class="perk">CV Scorecard + PDF report</div>
+        <div class="perk">Sectors &amp; Domains guide</div>
+        <div class="perk">Roles to Apply list</div>
+        <div class="perk">WhatsApp community access</div>
+      </div>
 
-    <!-- STEP 1: FORM -->
-    <div class="step-section active" id="step-form">
-      <div class="form-title">Create your free account</div>
-      <p class="form-sub">No password needed. We'll send a magic link to your email — click it and you're in.</p>
-      <form onsubmit="handleSignup(event)">
-        <div class="fg-row">
-          <div><label>First name <span class="req">*</span></label><input type="text" class="fi" id="sg-fname" placeholder="First name" required></div>
-          <div><label>Last name <span class="req">*</span></label><input type="text" class="fi" id="sg-lname" placeholder="Last name" required></div>
-        </div>
-        <div class="fg"><label>Email address <span class="req">*</span></label><input type="email" class="fi" id="sg-email" placeholder="you@email.com" required></div>
-        <div class="fg">
-          <label>University <span class="req">*</span></label>
-          <select class="fs" id="sg-uni" required>
-            <option value="" disabled selected>Select your university</option>
-            <optgroup label="Russell Group">
-              <option>University of Birmingham</option>
-              <option>University of Bristol</option>
-              <option>University of Cambridge</option>
-              <option>Cardiff University</option>
-              <option>Durham University</option>
-              <option>University of Edinburgh</option>
-              <option>University of Exeter</option>
-              <option>University of Glasgow</option>
-              <option>Imperial College London</option>
-              <option>King's College London</option>
-              <option>University of Leeds</option>
-              <option>University of Liverpool</option>
-              <option>London School of Economics (LSE)</option>
-              <option>University of Manchester</option>
-              <option>Newcastle University</option>
-              <option>University of Nottingham</option>
-              <option>University of Oxford</option>
-              <option>Queen Mary University of London</option>
-              <option>Queen's University Belfast</option>
-              <option>University of Sheffield</option>
-              <option>University of Southampton</option>
-              <option>University College London (UCL)</option>
-              <option>University of Warwick</option>
-              <option>University of York</option>
-            </optgroup>
-            <optgroup label="Other UK Universities">
-              <option>Anglia Ruskin University</option>
-              <option>Aston University</option>
-              <option>Bath Spa University</option>
-              <option>University of Bath</option>
-              <option>Bournemouth University</option>
-              <option>Brunel University London</option>
-              <option>Birkbeck, University of London</option>
-              <option>City, University of London</option>
-              <option>Coventry University</option>
-              <option>De Montfort University</option>
-              <option>University of Derby</option>
-              <option>University of East Anglia (UEA)</option>
-              <option>University of East London</option>
-              <option>Edinburgh Napier University</option>
-              <option>University of Essex</option>
-              <option>Goldsmiths, University of London</option>
-              <option>University of Greenwich</option>
-              <option>Heriot-Watt University</option>
-              <option>University of Hertfordshire</option>
-              <option>University of Huddersfield</option>
-              <option>University of Hull</option>
-              <option>Keele University</option>
-              <option>University of Kent</option>
-              <option>Kingston University London</option>
-              <option>Lancaster University</option>
-              <option>University of Leicester</option>
-              <option>University of Lincoln</option>
-              <option>Liverpool John Moores University</option>
-              <option>London Metropolitan University</option>
-              <option>London South Bank University</option>
-              <option>Loughborough University</option>
-              <option>Manchester Metropolitan University</option>
-              <option>Middlesex University</option>
-              <option>University of Northampton</option>
-              <option>Northumbria University</option>
-              <option>Nottingham Trent University</option>
-              <option>Oxford Brookes University</option>
-              <option>Plymouth University</option>
-              <option>University of Portsmouth</option>
-              <option>University of Reading</option>
-              <option>Robert Gordon University</option>
-              <option>Royal Holloway, University of London</option>
-              <option>University of Salford</option>
-              <option>Sheffield Hallam University</option>
-              <option>University of South Wales</option>
-              <option>University of Stirling</option>
-              <option>University of Strathclyde</option>
-              <option>University of Sunderland</option>
-              <option>Surrey University</option>
-              <option>University of Sussex</option>
-              <option>Swansea University</option>
-              <option>Teesside University</option>
-              <option>Ulster University</option>
-              <option>University of West London</option>
-              <option>University of West of England (UWE)</option>
-              <option>University of Westminster</option>
-              <option>University of Wolverhampton</option>
-              <option>Wrexham University</option>
-            </optgroup>
-            <option>Other UK university</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label>Your status <span class="req">*</span></label>
-          <select class="fs" id="sg-status" required>
-            <option value="" disabled selected>Select your status</option>
-            <option>Currently studying (Bachelors)</option>
-            <option>Currently studying (Masters)</option>
-            <option>Recently Graduated (0-6 months)</option>
-            <option>Graduated 6+ Months Ago</option>
-          </select>
-        </div>
-        <!-- T&C CHECKBOX -->
-        <div style="display:flex;align-items:flex-start;gap:10px;margin:12px 0 4px;padding:14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px">
-          <input type="checkbox" id="sg-tc" required style="margin-top:2px;accent-color:var(--teal);width:16px;height:16px;flex-shrink:0;cursor:pointer">
-          <label for="sg-tc" style="font-size:13px;color:var(--text-2);line-height:1.6;cursor:pointer">
-            I agree to the <button type="button" onclick="document.getElementById('tc-modal').style.display='flex'" style="background:none;border:none;color:var(--teal);font-size:13px;cursor:pointer;text-decoration:underline;padding:0;font-family:var(--font-b)">Terms & Conditions</button>. CyberGrad provides practical career guidance and structured resources — not job placement. No employment outcomes are guaranteed.
-          </label>
-        </div>
-        <button type="submit" class="btn-submit" id="sg-btn">
-          <span id="sg-btn-txt">Send my magic link</span>
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <div class="trust-note">
-          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          No password · No spam · Free forever
-        </div>
-      </form>
-      <div class="form-footer">Already have an account? <a href="login.html">Log in</a></div>
+      <div id="signup-error" class="err"></div>
+
+      <div class="row-2">
+        <div class="fg"><label>First name</label><input type="text" class="fi" id="sg-first" placeholder="Rakesh" required></div>
+        <div class="fg"><label>Last name</label><input type="text" class="fi" id="sg-last" placeholder="Elamaran" required></div>
+      </div>
+      <div class="fg"><label>Email address</label><input type="email" class="fi" id="sg-email" placeholder="you@email.com" required></div>
+      <div class="fg">
+        <label>University</label>
+        <input type="text" class="fi" id="sg-uni" placeholder="University of Birmingham" required list="uni-list">
+        <datalist id="uni-list">
+          <option>University of Birmingham</option><option>University of Bristol</option><option>University of Cambridge</option>
+          <option>Cardiff University</option><option>Durham University</option><option>University of Edinburgh</option>
+          <option>University of Exeter</option><option>University of Glasgow</option><option>Imperial College London</option>
+          <option>King's College London</option><option>University of Leeds</option><option>University of Liverpool</option>
+          <option>London School of Economics</option><option>University of Manchester</option><option>Newcastle University</option>
+          <option>University of Nottingham</option><option>University of Oxford</option><option>Queen Mary University of London</option>
+          <option>University of Sheffield</option><option>University of Southampton</option><option>University College London</option>
+          <option>University of Warwick</option><option>University of York</option><option>Coventry University</option>
+          <option>Aston University</option><option>Brunel University London</option><option>City, University of London</option>
+          <option>University of Surrey</option><option>University of Sussex</option><option>Heriot-Watt University</option>
+          <option>Northumbria University</option><option>Teesside University</option><option>Other UK university</option>
+        </datalist>
+      </div>
+      <div class="fg">
+        <label>Current status</label>
+        <select class="fs" id="sg-status" required>
+          <option value="" disabled selected>Select your status</option>
+          <option>Currently studying (Bachelors)</option>
+          <option>Currently studying (Masters)</option>
+          <option>Recently graduated (0–6 months)</option>
+          <option>Graduated 6+ months ago</option>
+        </select>
+      </div>
+      <div class="tc-row">
+        <input type="checkbox" id="sg-tc" required>
+        <label for="sg-tc">I agree to the <a href="terms.html" target="_blank">Terms &amp; Conditions</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>. I understand CyberGrad does not guarantee employment.</label>
+      </div>
+      <button class="btn" id="sg-btn" onclick="handleSignup(event)">
+        <span id="sg-btn-txt">Create free account</span>
+      </button>
+      <div class="card-footer">Already have an account? <a href="login.html">Log in →</a></div>
     </div>
 
-    <!-- STEP 2: CHECK EMAIL -->
-    <div class="step-section" id="step-email">
-      <div class="check-email">
-        <div class="email-icon">📬</div>
-        <h2>Check your inbox</h2>
-        <p>We sent a magic link to:</p>
-        <div class="email-pill" id="sent-email">you@email.com</div>
-        <p>Click the link to log in instantly. No password — ever. Link expires in 10 minutes.</p>
-        <p style="font-size:12px;color:var(--text-3);margin-top:8px">Can't find it? Check your spam folder.</p>
-        <!-- V1.1 — Demo mode removed. Dashboard only accessible after clicking magic link.
-        <button class="btn-demo" onclick="window.location.href='dashboard.html'">
-          ✨ Demo mode — go straight to dashboard
-        </button>
-        -->
-        <div class="resend">Didn't get it? <button onclick="resend()">Resend link</button></div>
+    <div id="step-email" class="step">
+      <div class="inbox-icon">
+        <svg width="26" height="26" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
-    </div>
-
-  </div>
-</main>
-
-<!-- T&C MODAL -->
-<div id="tc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#0A1020;border:1px solid #131D30;border-radius:16px;max-width:540px;width:100%;max-height:80vh;overflow-y:auto;padding:32px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-      <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.5px">Terms & Conditions</h2>
-      <button onclick="document.getElementById('tc-modal').style.display='none'" style="background:none;border:none;color:#8896B3;font-size:20px;cursor:pointer;line-height:1">×</button>
-    </div>
-    <div style="font-size:14px;color:#8896B3;line-height:1.75">
-      <p style="margin-bottom:14px;color:#F0F6FF;font-weight:600">By creating a CyberGrad account, you agree to the following:</p>
-      <p style="margin-bottom:12px"><strong style="color:#F0F6FF">1. What CyberGrad provides</strong><br>CyberGrad is a structured career guidance programme — not a recruitment or job placement service. We provide tools, knowledge, structured sessions, and community to help you navigate the UK cybersecurity job market.</p>
-      <p style="margin-bottom:12px"><strong style="color:#F0F6FF">2. No employment guarantees</strong><br>CyberGrad does not guarantee employment outcomes. Results depend on individual effort, background, and market conditions. Practical industry knowledge beyond your degree — guidance, not guarantees.</p>
-      <p style="margin-bottom:12px"><strong style="color:#F0F6FF">3. Payments</strong><br>All paid plans are one-time payments, not subscriptions. Access is granted immediately upon successful payment. No refunds after programme access has been granted and sessions have begun.</p>
-      <p style="margin-bottom:12px"><strong style="color:#F0F6FF">4. Your data</strong><br>Your personal data is handled in accordance with UK GDPR. We never sell or share your personal information with third parties. CV text is processed in-session only and never stored on our servers.</p>
-      <p style="margin-bottom:12px"><strong style="color:#F0F6FF">5. Community guidelines</strong><br>CyberGrad community spaces (WhatsApp groups) require respectful conduct. Spam, harassment, or sharing of copyrighted materials will result in removal without refund.</p>
-      <p style="margin-bottom:20px"><strong style="color:#F0F6FF">6. Access</strong><br>Programme access is personal and non-transferable. Account sharing is not permitted.</p>
-      <button onclick="document.getElementById('sg-tc').checked=true;document.getElementById('tc-modal').style.display='none'" style="width:100%;background:#00C896;color:#060B16;border:none;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:13px;cursor:pointer">I agree — close</button>
+      <h1>Check your inbox</h1>
+      <p class="card-sub">We sent a magic link to <strong id="sent-email"></strong>. Click it to activate your account and access your dashboard.</p>
+      <p style="font-size:13px;color:var(--text-3);text-align:center;margin-top:12px">Check your spam folder if you don't see it within a minute.</p>
     </div>
   </div>
 </div>
 
+<footer>
+  <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="index.html">cyber-grad.co.uk</a>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ── SUPABASE INIT ── */
-const SUPABASE_URL = 'https://oglsolxcvchgmjcprrwa.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
 
-/* ── COMPLETE PROFILE MODE (?complete=1) ── */
-// Fires when user verified magic link but has no name in DB yet
+// Complete profile mode
 async function checkCompleteMode() {
   const params = new URLSearchParams(window.location.search);
   if (!params.get('complete')) return;
-
   const { data: { session } } = await sb.auth.getSession();
   if (!session) { window.location.href = 'login.html'; return; }
-
-  // Pre-fill email (hidden) and switch heading
-  const emailEl = document.getElementById('sg-email');
-  if (emailEl) { emailEl.value = session.user.email; emailEl.closest('.fg').style.display = 'none'; }
-
-  const heading = document.querySelector('.card-title');
-  if (heading) heading.textContent = 'Complete your profile';
-
-  const sub = document.querySelector('.card-sub');
-  if (sub) sub.textContent = 'Just a few details so we can personalise your dashboard.';
+  document.getElementById('sg-email').value = session.user.email;
+  document.getElementById('sg-email').closest('.fg').style.display = 'none';
+  document.getElementById('card-title').textContent = 'Complete your profile';
+  document.getElementById('card-sub').textContent = 'Just a few details to personalise your dashboard.';
+  document.querySelector('.perks').style.display = 'none';
 }
 checkCompleteMode();
 
-/* ── COUNTER (from DB) ── */
-async function loadCount() {
-  const { count } = await sb.from('students').select('*', { count: 'exact', head: true });
-  const displayed = Math.max(count || 0, 5);
-  const el = document.getElementById('side-count');
-  if (el) el.textContent = displayed;
-}
-loadCount();
-
-/* ── SIGNUP ── */
 async function handleSignup(e) {
   e.preventDefault();
-  const fname = document.getElementById('sg-fname').value.trim();
-  const lname = document.getElementById('sg-lname').value.trim();
+  const fname = document.getElementById('sg-first').value.trim();
+  const lname = document.getElementById('sg-last').value.trim();
   const email = document.getElementById('sg-email').value.trim();
-  const uni   = document.getElementById('sg-uni').value;
+  const uni   = document.getElementById('sg-uni').value.trim();
   const status= document.getElementById('sg-status').value;
-  if (!fname || !lname || !email || !uni || !status) return;
+  const tc    = document.getElementById('sg-tc').checked;
+  const btn   = document.getElementById('sg-btn');
+  const txt   = document.getElementById('sg-btn-txt');
+  const errEl = document.getElementById('signup-error');
 
-  const btn = document.getElementById('sg-btn');
-  const txt = document.getElementById('sg-btn-txt');
-  btn.disabled = true;
-  txt.textContent = 'Sending magic link...';
+  errEl.style.display = 'none';
+  if (!fname || !lname || !email || !uni || !status) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display = 'block'; return; }
+  if (!tc) { errEl.textContent = 'Please agree to the terms to continue.'; errEl.style.display = 'block'; return; }
+
+  btn.disabled = true; txt.textContent = 'Creating account...';
 
   try {
-    /* 1. Send magic link */
     const { error: authError } = await sb.auth.signInWithOtp({
       email,
       options: {
@@ -358,72 +179,25 @@ async function handleSignup(e) {
     });
     if (authError) throw authError;
 
-    /* 1b. Also update user metadata if user already exists */
-    try {
-      await sb.auth.updateUser({
-        data: { first_name: fname, last_name: lname, university: uni, status }
-      });
-    } catch(e) { /* silent — user may not be authenticated yet */ }
-
-    /* 2. Insert student row */
     await sb.from('students').upsert({
-      email,
-      first_name: fname,
-      last_name: lname,
-      university: uni,
-      status,
-      plan: 'starter'
+      email, first_name: fname, last_name: lname, university: uni, status, plan: 'starter'
     }, { onConflict: 'email' });
 
-    /* 3. Save to localStorage for dashboard personalisation */
-    localStorage.setItem('cg_user', JSON.stringify({
-      name: fname + ' ' + lname,
-      firstName: fname,
-      email, uni, status, plan: 'free',
-      joined: new Date().toISOString()
-    }));
+    localStorage.setItem('cg_user', JSON.stringify({ firstName: fname, name: (fname+' '+lname).trim(), email }));
 
-    /* 4. Show check-email state */
     document.getElementById('sent-email').textContent = email;
     document.getElementById('step-form').classList.remove('active');
     document.getElementById('step-email').classList.add('active');
-
-  } catch (err) {
-    console.error(err);
-    txt.textContent = 'Something went wrong — try again';
-    btn.disabled = false;
+  } catch(err) {
+    errEl.textContent = 'Something went wrong. Try again or email cybergraduk@gmail.com';
+    errEl.style.display = 'block';
+    btn.disabled = false; txt.textContent = 'Create free account';
   }
 }
 
-function resend() {
-  const btn = document.querySelector('.resend button');
-  btn.textContent = 'Sent ✓';
-  setTimeout(() => btn.textContent = 'Resend link', 3000);
-}
-
-// Cross-tab detection — if magic link clicked in another tab, redirect this tab
 sb.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_IN' && session) {
-    window.location.href = 'https://www.cyber-grad.co.uk/dashboard.html';
-  }
+  if (event === 'SIGNED_IN' && session) window.location.href = 'https://www.cyber-grad.co.uk/dashboard.html';
 });
-
-/* DROPDOWN CLICK TOGGLE */
-function initDropdowns(){
-  document.querySelectorAll(".dropdown-toggle").forEach(function(btn){
-    btn.addEventListener("click",function(e){
-      e.stopPropagation();
-      var dd=this.closest(".dropdown");
-      var isOpen=dd.classList.contains("open");
-      document.querySelectorAll(".dropdown.open").forEach(function(d){d.classList.remove("open");});
-      if(!isOpen) dd.classList.add("open");
-    });
-  });
-  document.addEventListener("click",function(){
-    document.querySelectorAll(".dropdown.open").forEach(function(d){d.classList.remove("open");});
-  });
-}
-document.addEventListener("DOMContentLoaded",initDropdowns);
 </script>
 </body>
 </html>

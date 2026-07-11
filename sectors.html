@@ -14,7 +14,7 @@
   --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
   --border:#E2E8F0;--border-2:#CBD5E1;
   --blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--blue-dark:#1E3A8A;
-  --teal:#1E40AF;--teal-b:#BFDBFE;--teal-dim:#EFF6FF;--bg:#060B16;--bg2:#0A1020;--bg3:#0F1829;--teal:#00C896;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.20);--text:#F0F6FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif}
+  --teal:#1E40AF;--teal-b:#BFDBFE;--teal-dim:#EFF6FF;--bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#0F1829;--teal:#1E40AF;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.20);--text:#0F172A;--text-2:#475569;--text-3:#4A5775;--border:#E2E8F0;--font-h:'Inter',sans-serif;--font-b:'Inter',sans-serif}
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;-webkit-font-smoothing:antialiased}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(6,11,22,0.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
@@ -56,10 +56,14 @@ footer{padding:32px 5%;border-top:1px solid var(--border);display:flex;align-ite
 
 @media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}main{padding:88px 20px 60px}.sectors-grid{grid-template-columns:1fr}}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 <nav>
-  <a href="index.html" class="nav-logo"><img src="logo.png" alt="CyberGrad" style="height:36px;width:auto"></a>
+  <a href="index.html" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+    <div style="width:34px;height:34px;background:#1E40AF;border-radius:7px;display:flex;align-items:center;justify-content:center"><span style="color:#fff;font-size:13px;font-weight:800">CG</span></div>
+    <span style="font-size:17px;font-weight:800;color:#0F172A">CyberGrad</span>
+  </a>
   <a href="dashboard.html" id="back-dashboard-btn" style="display:none;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-2);padding:8px 14px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:500;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,150,.3)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-2)'">
     <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     Back to Dashboard
@@ -238,12 +242,12 @@ function showGate() {
   contentShown = true;
   mainEl.innerHTML = '<div style="text-align:center;padding:100px 24px;max-width:480px;margin:0 auto">'
     + '<div style="width:64px;height:64px;background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">'
-    + '<svg width="28" height="28" fill="none" stroke="#00C896" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>'
-    + '<h2 style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.8px;margin-bottom:12px;color:#F0F6FF">Free with a CyberGrad account.</h2>'
+    + '<svg width="28" height="28" fill="none" stroke="#1E40AF" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>'
+    + '<h2 style="font-family:\'Inter\',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.8px;margin-bottom:12px;color:#F0F6FF">Free with a CyberGrad account.</h2>'
     + '<p style="font-size:15px;color:#8896B3;line-height:1.7;margin-bottom:28px">Create a free account to access Sectors & Domains, Roles to Apply, and the CV Scorecard. No payment needed.</p>'
     + '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'
-    + '<a href="signup.html" style="display:inline-flex;align-items:center;gap:8px;background:#00C896;color:#060B16;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:700;text-decoration:none">Create free account</a>'
-    + '<a href="login.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid #131D30;color:#8896B3;padding:13px 24px;border-radius:8px;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:14px;font-weight:600;text-decoration:none">Log in</a>'
+    + '<a href="signup.html" style="display:inline-flex;align-items:center;gap:8px;background:#1E40AF;color:#060B16;padding:13px 24px;border-radius:8px;font-family:\'Inter\',sans-serif;font-size:14px;font-weight:700;text-decoration:none">Create free account</a>'
+    + '<a href="login.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid #131D30;color:#8896B3;padding:13px 24px;border-radius:8px;font-family:\'Inter\',sans-serif;font-size:14px;font-weight:600;text-decoration:none">Log in</a>'
     + '</div></div>';
   mainEl.style.opacity = '1';
 }

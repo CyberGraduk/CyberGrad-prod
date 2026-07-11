@@ -8,11 +8,11 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#060B16;--bg2:#0A1020;--bg3:#0F1829;
-  --teal:#00C896;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.20);
-  --text:#F0F6FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;
+  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#0F1829;
+  --teal:#1E40AF;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.20);
+  --text:#0F172A;--text-2:#475569;--text-3:#4A5775;--border:#E2E8F0;
   --red:#DC2626;--amber:#D97706;--blue:#3B82F6;
-  --font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;
+  --font-h:'Inter',sans-serif;--font-b:'Inter',sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;-webkit-font-smoothing:antialiased}
 
@@ -75,7 +75,7 @@ tr:last-child td{border-bottom:none}
 .plan-badge.industry{color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-b)}
 .plan-badge.elite{color:var(--amber);background:rgba(217,119,6,0.1);border:1px solid rgba(217,119,6,0.25)}
 .score-pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px}
-.score-pill.good{color:#00C896;background:rgba(0,200,150,0.1)}
+.score-pill.good{color:#1E40AF;background:rgba(0,200,150,0.1)}
 .score-pill.mid{color:var(--amber);background:rgba(217,119,6,0.1)}
 .score-pill.low{color:var(--red);background:rgba(220,38,38,0.1)}
 .score-pill.none{color:var(--text-3);background:rgba(255,255,255,.04)}
@@ -119,6 +119,7 @@ tr:last-child td{border-bottom:none}
 @media(max-width:1100px){.stats-strip{grid-template-columns:repeat(3,1fr)}.content-grid{grid-template-columns:1fr}}
 @media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.stats-strip,.content-grid{padding-left:16px;padding-right:16px}}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="app">
