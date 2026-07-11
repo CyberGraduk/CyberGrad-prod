@@ -1,51 +1,58 @@
-CyberGrad — V4.0 Changes
-========================
+CyberGrad — V4.2 Changes
+=========================
 Date: July 2026
 
-1. CV CHECKER — Non-logged-in gate form fix
-   After submitting gate form (name, email, university, status):
-   - Full Good/Bad/Fix report now shows on screen
-   - PDF sent to their email
-   - Confirmation banner shown
-   - "Create free account" prompt shown below
-   Previously: confirmation screen showed but full report was hidden
+MAJOR: Full light theme redesign + SEO + Privacy/Terms + nav fixes
 
-2. DASHBOARD GREETING — Duplicate loadUser removed
-   Two loadUser() functions existed — second overrode first with 'there' fallback
-   Single clean function with 4-source resolution:
-   1. getUser() — freshest user_metadata
-   2. localStorage cache
-   3. Session metadata
-   4. Students table query
-   Fallback: "Hello, Grad." — never "Hello, there."
+1. LIGHT THEME — all pages
+   Background: #F8FAFC | Cards: #FFFFFF | Text: #0F172A
+   Accent: #1E40AF (deep blue) | Muted: #475569 | Border: #E2E8F0
+   Replaces dark navy + teal across entire site
 
-3. PRICING — Both pages updated
-   Starter: CV Scorecard, Sectors & Domains, Roles to Apply, WhatsApp Community Access
-   Industry-Ready: "Everything in Starter" + Personalised 1-1 Roadmap + full list
-   Updated on index.html AND pricing.html
+2. HOMEPAGE (index.html) — full rebuild
+   New hero, stats bar, CV teaser strip
+   Problem section with blue top border cards
+   How it works — 4 steps with connecting line
+   Pricing — 3 cards, Industry-Ready featured
+   Resources — 4 gated cards with lock + create account CTA
+   Community — WhatsApp section
+   Founder trust strip with photo
+   FAQ — 7 questions
+   CTA band in blue
+   Full footer with 4 columns
 
-4. TOPMATE LINK — Updated everywhere
-   https://topmate.io/rakeshelamaran/2176589?coupon_code=UKCyb3r
-   Updated in: index.html FAQ, pricing.html FAQ, about.html
+3. NAVIGATION — correct across all pages
+   Tools | Community | Academy | About | Log in | Get started free
+   Active state highlighting per page
+   Mobile hamburger works on all pages
+   Logo links to homepage on all pages
 
-5. FOUNDER PHOTO — Added to about page
-   rakesh-photo.jpg (cropped from BSides Exeter conference photo)
-   Replaces "RE" text avatar
+4. FOOTER — all pages
+   Privacy Policy link
+   Terms & Conditions link
+   cybergraduk@gmail.com
+   "Guidance, not guarantees."
 
-6. SEND REPORT — green → passCol fix in send-report.js
-   Was causing 500 error on every PDF generation
+5. NEW PAGES
+   privacy.html — full UK GDPR compliant privacy policy
+   terms.html — honest terms, no job guarantee language
+   404.html — friendly error page
 
-7. SIGNUP — saves name to user_metadata
-   signInWithOtp passes data: { first_name, last_name, university, status }
+6. SEO — all pages
+   <html lang="en"> on all pages
+   Unique <title> per page with keywords
+   <meta name="description"> on all pages
+   <link rel="canonical"> on all pages
+   Open Graph tags on homepage
+   JSON-LD Organisation schema on homepage
+   Keywords: UK cybersecurity graduates, graduate visa, MSc cybersecurity UK
 
-VERSION TAG — v4.0 is live
+7. sitemap.xml — all public pages listed
+8. robots.txt — crawl rules, sitemap reference, dashboard/admin blocked
+9. Cookie consent banner on homepage (GDPR compliant)
+10. Alt text on founder photo
 
-FILES CHANGED
-- cv-checker.html (gate form shows report, session timing fix)
-- dashboard.html (single loadUser, getUser fix, Hello Grad)
-- index.html (pricing, topmate, version tag)
-- pricing.html (pricing update, topmate link, FAQ)
-- about.html (founder photo, topmate link)
-- signup.html (user_metadata save)
-- api/send-report.js (green → passCol)
-- rakesh-photo.jpg (NEW — founder photo)
+VERSION — v4.2
+
+FILES
+16 HTML + 3 API + sitemap.xml + robots.txt + logo.png + rakesh-photo.jpg

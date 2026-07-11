@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UK CV Checker — CyberGrad</title>
-<meta name="description" content="Free UK cybersecurity CV checker. Score your CV out of 100 and download a detailed PDF report.">
+<title>Free CV Scorecard — CyberGrad</title>
+<link rel="canonical" href="https://www.cyber-grad.co.uk/cv-checker.html">
+<meta name="description" content="Check your cybersecurity CV for free. Score out of 100, see exactly what is wrong, get a PDF report. Built for international graduates applying for UK cyber jobs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
 <!-- jsPDF for PDF generation -->
@@ -15,6 +16,11 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 :root{
+  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#F1F5F9;
+  --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
+  --border:#E2E8F0;--border-2:#CBD5E1;
+  --blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--blue-dark:#1E3A8A;
+  --teal:#1E40AF;--teal-b:#BFDBFE;--teal-dim:#EFF6FF;
   --bg:#060B16;--bg-2:#0A1020;--bg-3:#0F1829;
   --teal:#00C896;--teal-l:#00DFA8;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);
   --text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;
@@ -410,133 +416,26 @@ CompTIA Security+, Python, SIEM, Splunk..."></textarea>
 
       <!-- GATE -->
       <div class="gate-card" id="gate-card">
-        <div class="gate-icon">📄</div>
-        <h2 class="gate-title">Get your full report by email</h2>
-        <p class="gate-sub">Enter your details and we'll email you a complete branded PDF report — every specific fix, every missing keyword, AI language analysis, and your priority action list.</p>
-
-        <div class="gate-pdf-preview">
-          <span class="gate-pdf-icon">📧</span>
-          <div>
-            <div class="gate-pdf-title">CyberGrad CV Report — sent to your inbox</div>
-            <div class="gate-pdf-sub">Score summary · 6 category breakdowns · Every fix · Priority action list · cyber-grad.co.uk</div>
-          </div>
-        </div>
+        <div class="gate-icon">🔒</div>
+        <h2 class="gate-title">Create a free account to see your full report</h2>
+        <p class="gate-sub">Your score is ready. Create a free CyberGrad account to unlock the full Good/Bad/Fix breakdown, get your PDF report by email, and save your score to your dashboard.</p>
 
         <div class="gate-unlocks">
           <div class="gate-unlock">Full breakdown — every specific check, pass/warn/fail</div>
           <div class="gate-unlock">Every fix written out clearly — not vague advice</div>
           <div class="gate-unlock">Missing UK keywords for your target role</div>
-          <div class="gate-unlock">Priority action list — top 5 fixes ordered by impact</div>
-          <div class="gate-unlock">Delivered straight to your inbox — free</div>
+          <div class="gate-unlock">PDF report sent to your email</div>
+          <div class="gate-unlock">Score saved to your dashboard</div>
         </div>
 
-        <form class="signup-form" onsubmit="unlockReport(event)">
-          <div class="form-row">
-            <input type="text" class="form-input" id="sg-name" placeholder="Your full name" required>
-            <input type="email" class="form-input" id="sg-email" placeholder="Email address" required>
-          </div>
-          <select class="form-select" id="sg-status" required>
-            <option value="" disabled selected>Your current status</option>
-            <option>Currently studying (Bachelors)</option>
-            <option>Currently studying (Masters)</option>
-            <option>Recently Graduated (0-6 months)</option>
-            <option>Graduated 6+ Months Ago</option>
-          </select>
-          <select class="form-select" id="sg-uni" required>
-            <option value="" disabled selected>Your university</option>
-            <optgroup label="Russell Group">
-              <option>University of Birmingham</option>
-              <option>University of Bristol</option>
-              <option>University of Cambridge</option>
-              <option>Cardiff University</option>
-              <option>Durham University</option>
-              <option>University of Edinburgh</option>
-              <option>University of Exeter</option>
-              <option>University of Glasgow</option>
-              <option>Imperial College London</option>
-              <option>King's College London</option>
-              <option>University of Leeds</option>
-              <option>University of Liverpool</option>
-              <option>London School of Economics (LSE)</option>
-              <option>University of Manchester</option>
-              <option>Newcastle University</option>
-              <option>University of Nottingham</option>
-              <option>University of Oxford</option>
-              <option>Queen Mary University of London</option>
-              <option>Queen's University Belfast</option>
-              <option>University of Sheffield</option>
-              <option>University of Southampton</option>
-              <option>University College London (UCL)</option>
-              <option>University of Warwick</option>
-              <option>University of York</option>
-            </optgroup>
-            <optgroup label="Other UK Universities">
-              <option>Anglia Ruskin University</option>
-              <option>Aston University</option>
-              <option>University of Bath</option>
-              <option>Bournemouth University</option>
-              <option>Brunel University London</option>
-              <option>Birkbeck, University of London</option>
-              <option>City, University of London</option>
-              <option>Coventry University</option>
-              <option>De Montfort University</option>
-              <option>University of East Anglia (UEA)</option>
-              <option>University of East London</option>
-              <option>Edinburgh Napier University</option>
-              <option>University of Essex</option>
-              <option>University of Greenwich</option>
-              <option>Heriot-Watt University</option>
-              <option>University of Hertfordshire</option>
-              <option>University of Huddersfield</option>
-              <option>Keele University</option>
-              <option>University of Kent</option>
-              <option>Kingston University London</option>
-              <option>Lancaster University</option>
-              <option>University of Leicester</option>
-              <option>University of Lincoln</option>
-              <option>Liverpool John Moores University</option>
-              <option>London Metropolitan University</option>
-              <option>London South Bank University</option>
-              <option>Loughborough University</option>
-              <option>Manchester Metropolitan University</option>
-              <option>Middlesex University</option>
-              <option>Northumbria University</option>
-              <option>Nottingham Trent University</option>
-              <option>Oxford Brookes University</option>
-              <option>University of Portsmouth</option>
-              <option>University of Reading</option>
-              <option>Robert Gordon University</option>
-              <option>Royal Holloway, University of London</option>
-              <option>University of Salford</option>
-              <option>Sheffield Hallam University</option>
-              <option>University of Stirling</option>
-              <option>University of Strathclyde</option>
-              <option>University of Surrey</option>
-              <option>University of Sussex</option>
-              <option>Swansea University</option>
-              <option>Teesside University</option>
-              <option>Ulster University</option>
-              <option>University of West London</option>
-              <option>University of Westminster</option>
-              <option>University of Wolverhampton</option>
-            </optgroup>
-            <option>Other UK university</option>
-          </select>
-          <button type="submit" class="btn-unlock" id="unlock-btn">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
-            <span id="unlock-text">Send my report to email — free</span>
-          </button>
-          <div class="gate-trust">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            No spam. No payment. Report arrives in under 60 seconds.
-          </div>
-          <div class="gate-gdpr">
-            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Your CV data is never stored or shared. Processed in-session only. GDPR compliant.
-          </div>
-        </form>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:24px">
+          <a href="signup.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#060B16;padding:14px 32px;border-radius:10px;font-family:var(--font-b);font-size:15px;font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            Create free account
+          </a>
+          <span style="font-size:13px;color:var(--text-3)">Already have an account? <a href="login.html" style="color:var(--teal);text-decoration:none;font-weight:600">Log in →</a></span>
+        </div>
       </div>
-
       <!-- CHECK EMAIL SCREEN — shown first after gate -->
       <div id="check-email-screen" style="display:none;text-align:center;padding:56px 24px">
         <div style="width:76px;height:76px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
@@ -1039,10 +938,10 @@ async function runAnalysis(){
   setTimeout(()=>document.getElementById('step-results').scrollIntoView({behavior:'smooth',block:'start'}),100);
 
   if(loggedInUser && userData?.email){
-    // Logged-in: skip gate, show full report directly
+    // Logged-in: show full report directly
     showFullReportForLoggedIn(cvText);
   } else {
-    // Not logged-in: show gate form
+    // Not logged-in: show score + account gate
     document.getElementById('gate-card').style.display='block';
   }
 }

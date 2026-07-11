@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /admin.html
+Disallow: /auth-callback.html
+Disallow: /success.html
+
+Sitemap: https://www.cyber-grad.co.uk/sitemap.xml

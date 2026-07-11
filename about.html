@@ -3,11 +3,18 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — CyberGrad</title>
+<link rel="canonical" href="https://www.cyber-grad.co.uk/about.html">
+<meta name="description" content="Founder story and why CyberGrad was built. Career guidance for international cybersecurity graduates in the UK by Rakesh Elamaran.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#060B16;--bg-2:#0A1020;--bg-3:#0F1829;--teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);--text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;}
+:root{
+  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#F1F5F9;
+  --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
+  --border:#E2E8F0;--border-2:#CBD5E1;
+  --blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--blue-dark:#1E3A8A;
+  --teal:#1E40AF;--teal-b:#BFDBFE;--teal-dim:#EFF6FF;--bg:#060B16;--bg-2:#0A1020;--bg-3:#0F1829;--teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);--text:#F0F4FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;--font-h:'Bricolage Grotesque',sans-serif;--font-b:'Plus Jakarta Sans',sans-serif;}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(8,13,24,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
@@ -113,14 +120,12 @@ footer{padding:40px 5% 32px;border-top:1px solid var(--border);display:flex;alig
 <body>
 <nav>
   <a href="index.html" class="nav-logo"><img src="logo.png" alt="CyberGrad" style="height:36px;width:auto"></a>
-  <ul class="nav-links">
-    
-    <li><a href="cv-checker.html">CV Checker</a></li>
-    <!-- V1.3 — Marketplace removed from nav, do not delete
-    <li><a href="marketplace.html">Marketplace</a></li>
-    -->
-    <li><a href="pricing.html">Pricing</a></li>
-    <li><a href="about.html" style="color:var(--teal)">About</a></li>
+    <ul class="nav-links" id="nav-links">
+    <li><a href="cv-checker.html">Tools</a></li>
+    <li><a href="index.html#community">Community</a></li>
+    <li><a href="pricing.html">Academy</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="login.html" class="nav-login">Log in</a></li>
     <li><a href="signup.html" class="nav-cta">Get started free</a></li>
   </ul>
   <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
@@ -201,19 +206,6 @@ footer{padding:40px 5% 32px;border-top:1px solid var(--border);display:flex;alig
     </div>
   </div>
 
-  <div class="content-block fade-up">
-    <div class="section-tag">Why trust CyberGrad</div>
-    <h2>What makes this different.</h2>
-    <div class="trust-grid">
-      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>Built by someone who did it.</strong> Not a training company, not a recruiter. Someone who went through exactly what you're facing.</div></div>
-      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>Honest by design.</strong> Practical industry knowledge beyond your degree. No job promises. No inflated claims.</div></div>
-      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>Small cohorts always.</strong> 15 to 20 students maximum. You are not a number.</div></div>
-      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>UK-specific.</strong> Everything is built for the UK market. Not recycled generic career advice.</div></div>
-      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>Open to students and graduates.</strong> Whether you're in your final year or six months post-graduation.</div></div>
-      <div class="trust-item"><div class="ti-dot"></div><div class="ti-text"><strong>One-time pricing.</strong> No subscriptions, no surprise charges. Pay once, get everything in your plan.</div></div>
-    </div>
-  </div>
-
   <!-- CLEAN CTA — no boxes -->
   <div class="fade-up" style="padding:56px 0;text-align:center;border-top:1px solid var(--border);margin-top:16px">
     <div class="section-tag" style="margin-bottom:14px">Ready?</div>
@@ -235,6 +227,7 @@ footer{padding:40px 5% 32px;border-top:1px solid var(--border);display:flex;alig
   <span>© 2026 CyberGrad</span>
   <span class="footer-right">"Guidance, not guarantees."</span>
     <span style="font-size:12px;color:var(--text-3)">Your data is handled in accordance with UK GDPR. We never sell or share your personal information.</span>
+  <div style="border-top:1px solid #E2E8F0;margin-top:16px;padding-top:16px;font-size:12px;color:#94A3B8;text-align:center"><a href="privacy.html" style="color:#94A3B8;margin:0 8px">Privacy Policy</a> · <a href="terms.html" style="color:#94A3B8;margin:0 8px">Terms &amp; Conditions</a> · <a href="mailto:cybergraduk@gmail.com" style="color:#94A3B8;margin:0 8px">cybergraduk@gmail.com</a></div>
 </footer>
 
 <script>

@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pricing — CyberGrad</title>
-<meta name="description" content="Simple, one-time pricing. No subscriptions. Free, Foundation £129, Industry-Ready £299.">
+<title>Academy — Industry-Ready Programme — CyberGrad</title>
+<link rel="canonical" href="https://www.cyber-grad.co.uk/pricing.html">
+<meta name="description" content="Join the CyberGrad Industry-Ready programme. 4-week structured career guidance for international cybersecurity graduates in the UK. £125 early bird.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 :root{
+  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#F1F5F9;
+  --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
+  --border:#E2E8F0;--border-2:#CBD5E1;
+  --blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--blue-dark:#1E3A8A;
+  --teal:#1E40AF;--teal-b:#BFDBFE;--teal-dim:#EFF6FF;
   --bg:#060B16;--bg-2:#0A1020;--bg-3:#0F1829;
   --teal:#00C896;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);
   --text:#F0F6FF;--text-2:#8896B3;--text-3:#4A5775;--border:#131D30;
@@ -119,12 +125,12 @@ footer{padding:44px 5% 36px;border-top:1px solid var(--border);display:flex;alig
     <div class="nav-lm">CG</div>
     <span class="nav-lt">CyberGrad</span>
   </a>
-  <ul class="nav-links">
-    <li class="dropdown"><button class="dropdown-toggle">Tools <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="dropdown-menu"><a href="cv-checker.html" class="dropdown-item">CV Scorecard</a><a href="sectors.html" class="dropdown-item">Sectors &amp; Domains</a><a href="roles.html" class="dropdown-item">Roles to Apply</a></div></li>
-    <!-- <li><a href="marketplace.html">Marketplace</a></li> V1.1 — removed, marketplace hidden -->
-    <li><a href="pricing.html" style="color:var(--teal)">Pricing</a></li>
+    <ul class="nav-links" id="nav-links">
+    <li><a href="cv-checker.html">Tools</a></li>
+    <li><a href="index.html#community">Community</a></li>
+    <li><a href="pricing.html" class="active">Academy</a></li>
     <li><a href="about.html">About</a></li>
-    <li><a href="login.html">Log in</a></li>
+    <li><a href="login.html" class="nav-login">Log in</a></li>
     <li><a href="signup.html" class="nav-cta">Get started free</a></li>
   </ul>
   <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
@@ -330,6 +336,7 @@ function toggleFaq(btn){const item=btn.parentElement;item.classList.toggle('open
   <span>© 2026 CyberGrad</span>
   <span style="font-style:italic">"Guidance, not guarantees."</span>
     <span style="font-size:12px;color:var(--text-3)">Your data is handled in accordance with UK GDPR. We never sell or share your personal information.</span>
+  <div style="border-top:1px solid #E2E8F0;margin-top:16px;padding-top:16px;font-size:12px;color:#94A3B8;text-align:center"><a href="privacy.html" style="color:#94A3B8;margin:0 8px">Privacy Policy</a> · <a href="terms.html" style="color:#94A3B8;margin:0 8px">Terms &amp; Conditions</a> · <a href="mailto:cybergraduk@gmail.com" style="color:#94A3B8;margin:0 8px">cybergraduk@gmail.com</a></div>
 </footer>
 
 <script>
@@ -349,7 +356,7 @@ function initDropdowns(){
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initDropdowns);
 else initDropdowns();
 
-function toggleNav(){const ul=document.querySelector('.nav-links');const open=ul.style.display==='flex';ul.style.cssText=open?'':'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#060B16;padding:24px 20px;gap:18px;border-bottom:1px solid #131D30;z-index:99'}
+function toggleNav(){const ul=document.querySelector('.nav-links');const open=ul.style.display==='flex';ul.style.cssText=open?'':'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#F8FAFC;padding:24px 20px;gap:18px;border-bottom:1px solid #131D30;z-index:99'}
 const obs=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('vis')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
 function togglePrFound(){
