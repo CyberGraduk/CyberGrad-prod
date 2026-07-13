@@ -83,7 +83,7 @@ footer a:hover{color:var(--blue)}
       <div class="fg"><label>Email address</label><input type="email" class="fi" id="sg-email" placeholder="you@email.com" required></div>
       <div class="fg">
         <label>University</label>
-        <input type="text" class="fi" id="sg-uni" placeholder="University of Birmingham" required list="uni-list">
+        <input type="text" class="fi" id="sg-uni" placeholder="University of Birmingham" required list="uni-list" oninput="checkOtherUni(this.value)">
         <datalist id="uni-list">
           <option>University of Birmingham</option><option>University of Bristol</option><option>University of Cambridge</option>
           <option>Cardiff University</option><option>Durham University</option><option>University of Edinburgh</option>
@@ -95,8 +95,11 @@ footer a:hover{color:var(--blue)}
           <option>University of Warwick</option><option>University of York</option><option>Coventry University</option>
           <option>Aston University</option><option>Brunel University London</option><option>City, University of London</option>
           <option>University of Surrey</option><option>University of Sussex</option><option>Heriot-Watt University</option>
-          <option>Northumbria University</option><option>Teesside University</option><option>Other UK university</option>
+          <option>Northumbria University</option><option>Teesside University</option><option>Other</option>
         </datalist>
+        <div id="other-uni-wrap" style="display:none;margin-top:8px">
+          <input type="text" class="fi" id="sg-uni-other" placeholder="Enter your university name">
+        </div>
       </div>
       <div class="fg">
         <label>Current status</label>
@@ -151,12 +154,27 @@ async function checkCompleteMode() {
 }
 checkCompleteMode();
 
+function checkOtherUni(val) {
+  const wrap = document.getElementById('other-uni-wrap');
+  const other = document.getElementById('sg-uni-other');
+  if (val === 'Other') {
+    wrap.style.display = 'block';
+    other.required = true;
+    other.focus();
+  } else {
+    wrap.style.display = 'none';
+    other.required = false;
+    other.value = '';
+  }
+}
+
 async function handleSignup(e) {
   e.preventDefault();
   const fname = document.getElementById('sg-first').value.trim();
   const lname = document.getElementById('sg-last').value.trim();
   const email = document.getElementById('sg-email').value.trim();
-  const uni   = document.getElementById('sg-uni').value.trim();
+  const uniRaw = document.getElementById('sg-uni').value.trim();
+  const uni = uniRaw === 'Other' ? (document.getElementById('sg-uni-other').value.trim() || 'Other') : uniRaw;
   const status= document.getElementById('sg-status').value;
   const tc    = document.getElementById('sg-tc').checked;
   const btn   = document.getElementById('sg-btn');
