@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Resources — CyberGrad</title>
+<meta name="description" content="Free career resources for international cybersecurity graduates in the UK. CV template, cover letter, sectors guide, roles guide, and UK job boards.">
+<link rel="canonical" href="https://www.cyber-grad.co.uk/resources.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F8FAFC;--bg2:#fff;--text:#0F172A;--text-2:#475569;--text-3:#94A3B8;--border:#E2E8F0;--blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--font:'Inter',-apple-system,sans-serif;--radius:8px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-badge{width:34px;height:34px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-badge span{color:#fff;font-size:13px;font-weight:800}
+.nav-name{font-size:17px;font-weight:800;color:var(--text)}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-2);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--blue);font-weight:600}
+.nav-login{color:var(--blue)!important;font-weight:600!important}
+.nav-cta{background:var(--blue);color:#fff!important;padding:9px 18px;border-radius:var(--radius);font-weight:700!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text);border-radius:1px}
+@media(max-width:768px){.nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 5%;gap:16px;border-bottom:1px solid var(--border);z-index:99}.nav-links.open{display:flex}.hamburger{display:flex}}
+
+.page-hero{padding:96px 5% 48px;background:#fff;border-bottom:1px solid var(--border);text-align:center}
+.page-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:12px}
+h1{font-size:38px;font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.hero-sub{font-size:16px;color:var(--text-2);max-width:520px;margin:0 auto;line-height:1.7}
+
+.content{max-width:960px;margin:0 auto;padding:48px 5%}
+.resources-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.resource-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .2s,box-shadow .2s}
+.resource-card:hover{border-color:var(--blue-border);box-shadow:0 2px 12px rgba(30,64,175,.06)}
+.resource-icon{width:44px;height:44px;background:var(--blue-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.resource-card h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
+.resource-card p{font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:16px}
+.resource-lock{background:var(--blue-light);border:1px solid var(--blue-border);border-radius:8px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.resource-lock span{font-size:12px;color:var(--blue);font-weight:600;display:flex;align-items:center;gap:6px}
+.resource-lock a{font-size:12px;font-weight:700;color:var(--blue);white-space:nowrap;transition:opacity .2s}
+.resource-lock a:hover{opacity:.75}
+.resource-open{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.resource-open span{font-size:12px;color:#16A34A;font-weight:600}
+.resource-open a{font-size:12px;font-weight:700;color:#16A34A;white-space:nowrap}
+
+.cta-band{background:var(--blue);padding:48px 5%;text-align:center}
+.cta-band h2{color:#fff;font-size:26px;font-weight:800;margin-bottom:8px}
+.cta-band p{color:rgba(255,255,255,.75);font-size:15px;margin-bottom:24px}
+footer{background:#fff;border-top:1px solid var(--border);padding:24px 5%}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-3)}
+.footer-bottom a{color:var(--text-3);transition:color .2s}
+.footer-bottom a:hover{color:var(--blue)}
+@media(max-width:768px){.resources-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-badge"><span>CG</span></div>
+    <span class="nav-name">CyberGrad</span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="cv-checker.html">Tools</a></li>
+    <li><a href="resources.html" class="active" style="color:#1E40AF;font-weight:600">Free Resources</a></li>
+    <li><a href="pricing.html">Academy</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="login.html" class="nav-login">Log in</a></li>
+    <li><a href="signup.html" class="nav-cta" style="background:#1E40AF;color:#fff!important;padding:9px 18px;border-radius:8px;font-weight:700!important">Get started free</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">Free Resources</div>
+  <h1>Everything you need.<br>Yours with a free account.</h1>
+  <p class="hero-sub">Create a free CyberGrad account to access all resources. No payment required.</p>
+</div>
+
+<div class="content">
+  <div class="resources-grid" id="resources-grid">
+
+    <!-- CV FORMAT -->
+    <div class="resource-card">
+      <div class="resource-icon">
+        <svg width="22" height="22" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <h3>UK CV Format Template</h3>
+      <p>A UK-specific CV template built to pass ATS filters and match what UK hiring managers actually expect. Not a generic template.</p>
+      <div class="resource-lock" id="cv-lock">
+        <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Free with a CyberGrad account</span>
+        <a href="signup.html">Create account →</a>
+      </div>
+    </div>
+
+    <!-- COVER LETTER -->
+    <div class="resource-card">
+      <div class="resource-icon">
+        <svg width="22" height="22" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <h3>Cover Letter Format</h3>
+      <p>A structured cover letter format for UK cybersecurity roles. What to include, what to leave out, and how to make it specific without starting from scratch.</p>
+      <div class="resource-lock" id="cl-lock">
+        <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Free with a CyberGrad account</span>
+        <a href="signup.html">Create account →</a>
+      </div>
+    </div>
+
+    <!-- SECTORS -->
+    <div class="resource-card">
+      <div class="resource-icon">
+        <svg width="22" height="22" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <h3>Sectors &amp; Domains</h3>
+      <p>8 UK cybersecurity sectors explained — Finance, Defence, Government, Healthcare and more. Know which ones you can actually enter on a Graduate Visa.</p>
+      <div class="resource-lock" id="sectors-lock">
+        <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Free with a CyberGrad account</span>
+        <a href="signup.html">Create account →</a>
+      </div>
+    </div>
+
+    <!-- ROLES -->
+    <div class="resource-card">
+      <div class="resource-icon">
+        <svg width="22" height="22" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+      </div>
+      <h3>Roles to Apply</h3>
+      <p>10 UK cybersecurity roles broken down — what they actually do, what skills they need, and which are realistic for international graduates right now.</p>
+      <div class="resource-lock" id="roles-lock">
+        <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Free with a CyberGrad account</span>
+        <a href="signup.html">Create account →</a>
+      </div>
+    </div>
+
+    <!-- JOB BOARDS -->
+    <div class="resource-card" style="grid-column:span 2">
+      <div style="display:flex;align-items:flex-start;gap:16px">
+        <div class="resource-icon" style="flex-shrink:0">
+          <svg width="22" height="22" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div style="flex:1">
+          <h3>UK Job Boards — Where to Actually Apply</h3>
+          <p>12 UK job boards reviewed and ranked for international cybersecurity graduates. Includes sponsorship likelihood, SC clearance warnings, and what each board is best for. Stop wasting applications on boards that won't work for you.</p>
+          <div class="resource-lock" id="jobs-lock">
+            <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Free with a CyberGrad account</span>
+            <a href="signup.html">Create account →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="cta-band">
+  <h2>All of this is free.</h2>
+  <p>Create your CyberGrad account in 60 seconds. No card, no payment.</p>
+  <a href="signup.html" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--blue);padding:13px 28px;border-radius:var(--radius);font-size:15px;font-weight:700">Create free account →</a>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span>© 2026 CyberGrad · cyber-grad.co.uk</span>
+    <span style="font-style:italic">"Guidance, not guarantees."</span>
+    <span><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a> &nbsp;·&nbsp; <a href="mailto:cybergraduk@gmail.com">cybergraduk@gmail.com</a></span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
+
+async function checkAuth() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    // Logged in — unlock all resources
+    ['cv-lock','cl-lock','sectors-lock','roles-lock','jobs-lock'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const isJobs = id === 'jobs-lock';
+      el.className = 'resource-open';
+      el.innerHTML = `
+        <span>✓ Unlocked</span>
+        <a href="${isJobs ? 'job-boards.html' : id === 'sectors-lock' ? 'sectors.html' : id === 'roles-lock' ? 'roles.html' : '#'}" style="color:#16A34A">
+          ${isJobs ? 'View job boards →' : id === 'sectors-lock' ? 'View sectors →' : id === 'roles-lock' ? 'View roles →' : 'Download →'}
+        </a>`;
+    });
+  }
+}
+checkAuth();
+</script>
+</body>
+</html>

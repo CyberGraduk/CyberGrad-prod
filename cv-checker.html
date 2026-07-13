@@ -271,7 +271,7 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
     <span class="nav-tool">CV Checker</span>
   </a>
   <div style="display:flex;align-items:center;gap:20px">
-    <a href="job-boards.html" style="font-size:13px;font-weight:600;color:#1E40AF;text-decoration:none">Free Resources</a>
+    <a href="resources.html" style="font-size:13px;font-weight:600;color:#1E40AF;text-decoration:none">Free Resources</a>
     <a href="pricing.html" style="font-size:13px;font-weight:500;color:#475569;text-decoration:none">Academy</a>
     <a href="login.html" style="font-size:13px;font-weight:600;color:#1E40AF;text-decoration:none">Log in</a>
     <a href="signup.html" style="font-size:13px;font-weight:700;background:#1E40AF;color:#fff;padding:8px 16px;border-radius:7px;text-decoration:none">Get started free</a>
@@ -316,12 +316,18 @@ textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,117,.1)
   <div id="cv-input-step" style="display:none">
   <div class="hero">
     <div class="hero-glow"></div>
-    <div class="hero-tag"><span class="tag-dot"></span>Targeting: <strong id="role-display" style="color:#1E40AF">SOC Analyst</strong> <button onclick="backToRole()" style="background:none;border:none;color:#94A3B8;font-size:12px;cursor:pointer;margin-left:8px;text-decoration:underline;font-family:var(--font-b)">Change</button></div>
     <h1>Paste your CV below</h1>
     <p class="hero-sub">Copy everything from your CV and paste it. The more complete the text, the more accurate your score.</p>
-    <div id="scan-counter" style="display:inline-flex;align-items:center;gap:8px;background:var(--teal-dim);border:1px solid var(--teal-b);border-radius:100px;padding:6px 16px;font-size:13px;font-weight:600;color:var(--teal);margin-bottom:8px">
+    <div id="scan-counter" style="display:inline-flex;align-items:center;gap:8px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:100px;padding:6px 16px;font-size:13px;font-weight:600;color:#1E40AF;margin-bottom:12px">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
       <span id="scan-count-text">5+ CVs scanned</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #E2E8F0;border-radius:100px;padding:6px 16px;font-size:13px;font-weight:500;color:#475569">
+        <span style="width:6px;height:6px;background:#1E40AF;border-radius:50%;display:inline-block"></span>
+        Targeting: <strong style="color:#1E40AF;margin:0 4px" id="role-display">SOC Analyst</strong>
+        <button onclick="backToRole()" style="background:none;border:none;color:#94A3B8;font-size:12px;cursor:pointer;text-decoration:underline;font-family:var(--font-b);padding:0">Change</button>
+      </div>
     </div>
   </div>
 
