@@ -1,58 +1,33 @@
-CyberGrad — V4.2 Changes
-=========================
+CyberGrad — V4.3
+================
 Date: July 2026
 
-MAJOR: Full light theme redesign + SEO + Privacy/Terms + nav fixes
+1. NEW PAGE — job-boards.html
+   12 UK job boards reviewed and ranked
+   Sections: Cyber Specific, UK Tech, Avoid on Graduate Visa
+   Tags: sponsor friendly, SC clearance, entry level, etc.
+   Gated — requires free account
+   CTA to CV Checker before applying
+   CTA to Industry-Ready for Sponsorship Radar
 
-1. LIGHT THEME — all pages
-   Background: #F8FAFC | Cards: #FFFFFF | Text: #0F172A
-   Accent: #1E40AF (deep blue) | Muted: #475569 | Border: #E2E8F0
-   Replaces dark navy + teal across entire site
+2. NAV — Free Resources added across all pages
+   "Free Resources" link in blue added to all navs
+   Points to job-boards.html
+   Get started free button — explicit blue #1E40AF bg, white text
 
-2. HOMEPAGE (index.html) — full rebuild
-   New hero, stats bar, CV teaser strip
-   Problem section with blue top border cards
-   How it works — 4 steps with connecting line
-   Pricing — 3 cards, Industry-Ready featured
-   Resources — 4 gated cards with lock + create account CTA
-   Community — WhatsApp section
-   Founder trust strip with photo
-   FAQ — 7 questions
-   CTA band in blue
-   Full footer with 4 columns
+3. ACADEMY (pricing.html)
+   "Book a call" → "Free 10 min call"
 
-3. NAVIGATION — correct across all pages
-   Tools | Community | Academy | About | Log in | Get started free
-   Active state highlighting per page
-   Mobile hamburger works on all pages
-   Logo links to homepage on all pages
+4. CV CHECKER
+   Role selected → "Targeting: {Role} · Change" with blue role name
+   "You can change this and re-check anytime" centred
+   "5+ CVs scanned" badge shown below role cards
+   Nav updated with Free Resources + full links
 
-4. FOOTER — all pages
-   Privacy Policy link
-   Terms & Conditions link
-   cybergraduk@gmail.com
-   "Guidance, not guarantees."
+5. DASHBOARD
+   UK Job Boards added to sidebar under Resources
 
-5. NEW PAGES
-   privacy.html — full UK GDPR compliant privacy policy
-   terms.html — honest terms, no job guarantee language
-   404.html — friendly error page
+6. SITEMAP
+   job-boards.html added
 
-6. SEO — all pages
-   <html lang="en"> on all pages
-   Unique <title> per page with keywords
-   <meta name="description"> on all pages
-   <link rel="canonical"> on all pages
-   Open Graph tags on homepage
-   JSON-LD Organisation schema on homepage
-   Keywords: UK cybersecurity graduates, graduate visa, MSc cybersecurity UK
-
-7. sitemap.xml — all public pages listed
-8. robots.txt — crawl rules, sitemap reference, dashboard/admin blocked
-9. Cookie consent banner on homepage (GDPR compliant)
-10. Alt text on founder photo
-
-VERSION — v4.2
-
-FILES
-16 HTML + 3 API + sitemap.xml + robots.txt + logo.png + rakesh-photo.jpg
+VERSION — v4.3 is live

@@ -6,6 +6,7 @@
   <url><loc>https://www.cyber-grad.co.uk/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.cyber-grad.co.uk/signup.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.cyber-grad.co.uk/sectors.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.cyber-grad.co.uk/job-boards.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.cyber-grad.co.uk/roles.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.cyber-grad.co.uk/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.cyber-grad.co.uk/terms.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UK Cybersecurity Job Boards — CyberGrad</title>
+<meta name="description" content="The best UK job boards for international cybersecurity graduates. Where to apply, what each is best for, and which roles require SC clearance.">
+<link rel="canonical" href="https://www.cyber-grad.co.uk/job-boards.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F8FAFC;--bg2:#fff;--text:#0F172A;--text-2:#475569;--text-3:#94A3B8;--border:#E2E8F0;--blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--font:'Inter',-apple-system,sans-serif;--radius:8px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-badge{width:34px;height:34px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-badge span{color:#fff;font-size:13px;font-weight:800}
+.nav-name{font-size:17px;font-weight:800;color:var(--text)}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-2);transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-login{color:var(--blue)!important;font-weight:600!important}
+.nav-cta{background:var(--blue);color:#fff!important;padding:9px 18px;border-radius:var(--radius);font-weight:700!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text);border-radius:1px}
+@media(max-width:768px){.nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 5%;gap:16px;border-bottom:1px solid var(--border);z-index:99}.nav-links.open{display:flex}.hamburger{display:flex}}
+
+.page-hero{padding:96px 5% 48px;background:#fff;border-bottom:1px solid var(--border)}
+.page-hero-inner{max-width:860px;margin:0 auto}
+.page-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:12px}
+h1{font-size:38px;font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.hero-sub{font-size:16px;color:var(--text-2);max-width:560px;line-height:1.7;margin-bottom:20px}
+.hero-note{display:inline-flex;align-items:center;gap:8px;background:var(--blue-light);border:1px solid var(--blue-border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--blue);font-weight:500}
+
+.content{max-width:860px;margin:0 auto;padding:48px 5%}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:16px;margin-top:40px}
+.section-label:first-child{margin-top:0}
+
+.board-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:12px;display:flex;align-items:flex-start;gap:16px;transition:border-color .2s,box-shadow .2s}
+.board-card:hover{border-color:var(--blue-border);box-shadow:0 2px 8px rgba(30,64,175,.06)}
+.board-icon{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.board-main{flex:1;min-width:0}
+.board-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.board-desc{font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:8px}
+.board-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px}
+.tag-good{background:#F0FDF4;color:#16A34A;border:1px solid #BBF7D0}
+.tag-warn{background:#FFF7ED;color:#D97706;border:1px solid #FED7AA}
+.tag-bad{background:#FFF1F2;color:#DC2626;border:1px solid #FECDD3}
+.tag-blue{background:var(--blue-light);color:var(--blue);border:1px solid var(--blue-border)}
+.board-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--blue);margin-top:8px;text-decoration:none;transition:opacity .2s}
+.board-link:hover{opacity:.75}
+.board-link svg{flex-shrink:0}
+
+.tip-box{background:var(--blue-light);border:1px solid var(--blue-border);border-radius:10px;padding:16px 20px;margin:32px 0}
+.tip-box p{font-size:14px;color:#1E3A8A;line-height:1.7}
+.tip-box strong{color:var(--blue)}
+
+.warn-box{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:16px 20px;margin:20px 0}
+.warn-box p{font-size:14px;color:#92400E;line-height:1.7}
+
+.cta-band{background:var(--blue);padding:48px 5%;text-align:center;margin-top:0}
+.cta-band h2{color:#fff;font-size:26px;font-weight:800;margin-bottom:8px}
+.cta-band p{color:rgba(255,255,255,.75);font-size:15px;margin-bottom:24px}
+
+footer{background:#fff;border-top:1px solid var(--border);padding:24px 5%}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-3)}
+.footer-bottom a{color:var(--text-3);transition:color .2s}
+.footer-bottom a:hover{color:var(--blue)}
+
+/* Gate overlay */
+#gate-overlay{display:none;position:fixed;inset:0;background:rgba(248,250,252,0.92);backdrop-filter:blur(4px);z-index:50;align-items:center;justify-content:center;padding:20px}
+#gate-overlay.show{display:flex}
+.gate-box{background:#fff;border:1px solid var(--border);border-radius:16px;padding:40px;max-width:420px;width:100%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.1)}
+.gate-box h2{font-size:22px;font-weight:800;margin-bottom:8px}
+.gate-box p{font-size:14px;color:var(--text-2);margin-bottom:24px;line-height:1.6}
+.btn-blue{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:13px 28px;border-radius:var(--radius);font-size:15px;font-weight:700;text-decoration:none;transition:opacity .2s}
+.btn-blue:hover{opacity:.88}
+.btn-outline{display:inline-block;color:var(--blue);font-size:14px;font-weight:600;margin-top:12px;text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- GATE OVERLAY for non-logged-in -->
+<div id="gate-overlay">
+  <div class="gate-box">
+    <div style="width:52px;height:52px;background:var(--blue-light);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+      <svg width="24" height="24" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <h2>Free with a CyberGrad account</h2>
+    <p>Create a free account to access the UK Job Boards guide, Sectors, Roles, and your CV Scorecard — all in one place.</p>
+    <a href="signup.html" class="btn-blue">Create free account</a>
+    <br>
+    <a href="login.html" class="btn-outline">Already have an account? Log in →</a>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-badge"><span>CG</span></div>
+    <span class="nav-name">CyberGrad</span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="cv-checker.html">Tools</a></li>
+    <li><a href="job-boards.html" class="active" style="color:#1E40AF;font-weight:600">Free Resources</a></li>
+    <li><a href="pricing.html">Academy</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="login.html" class="nav-login">Log in</a></li>
+    <li><a href="signup.html" class="nav-cta" style="background:#1E40AF;color:#fff!important">Get started free</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-tag">Free Resource</div>
+    <h1>UK Cybersecurity Job Boards</h1>
+    <p class="hero-sub">Where to actually apply. Ranked by relevance for international graduates — with notes on sponsorship likelihood and visa restrictions.</p>
+    <div class="hero-note">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Always check for a "Visa sponsorship" or "Right to Work" filter before applying
+    </div>
+  </div>
+</div>
+
+<div class="content" id="main-content">
+
+  <div class="tip-box">
+    <p><strong>Before you apply anywhere:</strong> Check your CV score first at <a href="cv-checker.html" style="color:var(--blue);font-weight:600">cv-checker.html</a>. A generic CV will be filtered out by ATS on every one of these platforms. Know your score, fix the gaps, then apply.</p>
+  </div>
+
+  <!-- CYBER SPECIFIC -->
+  <div class="section-label">Cybersecurity Specific</div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#EFF6FF">🛡️</div>
+    <div class="board-main">
+      <div class="board-name">CyberJobsHQ
+        <span class="tag tag-good">Cyber only</span>
+        <span class="tag tag-good">Sponsor friendly</span>
+      </div>
+      <div class="board-desc">UK-focused cybersecurity job board. Roles from SOC to GRC to pentesting. Good volume of roles that actively seek cyber graduates. Filter by location and experience level.</div>
+      <div class="board-tags">
+        <span class="tag tag-blue">SOC</span><span class="tag tag-blue">GRC</span><span class="tag tag-blue">AppSec</span><span class="tag tag-blue">Pentest</span>
+      </div>
+      <a href="https://www.cyberjobshq.com" target="_blank" rel="noopener" class="board-link">Visit CyberJobsHQ <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#F0FDF4">🔒</div>
+    <div class="board-main">
+      <div class="board-name">CREST Jobs Board
+        <span class="tag tag-blue">Pentest focused</span>
+      </div>
+      <div class="board-desc">Run by CREST — the UK body for penetration testing certification. If you are targeting offensive security, this is where certified firms post. Roles often require CREST or OSCP certification.</div>
+      <div class="board-tags">
+        <span class="tag tag-blue">Pentest</span><span class="tag tag-blue">Red Team</span><span class="tag tag-warn">Cert required</span>
+      </div>
+      <a href="https://www.crest-approved.org/jobs" target="_blank" rel="noopener" class="board-link">Visit CREST Jobs <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#EFF6FF">🎓</div>
+    <div class="board-main">
+      <div class="board-name">ISC2 Job Board
+        <span class="tag tag-blue">Certification holders</span>
+      </div>
+      <div class="board-desc">Global job board for ISC2 members. If you have CISSP, SSCP, or CC — this is worth checking. Roles skew mid to senior but graduate roles do appear.</div>
+      <div class="board-tags">
+        <span class="tag tag-blue">CISSP</span><span class="tag tag-blue">SSCP</span><span class="tag tag-blue">CC</span>
+      </div>
+      <a href="https://jobs.isc2.org" target="_blank" rel="noopener" class="board-link">Visit ISC2 Jobs <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <!-- UK GENERAL TECH -->
+  <div class="section-label" style="margin-top:40px">UK Tech & IT Job Boards</div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#EFF6FF">💼</div>
+    <div class="board-main">
+      <div class="board-name">CWJobs
+        <span class="tag tag-good">High volume</span>
+        <span class="tag tag-good">Sponsor friendly</span>
+      </div>
+      <div class="board-desc">One of the largest UK tech job boards. Good filter for cybersecurity roles. Many employers here actively sponsor Graduate Visas. Use keyword "cybersecurity" or "information security" and filter by London or remote.</div>
+      <div class="board-tags">
+        <span class="tag tag-blue">SOC</span><span class="tag tag-blue">GRC</span><span class="tag tag-blue">Cloud Security</span><span class="tag tag-good">Sponsors visas</span>
+      </div>
+      <a href="https://www.cwjobs.co.uk" target="_blank" rel="noopener" class="board-link">Visit CWJobs <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#EFF6FF">🔗</div>
+    <div class="board-main">
+      <div class="board-name">LinkedIn Jobs
+        <span class="tag tag-good">Best for networking</span>
+      </div>
+      <div class="board-desc">Most important platform for UK cyber jobs. Use the "Visa sponsorship" filter under "Job type" — this alone filters out 80% of roles you cannot get. Also: connect with hiring managers BEFORE applying. Apply AND connect, not just apply.</div>
+      <div class="board-tags">
+        <span class="tag tag-good">Visa filter available</span><span class="tag tag-blue">All roles</span><span class="tag tag-blue">Networking</span>
+      </div>
+      <a href="https://www.linkedin.com/jobs" target="_blank" rel="noopener" class="board-link">Visit LinkedIn Jobs <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#FFF7ED">🔍</div>
+    <div class="board-main">
+      <div class="board-name">Indeed UK
+        <span class="tag tag-blue">High volume</span>
+      </div>
+      <div class="board-desc">Broad UK job board with high volume of cyber roles. Search "cybersecurity graduate" or "information security analyst". Mix of agencies and direct employers. Quality varies — always research the employer before applying.</div>
+      <div class="board-tags">
+        <span class="tag tag-blue">Graduate roles</span><span class="tag tag-warn">Agency heavy</span>
+      </div>
+      <a href="https://uk.indeed.com" target="_blank" rel="noopener" class="board-link">Visit Indeed UK <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#F0FDF4">📋</div>
+    <div class="board-main">
+      <div class="board-name">Reed.co.uk
+        <span class="tag tag-good">Good for entry level</span>
+      </div>
+      <div class="board-desc">Strong for entry-level and graduate cyber roles in the UK. Filter by "cybersecurity" and salary range. Reed has good employer diversity — financial services, consulting, NHS. Worth checking weekly.</div>
+      <div class="board-tags">
+        <span class="tag tag-blue">Entry level</span><span class="tag tag-blue">Graduate</span><span class="tag tag-good">Sponsor friendly</span>
+      </div>
+      <a href="https://www.reed.co.uk" target="_blank" rel="noopener" class="board-link">Visit Reed <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#F8FAFC">💻</div>
+    <div class="board-main">
+      <div class="board-name">Jobserve
+        <span class="tag tag-warn">Contract heavy</span>
+      </div>
+      <div class="board-desc">IT contractor focused but has permanent cyber roles. Good for DevSecOps and cloud security. Salary rates tend to be higher. Filter by "Permanent" to avoid contract-only listings. Less relevant if you are a fresh graduate.</div>
+      <div class="board-tags">
+        <span class="tag tag-blue">DevSecOps</span><span class="tag tag-blue">Cloud Security</span><span class="tag tag-warn">Mostly contract</span>
+      </div>
+      <a href="https://www.jobserve.com" target="_blank" rel="noopener" class="board-link">Visit Jobserve <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <div class="board-card">
+    <div class="board-icon" style="background:#F8FAFC">🌍</div>
+    <div class="board-main">
+      <div class="board-name">Relocate.me
+        <span class="tag tag-good">International friendly</span>
+      </div>
+      <div class="board-desc">Built for international job seekers. Employers here are explicitly open to relocating candidates. Good for roles that include relocation support. Smaller volume but higher intent from employers.</div>
+      <div class="board-tags">
+        <span class="tag tag-good">Visa sponsorship</span><span class="tag tag-good">Relocation support</span><span class="tag tag-blue">Tech & Security</span>
+      </div>
+      <a href="https://relocate.me" target="_blank" rel="noopener" class="board-link">Visit Relocate.me <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+
+  <!-- AVOID / SC CLEARANCE -->
+  <div class="section-label" style="margin-top:40px">Avoid on a Graduate Visa</div>
+
+  <div class="warn-box">
+    <p><strong>⚠️ SC Clearance roles:</strong> Roles listed on <strong>NCSC Careers</strong>, <strong>Civil Service Jobs</strong>, and many <strong>defence contractor</strong> boards require UK Security Clearance (SC). On a Graduate Visa you are not eligible for SC clearance. Applying wastes time and damages your application history. Check the job description for "SC Clearance", "DV Clearance", or "must be a British National" before applying.</p>
+  </div>
+
+  <div class="board-card" style="border-color:#FECDD3;opacity:.75">
+    <div class="board-icon" style="background:#FFF1F2">🏛️</div>
+    <div class="board-main">
+      <div class="board-name">NCSC Careers
+        <span class="tag tag-bad">SC Clearance required</span>
+      </div>
+      <div class="board-desc">National Cyber Security Centre roles. Almost all require SC or DV clearance and British nationality. Not accessible on a Graduate Visa. Worth bookmarking for the future — but not now.</div>
+      <div class="board-tags">
+        <span class="tag tag-bad">Not accessible on Graduate Visa</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-card" style="border-color:#FECDD3;opacity:.75">
+    <div class="board-icon" style="background:#FFF1F2">⚔️</div>
+    <div class="board-main">
+      <div class="board-name">Defence Contractor Boards (BAE, GCHQ, Leidos)
+        <span class="tag tag-bad">Clearance required</span>
+      </div>
+      <div class="board-desc">BAE Systems, Leonardo, Leidos, ManTech, Northrop Grumman — most cyber roles require SC or DV clearance. Some commercial IT roles do not. Read every JD carefully before applying.</div>
+      <div class="board-tags">
+        <span class="tag tag-bad">Mostly SC/DV required</span><span class="tag tag-warn">Some exceptions</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tip-box" style="margin-top:40px">
+    <p><strong>Pro tip:</strong> Do not apply to 50 roles on one platform. Apply to 10 targeted roles across 3 platforms with a tailored CV each time. Quality beats volume every time in the UK market. Use your <a href="cv-checker.html" style="color:var(--blue);font-weight:600">CV Scorecard</a> to make sure your CV is ready before you start.</p>
+  </div>
+
+  <div style="text-align:center;margin-top:32px;padding:24px;background:#fff;border:1px solid var(--border);border-radius:12px">
+    <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px">Want to know which companies actually sponsor?</div>
+    <div style="font-size:13px;color:var(--text-2);margin-bottom:16px">The UK Sponsorship Radar lists 50+ verified UK cybersecurity employers who actively sponsor Graduate Visa holders. Available in the Industry-Ready programme.</div>
+    <a href="pricing.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:11px 22px;border-radius:var(--radius);font-size:14px;font-weight:700">See Industry-Ready →</a>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>Check your CV before applying.</h2>
+  <p>A great job board means nothing if your CV is filtered out by ATS. See your score in 60 seconds.</p>
+  <a href="cv-checker.html" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--blue);padding:13px 28px;border-radius:var(--radius);font-size:15px;font-weight:700">Check my CV free →</a>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span>© 2026 CyberGrad · cyber-grad.co.uk</span>
+    <span style="font-style:italic">"Guidance, not guarantees."</span>
+    <span><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a> &nbsp;·&nbsp; <a href="mailto:cybergraduk@gmail.com">cybergraduk@gmail.com</a></span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
+
+async function checkAuth() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    document.getElementById('gate-overlay').classList.add('show');
+  }
+}
+checkAuth();
+</script>
+</body>
+</html>

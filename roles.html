@@ -19,7 +19,7 @@
   --font-h:'Inter',-apple-system,sans-serif;--font-b:'Inter',-apple-system,sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(6,11,22,0.93);;border-bottom:1px solid var(--border)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:#fff;;border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
 .nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
@@ -63,17 +63,17 @@ footer{padding:32px 5%;border-top:1px solid var(--border);display:flex;align-ite
     <div style="width:34px;height:34px;background:#1E40AF;border-radius:7px;display:flex;align-items:center;justify-content:center"><span style="color:#fff;font-size:13px;font-weight:800">CG</span></div>
     <span style="font-size:17px;font-weight:800;color:#0F172A">CyberGrad</span>
   </a>
-  <a href="dashboard.html" id="back-dashboard-btn" style="display:none;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-2);padding:8px 14px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:500;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,150,.3)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-2)'">
+  <a href="dashboard.html" id="back-dashboard-btn" style="display:none;align-items:center;gap:5px;font-size:13px;font-weight:500;color:#94A3B8;text-decoration:none;transition:color .2s" onmouseover="this.style.color='#1E40AF'" onmouseout="this.style.color='#94A3B8'">
     <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    Back to Dashboard
+    Dashboard
   </a>
     <ul class="nav-links" id="nav-links">
     <li><a href="cv-checker.html">Tools</a></li>
-    <li><a href="index.html#community">Community</a></li>
+    <li><a href="job-boards.html" style="color:#1E40AF;font-weight:600">Free Resources</a></li>
     <li><a href="pricing.html">Academy</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="login.html" class="nav-login">Log in</a></li>
-    <li><a href="signup.html" class="nav-cta">Get started free</a></li>
+    <li><a href="signup.html" class="nav-cta" style="background:#1E40AF;color:#fff!important">Get started free</a></li>
   </ul>
 </nav>
 
