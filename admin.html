@@ -4,15 +4,17 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — CyberGrad</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#0F1829;
-  --teal:#1E40AF;--teal-dim:rgba(0,200,150,0.08);--teal-b:rgba(0,200,150,0.20);
-  --text:#0F172A;--text-2:#475569;--text-3:#4A5775;--border:#E2E8F0;
-  --red:#DC2626;--amber:#D97706;--blue:#3B82F6;
-  --font-h:'Inter',sans-serif;--font-b:'Inter',sans-serif;
+  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#F1F5F9;
+  --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
+  --border:#E2E8F0;--border-2:#CBD5E1;
+  --blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--blue-dark:#1E3A8A;
+  --teal:#1E40AF;--teal-b:#BFDBFE;--teal-dim:#EFF6FF;
+  --green:#16A34A;--amber:#D97706;--red:#DC2626;
+  --font-h:'Inter',-apple-system,sans-serif;--font-b:'Inter',-apple-system,sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;-webkit-font-smoothing:antialiased}
 
@@ -20,7 +22,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
 .app{display:flex;min-height:100vh}
 .sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:50}
 .sidebar-logo{display:flex;align-items:center;gap:10px;padding:18px 16px;border-bottom:1px solid var(--border);text-decoration:none}
-.s-lm{width:28px;height:28px;border-radius:6px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:11px;font-weight:800;color:#060B16}
+.s-lm{width:28px;height:28px;border-radius:6px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:11px;font-weight:800;color:#fff}
 .s-lt{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--text);letter-spacing:-0.4px}
 .admin-badge{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);background:rgba(217,119,6,0.1);border:1px solid rgba(217,119,6,0.2);padding:2px 7px;border-radius:4px;margin-left:auto}
 .sidebar-nav{flex:1;padding:14px 10px}
@@ -40,7 +42,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
 .topbar-right{display:flex;align-items:center;gap:10px}
 .btn-refresh{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-2);padding:8px 14px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:500;cursor:pointer;transition:background .2s}
 .btn-refresh:hover{background:rgba(255,255,255,.08);color:var(--text)}
-.btn-export{display:flex;align-items:center;gap:6px;background:var(--teal);border:none;color:#060B16;padding:8px 16px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.btn-export{display:flex;align-items:center;gap:6px;background:var(--teal);border:none;color:#fff;padding:8px 16px;border-radius:7px;font-family:var(--font-b);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s}
 .btn-export:hover{opacity:.88}
 .last-updated{font-size:12px;color:var(--text-3)}
 

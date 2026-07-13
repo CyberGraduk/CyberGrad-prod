@@ -4,14 +4,22 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome to CyberGrad! 🎉</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#F8FAFC;--bg-2:#0A1020;--teal:#1E40AF;--teal-dim:rgba(0,200,150,0.10);--teal-b:rgba(0,200,150,0.22);--text:#0F172A;--text-2:#475569;--text-3:#4A5775;--border:#E2E8F0;--font-h:'Inter',sans-serif;--font-b:'Inter',sans-serif;}
+:root{
+  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#F1F5F9;
+  --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
+  --border:#E2E8F0;--border-2:#CBD5E1;
+  --blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--blue-dark:#1E3A8A;
+  --teal:#1E40AF;--teal-b:#BFDBFE;--teal-dim:#EFF6FF;
+  --green:#16A34A;--amber:#D97706;--red:#DC2626;
+  --font-h:'Inter',-apple-system,sans-serif;--font-b:'Inter',-apple-system,sans-serif;
+}
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 nav{display:flex;align-items:center;padding:0 5%;height:64px;border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#060B16}
+.nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
 .nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
 main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 20px}
 .wrap{max-width:600px;width:100%;text-align:center}
@@ -31,7 +39,7 @@ h1{font-family:var(--font-h);font-size:clamp(28px,4vw,40px);font-weight:800;lett
 
 .steps-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;animation:fadeUp .5s ease forwards 1.15s;opacity:0}
 .steps{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
-.step{display:flex;gap:14px;align-items:flex-start;background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:left;transition:border-color .2s}
+.step{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:left;transition:border-color .2s}
 .step:hover{border-color:var(--teal-b)}
 .step-num{width:32px;height:32px;border-radius:50%;background:var(--teal-dim);border:1px solid var(--teal-b);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--teal);flex-shrink:0;margin-top:1px}
 .step-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
@@ -40,7 +48,7 @@ h1{font-family:var(--font-h);font-size:clamp(28px,4vw,40px);font-weight:800;lett
 .step:nth-child(2){animation:fadeUp .5s ease forwards 1.3s;opacity:0}
 .step:nth-child(3){animation:fadeUp .5s ease forwards 1.4s;opacity:0}
 
-.btn-dashboard{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#060B16;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:14px 28px;cursor:pointer;text-decoration:none;transition:opacity .2s;animation:fadeUp .5s ease forwards 1.5s;opacity:0}
+.btn-dashboard{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:var(--font-b);font-size:15px;font-weight:700;padding:14px 28px;cursor:pointer;text-decoration:none;transition:opacity .2s;animation:fadeUp .5s ease forwards 1.5s;opacity:0}
 .btn-dashboard:hover{opacity:.88}
 
 @media(max-width:480px){nav{padding:0 20px}}
