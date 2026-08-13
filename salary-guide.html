@@ -56,6 +56,15 @@ footer{background:#fff;border-top:1px solid var(--border);padding:24px 5%}
 .footer-bottom a:hover{color:var(--blue)}
 @media(max-width:768px){.salary-table{font-size:12px}.salary-table th,.salary-table td{padding:10px 12px}}
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async () => {
+  const sb = supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) window.location.href = 'signup.html?next=' + encodeURIComponent(window.location.pathname);
+})();
+</script>
 </head>
 <body>
 <nav>

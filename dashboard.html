@@ -61,7 +61,13 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
 .tag-chip.muted{color:var(--text-3);background:var(--bg);border-color:var(--border)}
 .wa-btn{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 20px;border-radius:var(--radius);font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s}
 .wa-btn:hover{opacity:.88}
-#admin-nav-link{display:none}
+.progress-step{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s}
+.progress-step:hover{border-color:var(--blue-border)}
+.progress-step.done{background:var(--blue-light);border-color:var(--blue-border)}
+.step-check{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;color:transparent;transition:all .2s}
+.progress-step.done .step-check{background:var(--blue);border-color:var(--blue);color:#fff}
+.step-label{font-size:12px;font-weight:600;color:var(--text-2)}
+.progress-step.done .step-label{color:var(--blue)}
 .loading-overlay{position:fixed;inset:0;background:#F8FAFC;z-index:999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
 .loading-spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -103,9 +109,17 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
       </div>
       <div class="aside-section">
         <div class="aside-section-label">Resources</div>
-        <a href="resources.html" class="nav-item">
+        <a href="job-boards.html" class="nav-item">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           UK Job Boards
+        </a>
+        <a href="certifications.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Cert Roadmap
+        </a>
+        <a href="salary-guide.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Salary Guide
         </a>
         <a href="sectors.html" class="nav-item">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg>
@@ -218,7 +232,49 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
         <a href="roles.html" class="btn-check" style="text-decoration:none;display:inline-flex">View all roles →</a>
       </div>
 
-      <!-- COMMUNITY -->
+      <!-- PROGRESS CHECKLIST -->
+      <div class="card" style="grid-column:span 12">
+        <div class="card-title">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Your Progress
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px" id="progress-grid">
+          <div class="progress-step" id="step-cv" onclick="toggleStep('cv')">
+            <div class="step-check" id="check-cv"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
+            <div class="step-label">CV Checked</div>
+          </div>
+          <div class="progress-step" id="step-linkedin" onclick="toggleStep('linkedin')">
+            <div class="step-check" id="check-linkedin"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
+            <div class="step-label">LinkedIn Updated</div>
+          </div>
+          <div class="progress-step" id="step-role" onclick="toggleStep('role')">
+            <div class="step-check" id="check-role"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
+            <div class="step-label">Target Role Chosen</div>
+          </div>
+          <div class="progress-step" id="step-companies" onclick="toggleStep('companies')">
+            <div class="step-check" id="check-companies"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
+            <div class="step-label">5 Companies Listed</div>
+          </div>
+          <div class="progress-step" id="step-call" onclick="window.open('https://topmate.io/rakeshelamaran/2176589?coupon_code=UKCyb3r','_blank')">
+            <div class="step-check" id="check-call"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
+            <div class="step-label">1-1 Call Booked</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOOK A CALL -->
+      <div class="card" style="grid-column:span 12;background:var(--blue-light);border-color:var(--blue-border)">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#1E3A8A;margin-bottom:4px">Book a free 20 min call with Rakesh</div>
+            <div style="font-size:13px;color:#1E40AF;line-height:1.6">Ask your questions about your CV, target role, or UK job search. Honest, no pitch.</div>
+          </div>
+          <a href="https://topmate.io/rakeshelamaran/2176589?coupon_code=UKCyb3r" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#1E40AF;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;flex-shrink:0;white-space:nowrap">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Book free 20 min call →
+          </a>
+        </div>
+      </div>
       <div class="card community-card">
         <div class="card-title">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -226,7 +282,7 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
           <p style="font-size:13px;color:var(--text-2);line-height:1.6;margin:0">Join other international cybersecurity graduates navigating the UK job market. Ask questions, share updates, support each other.</p>
-          <a href="https://chat.whatsapp.com/CyberGradCommunity" target="_blank" class="wa-btn">
+          <a href="https://chat.whatsapp.com/CiWUjOvMm8AKN5WgWDxGNO?mode=gi_t" target="_blank" class="wa-btn">
             <svg width="16" height="16" fill="#fff" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
             Join Community
           </a>
@@ -235,6 +291,11 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
 
     </div>
   </div>
+</div>
+
+<div style="margin-left:240px;border-top:1px solid #E2E8F0;padding:14px 32px;background:#fff;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#94A3B8;flex-wrap:wrap;gap:8px">
+  <span>© 2026 CyberGrad · cyber-grad.co.uk</span>
+  <span><a href="privacy.html" style="color:#94A3B8;transition:color .2s" onmouseover="this.style.color='#1E40AF'" onmouseout="this.style.color='#94A3B8'">Privacy</a> &nbsp;·&nbsp; <a href="terms.html" style="color:#94A3B8;transition:color .2s" onmouseover="this.style.color='#1E40AF'" onmouseout="this.style.color='#94A3B8'">Terms</a> &nbsp;·&nbsp; <a href="mailto:cybergraduk@gmail.com" style="color:#94A3B8">cybergraduk@gmail.com</a></span>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -250,41 +311,46 @@ async function handleAuth() {
 async function loadUser(user) {
   let firstName = '', fullName = '';
 
-  // 1. getUser — freshest metadata
+  // 1. Always query students table first — most reliable
   try {
-    const { data: { user: fu } } = await sb.auth.getUser();
-    const meta = fu?.user_metadata || {};
-    if (meta.first_name) { firstName = meta.first_name; fullName = (firstName+' '+(meta.last_name||'')).trim(); }
+    const { data } = await sb.from('students')
+      .select('first_name, last_name, cv_score')
+      .eq('email', user.email)
+      .single();
+    if (data?.first_name) {
+      firstName = data.first_name;
+      fullName = (firstName + ' ' + (data.last_name || '')).trim();
+      if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
+      localStorage.setItem('cg_user', JSON.stringify({ firstName, name: fullName, email: user.email }));
+      // Sync to user_metadata so future logins are faster
+      sb.auth.updateUser({ data: { first_name: firstName, last_name: data.last_name || '' } }).catch(() => {});
+    }
   } catch(e) {}
 
-  // 2. localStorage cache
+  // 2. Fall back to getUser metadata
   if (!firstName) {
     try {
-      const c = JSON.parse(localStorage.getItem('cg_user')||'{}');
+      const { data: { user: fu } } = await sb.auth.getUser();
+      const meta = fu?.user_metadata || {};
+      if (meta.first_name) { firstName = meta.first_name; fullName = (firstName + ' ' + (meta.last_name || '')).trim(); }
+    } catch(e) {}
+  }
+
+  // 3. Fall back to localStorage
+  if (!firstName) {
+    try {
+      const c = JSON.parse(localStorage.getItem('cg_user') || '{}');
       if (c.firstName && c.email === user.email) { firstName = c.firstName; fullName = c.name || firstName; }
     } catch(e) {}
   }
 
-  // 3. Students table
-  if (!firstName) {
-    try {
-      const { data } = await sb.from('students').select('first_name,last_name,cv_score').eq('email',user.email).single();
-      if (data?.first_name) {
-        firstName = data.first_name; fullName = (firstName+' '+(data.last_name||'')).trim();
-        if (data.cv_score) localStorage.setItem('cg_cv_score', data.cv_score);
-        localStorage.setItem('cg_user', JSON.stringify({firstName, name:fullName, email:user.email}));
-        sb.auth.updateUser({data:{first_name:firstName, last_name:data.last_name||''}}).catch(()=>{});
-      }
-    } catch(e) {}
-  }
-
-  // 4. Banner fallback
+  // 4. Still no name — show banner
   if (!firstName) showNameBanner(user.email);
 
-  const initials = (firstName||'G')[0].toUpperCase();
   document.getElementById('topbar-name').textContent = firstName || 'Grad';
   document.getElementById('user-name').textContent = fullName || 'Student';
   document.getElementById('user-email').textContent = user.email;
+  const initials = (firstName || 'G')[0].toUpperCase();
   document.getElementById('user-av').textContent = initials;
   document.getElementById('sidebar-av').textContent = initials;
 
@@ -293,9 +359,9 @@ async function loadUser(user) {
   }
 
   // CV Score
-  const score = parseInt(localStorage.getItem('cg_cv_score')||'0');
+  const score = parseInt(localStorage.getItem('cg_cv_score') || '0');
   if (score > 0) {
-    const col = score>=80?'#1E40AF':score>=60?'#0369A1':score>=40?'#D97706':'#DC2626';
+    const col = score >= 80 ? '#1E40AF' : score >= 60 ? '#0369A1' : score >= 40 ? '#D97706' : '#DC2626';
     document.getElementById('cv-score-content').innerHTML = `
       <div class="cv-score-big" style="color:${col}">${score}</div>
       <div class="cv-score-sub">out of 100</div>
@@ -304,7 +370,7 @@ async function loadUser(user) {
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         Re-check my CV
       </a>`;
-    setTimeout(()=>{const b=document.getElementById('cv-fill-bar');if(b)b.style.width=score+'%'},300);
+    setTimeout(() => { const b = document.getElementById('cv-fill-bar'); if(b) b.style.width = score + '%'; }, 300);
   }
 
   document.getElementById('loading-overlay').style.display = 'none';
@@ -346,7 +412,27 @@ async function logout() {
   window.location.href = 'login.html';
 }
 
-handleAuth();
+// Progress checklist
+function toggleStep(key) {
+  const steps = JSON.parse(localStorage.getItem('cg_progress') || '{}');
+  steps[key] = !steps[key];
+  localStorage.setItem('cg_progress', JSON.stringify(steps));
+  renderProgress();
+}
+function renderProgress() {
+  const steps = JSON.parse(localStorage.getItem('cg_progress') || '{}');
+  ['cv','linkedin','role','companies','call'].forEach(key => {
+    const el = document.getElementById('step-' + key);
+    if (el) { steps[key] ? el.classList.add('done') : el.classList.remove('done'); }
+  });
+  // Auto-tick CV if score exists
+  if (localStorage.getItem('cg_cv_score')) {
+    const s = JSON.parse(localStorage.getItem('cg_progress') || '{}');
+    if (!s.cv) { s.cv = true; localStorage.setItem('cg_progress', JSON.stringify(s)); }
+    document.getElementById('step-cv')?.classList.add('done');
+  }
+}
+renderProgress();
 </script>
 </body>
 </html>
