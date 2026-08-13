@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Certification Roadmap — CyberGrad</title>
+<meta name="description" content="Which cybersecurity certifications actually matter for UK jobs. Role-specific roadmap for international graduates.">
+<link rel="canonical" href="https://www.cyber-grad.co.uk/certifications.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F8FAFC;--bg2:#fff;--text:#0F172A;--text-2:#475569;--text-3:#94A3B8;--border:#E2E8F0;--blue:#1E40AF;--blue-light:#EFF6FF;--blue-border:#BFDBFE;--font:'Inter',-apple-system,sans-serif;--radius:8px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-badge{width:34px;height:34px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-badge span{color:#fff;font-size:13px;font-weight:800}
+.nav-name{font-size:17px;font-weight:800;color:var(--text)}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-2);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-login{color:var(--blue)!important;font-weight:600!important}
+.nav-cta{background:var(--blue);color:#fff!important;padding:9px 18px;border-radius:var(--radius);font-weight:700!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text);border-radius:1px}
+@media(max-width:768px){.nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 5%;gap:16px;border-bottom:1px solid var(--border);z-index:99}.nav-links.open{display:flex}.hamburger{display:flex}}
+.page-hero{padding:96px 5% 48px;background:#fff;border-bottom:1px solid var(--border);text-align:center}
+.page-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:12px}
+h1{font-size:36px;font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.hero-sub{font-size:16px;color:var(--text-2);max-width:560px;margin:0 auto;line-height:1.7}
+.content{max-width:960px;margin:0 auto;padding:48px 5%}
+.role-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.role-tab{padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text-2);transition:all .2s}
+.role-tab:hover{border-color:var(--blue-border);color:var(--blue)}
+.role-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.role-content{display:none}
+.role-content.active{display:block}
+.cert-stage{margin-bottom:32px}
+.stage-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.stage-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.cert-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;transition:border-color .2s}
+.cert-card:hover{border-color:var(--blue-border)}
+.cert-badge{flex-shrink:0;width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;text-align:center;line-height:1.2}
+.cert-badge.free{background:#F0FDF4;color:#16A34A;border:1px solid #BBF7D0}
+.cert-badge.paid{background:var(--blue-light);color:var(--blue);border:1px solid var(--blue-border)}
+.cert-main h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
+.cert-main p{font-size:13px;color:var(--text-2);line-height:1.5;margin-bottom:6px}
+.cert-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px}
+.tag-free{background:#F0FDF4;color:#16A34A;border:1px solid #BBF7D0}
+.tag-paid{background:var(--blue-light);color:var(--blue);border:1px solid var(--blue-border)}
+.tag-time{background:#F8FAFC;color:var(--text-3);border:1px solid var(--border)}
+.tip-box{background:var(--blue-light);border:1px solid var(--blue-border);border-radius:10px;padding:16px 20px;margin:24px 0}
+.tip-box p{font-size:14px;color:#1E3A8A;line-height:1.7}
+.cta-band{background:var(--blue);padding:48px 5%;text-align:center}
+.cta-band h2{color:#fff;font-size:24px;font-weight:800;margin-bottom:8px}
+.cta-band p{color:rgba(255,255,255,.75);font-size:15px;margin-bottom:24px}
+footer{background:#fff;border-top:1px solid var(--border);padding:24px 5%}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-3)}
+.footer-bottom a{color:var(--text-3)}
+.footer-bottom a:hover{color:var(--blue)}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-badge"><span>CG</span></div>
+    <span class="nav-name">CyberGrad</span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="cv-checker.html">Tools</a></li>
+    <li><a href="resources.html" style="color:#1E40AF;font-weight:600">Free Resources</a></li>
+    <li><a href="pricing.html">Academy</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="login.html" class="nav-login">Log in</a></li>
+    <li><a href="signup.html" class="nav-cta" style="background:#1E40AF;color:#fff!important;padding:9px 18px;border-radius:8px;font-weight:700!important">Get started free</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">Free Resource</div>
+  <h1>Certification Roadmap</h1>
+  <p class="hero-sub">Which certifications actually matter for UK cyber jobs. Role-specific, honest, no unnecessary spending.</p>
+</div>
+
+<div class="content">
+  <div class="tip-box">
+    <p><strong>Before spending money on certs:</strong> Most UK entry-level cyber roles care more about a strong CV and demonstrable skills than certifications. Get your CV right first using the <a href="cv-checker.html" style="color:var(--blue);font-weight:600">free CV Scorecard</a>. Then add certs that fill specific gaps.</p>
+  </div>
+
+  <div class="role-tabs">
+    <button class="role-tab active" onclick="showRole('soc')">SOC Analyst</button>
+    <button class="role-tab" onclick="showRole('pentest')">Penetration Tester</button>
+    <button class="role-tab" onclick="showRole('appsec')">AppSec Engineer</button>
+    <button class="role-tab" onclick="showRole('grc')">GRC Analyst</button>
+    <button class="role-tab" onclick="showRole('cloud')">Cloud Security</button>
+    <button class="role-tab" onclick="showRole('devsecops')">DevSecOps</button>
+  </div>
+
+  <!-- SOC -->
+  <div class="role-content active" id="role-soc">
+    <div class="cert-stage">
+      <div class="stage-label">Start here — Free</div>
+      <div class="cert-card">
+        <div class="cert-badge free">TryH<br>ackMe</div>
+        <div class="cert-main">
+          <h3>TryHackMe — SOC Level 1 Path</h3>
+          <p>Hands-on labs covering log analysis, SIEM, phishing, and incident response. Free tier available. Employers recognise this. Do this before anything else.</p>
+          <div class="cert-tags"><span class="tag tag-free">Free tier</span><span class="tag tag-time">4–6 weeks</span></div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge free">Blue<br>Team</div>
+        <div class="cert-main">
+          <h3>Blue Team Labs Online</h3>
+          <p>Free SOC investigation labs. SIEM, threat hunting, malware analysis. Builds the practical skills that interviewers test for.</p>
+          <div class="cert-tags"><span class="tag tag-free">Free</span><span class="tag tag-time">Ongoing</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-stage">
+      <div class="stage-label">Worth paying for</div>
+      <div class="cert-card">
+        <div class="cert-badge paid">Sec+</div>
+        <div class="cert-main">
+          <h3>CompTIA Security+</h3>
+          <p>The most recognised entry-level cert in UK cyber. Covers fundamentals — threats, network security, cryptography. Required or preferred in many JDs. Study time ~2 months.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£320</span><span class="tag tag-time">2 months</span></div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge paid">Blue<br>Team+</div>
+        <div class="cert-main">
+          <h3>BTL1 — Blue Team Labs Level 1</h3>
+          <p>Hands-on SOC cert from Security Blue Team. Highly practical, increasingly recognised by UK employers. Better value than many expensive alternatives.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£400</span><span class="tag tag-time">3 months</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PENTEST -->
+  <div class="role-content" id="role-pentest">
+    <div class="cert-stage">
+      <div class="stage-label">Start here — Free</div>
+      <div class="cert-card">
+        <div class="cert-badge free">TryH<br>ackMe</div>
+        <div class="cert-main">
+          <h3>TryHackMe — Jr Penetration Tester Path</h3>
+          <p>Covers web app testing, network pentesting, privilege escalation. Structured learning with hands-on labs. Essential starting point before any paid cert.</p>
+          <div class="cert-tags"><span class="tag tag-free">Free tier</span><span class="tag tag-time">6–8 weeks</span></div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge free">Hack<br>TheBox</div>
+        <div class="cert-main">
+          <h3>HackTheBox — Starting Point</h3>
+          <p>Free beginner machines. Active HTB profile is proof of skills to employers. Build your profile alongside any certification.</p>
+          <div class="cert-tags"><span class="tag tag-free">Free tier</span><span class="tag tag-time">Ongoing</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-stage">
+      <div class="stage-label">Worth paying for</div>
+      <div class="cert-card">
+        <div class="cert-badge paid">eJPT</div>
+        <div class="cert-main">
+          <h3>eLearnSecurity Junior Penetration Tester (eJPT)</h3>
+          <p>Entry-level pentest cert. Practical exam, reasonable cost. Good first cert before OSCP. Recognised by UK consultancies.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£150</span><span class="tag tag-time">1–2 months</span></div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge paid">OSCP</div>
+        <div class="cert-main">
+          <h3>Offensive Security OSCP</h3>
+          <p>The gold standard for penetration testing in the UK. Required by most serious consultancies. Difficult, expensive, but transforms your job prospects. Not for beginners.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£1,300</span><span class="tag tag-time">6+ months prep</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPSEC -->
+  <div class="role-content" id="role-appsec">
+    <div class="cert-stage">
+      <div class="stage-label">Start here — Free</div>
+      <div class="cert-card">
+        <div class="cert-badge free">Port<br>Swigger</div>
+        <div class="cert-main">
+          <h3>PortSwigger Web Security Academy</h3>
+          <p>Completely free. Covers OWASP Top 10, SQLi, XSS, SSRF, authentication flaws. Built by the makers of Burp Suite. Essential for any AppSec role. Do all labs.</p>
+          <div class="cert-tags"><span class="tag tag-free">Free</span><span class="tag tag-time">3–6 months</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-stage">
+      <div class="stage-label">Worth paying for</div>
+      <div class="cert-card">
+        <div class="cert-badge paid">BSCP</div>
+        <div class="cert-main">
+          <h3>PortSwigger Burp Suite Certified Practitioner</h3>
+          <p>Practical web app security cert. Recognised by UK employers doing DAST/SAST work. Reasonable cost, high signal value.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£250</span><span class="tag tag-time">3 months</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRC -->
+  <div class="role-content" id="role-grc">
+    <div class="cert-stage">
+      <div class="stage-label">Start here — Free</div>
+      <div class="cert-card">
+        <div class="cert-badge free">ISO<br>27001</div>
+        <div class="cert-main">
+          <h3>ISO 27001 Foundation (free resources)</h3>
+          <p>Read the standard. Understand Annex A controls. Free resources on BSI and ISACA websites. GRC roles expect you to know this before the interview.</p>
+          <div class="cert-tags"><span class="tag tag-free">Free</span><span class="tag tag-time">2–3 weeks</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-stage">
+      <div class="stage-label">Worth paying for</div>
+      <div class="cert-card">
+        <div class="cert-badge paid">ISO<br>Lead</div>
+        <div class="cert-main">
+          <h3>ISO 27001 Lead Implementer / Auditor</h3>
+          <p>Formal qualification. Required for senior GRC roles. Good ROI for compliance-focused careers in finance and healthcare sectors.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£1,500</span><span class="tag tag-time">1 week course</span></div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge paid">CISM</div>
+        <div class="cert-main">
+          <h3>ISACA CISM — Certified Information Security Manager</h3>
+          <p>Respected GRC and governance cert. Better for roles in finance and consulting. Requires experience but can sit exam first.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£500</span><span class="tag tag-time">3–4 months</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOUD -->
+  <div class="role-content" id="role-cloud">
+    <div class="cert-stage">
+      <div class="stage-label">Start here — Free</div>
+      <div class="cert-card">
+        <div class="cert-badge free">AWS<br>Free</div>
+        <div class="cert-main">
+          <h3>AWS Cloud Practitioner Essentials (free)</h3>
+          <p>Free on AWS Skill Builder. Covers core AWS services. Cloud Security roles expect baseline cloud knowledge before the security layer.</p>
+          <div class="cert-tags"><span class="tag tag-free">Free</span><span class="tag tag-time">2 weeks</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-stage">
+      <div class="stage-label">Worth paying for</div>
+      <div class="cert-card">
+        <div class="cert-badge paid">AWS<br>SAA</div>
+        <div class="cert-main">
+          <h3>AWS Solutions Architect Associate</h3>
+          <p>Baseline cloud cert that many Cloud Security roles require. Shows you understand the architecture before the security controls.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£250</span><span class="tag tag-time">2–3 months</span></div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge paid">AWS<br>Sec</div>
+        <div class="cert-main">
+          <h3>AWS Certified Security Specialty</h3>
+          <p>The main Cloud Security cert for AWS environments. Directly relevant for most UK Cloud Security roles. Study after SAA.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£300</span><span class="tag tag-time">3–4 months</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEVSECOPS -->
+  <div class="role-content" id="role-devsecops">
+    <div class="cert-stage">
+      <div class="stage-label">Start here — Free</div>
+      <div class="cert-card">
+        <div class="cert-badge free">TryH<br>ackMe</div>
+        <div class="cert-main">
+          <h3>TryHackMe — DevSecOps Path</h3>
+          <p>Covers CI/CD security, container security, SAST/DAST integration, secrets management. Free tier. Practical and directly relevant.</p>
+          <div class="cert-tags"><span class="tag tag-free">Free tier</span><span class="tag tag-time">4–6 weeks</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-stage">
+      <div class="stage-label">Worth paying for</div>
+      <div class="cert-card">
+        <div class="cert-badge paid">CKS</div>
+        <div class="cert-main">
+          <h3>Certified Kubernetes Security Specialist (CKS)</h3>
+          <p>For DevSecOps roles working with container orchestration. Increasingly required as Kubernetes adoption grows in UK enterprises.</p>
+          <div class="cert-tags"><span class="tag tag-paid">~£350</span><span class="tag tag-time">3–4 months</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="cta-band">
+  <h2>Know your gaps before spending on certs.</h2>
+  <p>Check your CV score first. See exactly which skills are missing for your target role.</p>
+  <a href="cv-checker.html" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--blue);padding:13px 28px;border-radius:var(--radius);font-size:15px;font-weight:700">Check my CV free →</a>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span>© 2026 CyberGrad · cyber-grad.co.uk</span>
+    <span style="font-style:italic">"Guidance, not guarantees."</span>
+    <span><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a> &nbsp;·&nbsp; <a href="mailto:cybergraduk@gmail.com">cybergraduk@gmail.com</a></span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+function showRole(role) {
+  document.querySelectorAll('.role-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.role-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('role-' + role).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
