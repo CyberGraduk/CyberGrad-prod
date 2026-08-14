@@ -138,6 +138,32 @@ footer{background:#fff;border-top:1px solid var(--border);padding:24px 5%}
       </div>
     </div>
 
+    <!-- CERT ROADMAP -->
+    <div class="resource-card">
+      <div class="resource-icon">
+        <svg width="22" height="22" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Certification Roadmap</h3>
+      <p>Which certs actually matter for each UK cyber role. Role-specific roadmap — free resources first, paid only when it counts.</p>
+      <div class="resource-lock" id="cert-lock">
+        <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Free with a CyberGrad account</span>
+        <a href="signup.html">Create account →</a>
+      </div>
+    </div>
+
+    <!-- SALARY GUIDE -->
+    <div class="resource-card">
+      <div class="resource-icon">
+        <svg width="22" height="22" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h3>UK Salary Guide</h3>
+      <p>Honest salary ranges for every UK cyber role by experience level. What to expect, what to negotiate, and how sponsorship affects your starting offer.</p>
+      <div class="resource-lock" id="salary-lock">
+        <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Free with a CyberGrad account</span>
+        <a href="signup.html">Create account →</a>
+      </div>
+    </div>
+
     <!-- JOB BOARDS -->
     <div class="resource-card" style="grid-column:span 2">
       <div style="display:flex;align-items:flex-start;gap:16px">
@@ -180,15 +206,17 @@ async function checkAuth() {
   const { data: { session } } = await sb.auth.getSession();
   if (session) {
     // Logged in — unlock all resources
-    ['cv-lock','cl-lock','sectors-lock','roles-lock','jobs-lock'].forEach(id => {
+    ['cv-lock','cl-lock','sectors-lock','roles-lock','jobs-lock','cert-lock','salary-lock'].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
       const isJobs = id === 'jobs-lock';
+        const isCert = id === 'cert-lock';
+        const isSalary = id === 'salary-lock';
       el.className = 'resource-open';
       el.innerHTML = `
         <span>✓ Unlocked</span>
-        <a href="${isJobs ? 'job-boards.html' : id === 'sectors-lock' ? 'sectors.html' : id === 'roles-lock' ? 'roles.html' : '#'}" style="color:#16A34A">
-          ${isJobs ? 'View job boards →' : id === 'sectors-lock' ? 'View sectors →' : id === 'roles-lock' ? 'View roles →' : 'Download →'}
+        <a href="${isJobs ? 'job-boards.html' : isCert ? 'certifications.html' : isSalary ? 'salary-guide.html' : id === 'sectors-lock' ? 'sectors.html' : id === 'roles-lock' ? 'roles.html' : '#'}" style="color:#16A34A">
+          ${isJobs ? 'View job boards →' : isCert ? 'View roadmap →' : isSalary ? 'View guide →' : id === 'sectors-lock' ? 'View sectors →' : id === 'roles-lock' ? 'View roles →' : 'Download →'}
         </a>`;
     });
   }
