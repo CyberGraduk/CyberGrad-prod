@@ -302,10 +302,23 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
 <script>
 const sb = supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
 
+// Safety timeout — never leave loading overlay stuck
+const loadingTimeout = setTimeout(() => {
+  const overlay = document.getElementById('loading-overlay');
+  if (overlay) overlay.style.display = 'none';
+}, 5000);
+
 async function handleAuth() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (!session) { window.location.href = 'login.html'; return; }
-  await loadUser(session.user);
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = 'login.html'; return; }
+    await loadUser(session.user);
+  } catch(e) {
+    console.error('Auth error:', e);
+    // Still hide overlay so page is usable
+    clearTimeout(loadingTimeout);
+    document.getElementById('loading-overlay').style.display = 'none';
+  }
 }
 
 async function loadUser(user) {
@@ -373,6 +386,7 @@ async function loadUser(user) {
     setTimeout(() => { const b = document.getElementById('cv-fill-bar'); if(b) b.style.width = score + '%'; }, 300);
   }
 
+  clearTimeout(loadingTimeout);
   document.getElementById('loading-overlay').style.display = 'none';
 }
 
