@@ -56,6 +56,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:24px 5%}
 .footer-bottom a:hover{color:var(--blue)}
 @media(max-width:768px){.resources-grid{grid-template-columns:1fr}}
 </style>
+<link rel="icon" type="image/jpeg" href="logo.jpg">
 </head>
 <body>
 
@@ -215,8 +216,8 @@ async function checkAuth() {
       el.className = 'resource-open';
       el.innerHTML = `
         <span>✓ Unlocked</span>
-        <a href="${isJobs ? 'job-boards.html' : isCert ? 'certifications.html' : isSalary ? 'salary-guide.html' : id === 'sectors-lock' ? 'sectors.html' : id === 'roles-lock' ? 'roles.html' : '#'}" style="color:#16A34A">
-          ${isJobs ? 'View job boards →' : isCert ? 'View roadmap →' : isSalary ? 'View guide →' : id === 'sectors-lock' ? 'View sectors →' : id === 'roles-lock' ? 'View roles →' : 'Download →'}
+        <a href="${isJobs ? 'job-boards.html' : isCert ? 'certifications.html' : isSalary ? 'salary-guide.html' : id === 'sectors-lock' ? 'sectors.html' : id === 'roles-lock' ? 'roles.html' : id === 'cv-lock' ? 'https://drive.google.com/file/d/1hyBlCYBL6RvaLjPj0tcbn8oEJZH5dSPD/view?usp=sharing' : id === 'cl-lock' ? 'https://drive.google.com/file/d/1kpX8-RpVW8JY0YSwVXN9P6GYOH73Yirj/view?usp=sharing' : '#'}" target="_blank" style="color:#16A34A">
+          ${isJobs ? 'View job boards →' : isCert ? 'View roadmap →' : isSalary ? 'View guide →' : id === 'sectors-lock' ? 'View sectors →' : id === 'roles-lock' ? 'View roles →' : id === 'cv-lock' ? 'View CV Template →' : id === 'cl-lock' ? 'View Cover Letter →' : 'View →'}
         </a>`;
     });
   }
