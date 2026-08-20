@@ -137,10 +137,6 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg>
           Industry-Ready
         </a>
-        <a href="dashboard.html" class="nav-item" id="admin-nav-link" style="color:#D97706">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          Admin Panel
-        </a>
       </div>
     </div>
     <div class="aside-bottom">
@@ -189,12 +185,12 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/></svg>
           Resources
         </div>
-        <div class="resource-link" onclick="alert('CV Format template coming soon.')">
+        <div class="resource-link" onclick="window.open('https://drive.google.com/file/d/1hyBlCYBL6RvaLjPj0tcbn8oEJZH5dSPD/view?usp=sharing','_blank')">
           <div class="resource-icon"><svg width="16" height="16" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
           <div><div class="resource-name">UK CV Format Template</div><div class="resource-type">Word · Editable · UK-specific</div></div>
           <svg class="resource-dl" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </div>
-        <div class="resource-link" onclick="alert('Cover letter template coming soon.')">
+        <div class="resource-link" onclick="window.open('https://drive.google.com/file/d/1kpX8-RpVW8JY0YSwVXN9P6GYOH73Yirj/view?usp=sharing','_blank')">
           <div class="resource-icon"><svg width="16" height="16" fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
           <div><div class="resource-name">Cover Letter Format</div><div class="resource-type">Word · Editable · UK-specific</div></div>
           <svg class="resource-dl" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -368,9 +364,8 @@ async function loadUser(user) {
   document.getElementById('user-av').textContent = initials;
   document.getElementById('sidebar-av').textContent = initials;
 
-  if (user.email === 'rakeshelamaran98@gmail.com') {
-    document.getElementById('admin-nav-link').style.display = 'flex';
-  }
+  // Admin access via direct URL only
+  // admin.html
 
   // CV Score
   const score = parseInt(localStorage.getItem('cg_cv_score') || '0');
