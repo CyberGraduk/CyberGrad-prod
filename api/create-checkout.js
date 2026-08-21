@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
       foundation: {
         name: 'CyberGrad Foundation',
         description: '4-week cohort programme — live sessions, CV template, LinkedIn guide, community & more.',
-        amount: 12500, // £125.00 early bird price (in pence)
+        amount: 100, // £1.00 TEST PRICE — change back to 12500 (£125) before real launch
         currency: 'gbp'
       }
     };

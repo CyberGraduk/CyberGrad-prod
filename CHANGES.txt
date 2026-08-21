@@ -1,45 +1,29 @@
-CyberGrad V4.5 — Full Changelog
-================================
+CyberGrad V4.6 — Changelog
+===========================
 
-FIXES
-- Hello {Username} — students table queried first, always correct now
-- WhatsApp link updated everywhere → chat.whatsapp.com/CiWUjOvMm8AKN5WgWDxGNO
-- marketplace.html removed
-- Dashboard footer — Privacy · Terms · email added
-- UK Job Boards sidebar link fixed → job-boards.html
-- 20 min call label everywhere (was 30, then 10)
-- All dark theme CSS var overrides removed across all pages
+1. DASHBOARD SIDEBAR
+   - Removed Industry-Ready link from sidebar
+   - CV Scorecard → now points to cv-checker-dashboard.html
+   - Check my CV button → now points to cv-checker-dashboard.html
 
-NEW PAGES
-- certifications.html — 6 roles tabbed, free vs paid certs, auth gated
-- salary-guide.html — UK salaries by role/level/location, auth gated
-- resources.html — all 7 resource cards in one place
-- job-boards.html — 12 UK job boards reviewed and ranked
+2. CV CHECKER DASHBOARD VERSION (cv-checker-dashboard.html)
+   - New page for logged-in users only
+   - Auth gate — redirects to login if not logged in
+   - No "create account" blocker — full report shown immediately
+   - Nav shows "← Back to Dashboard" instead of full nav
+   - Same scoring engine as public cv-checker.html
+   - Score saved to Supabase + localStorage automatically
 
-DASHBOARD
-- Cert Roadmap link in sidebar
-- Salary Guide link in sidebar
-- Progress checklist (5 steps, auto-ticks CV if score exists)
-- Book a free 20 min call card (Topmate)
-- Privacy · Terms · email footer
+3. STRIPE TEST PRICE
+   - checkout.html → shows £1.00 (TEST)
+   - api/create-checkout.js → £1 (100 pence)
+   - Comment in code to change back to 12500 (£125) before launch
 
-HOMEPAGE
-- Title → "CyberGrad — The UK Cybersecurity Career Platform for International Graduates"
-- Section order: Problem → Free Resources → How it works → Academy → Community → Founder → FAQ → CTA
-- Resource cards reordered: CV Format, Cover Letter, Job Boards, Roles, Sectors
-- Pricing section renamed → Academy
+4. VERSION
+   - v4.6 is live
 
-NAV (all pages)
-- Free Resources link → resources.html
-- Get started free button → explicit blue #1E40AF, white text
-
-CV CHECKER
-- Targeting pill shown BELOW 5+ CVs scanned badge
-- Role cards — white bg, dark text, fully visible before selecting
-- Auth gate → create account (no inline form)
-
-SIGNUP
-- University dropdown — "Other" option shows text input
-
-VERSION — v4.5 is live
-FILES — 20 HTML + 3 API + sitemap + robots
+FILES CHANGED
+- dashboard.html
+- cv-checker-dashboard.html (NEW)
+- checkout.html
+- api/create-checkout.js
