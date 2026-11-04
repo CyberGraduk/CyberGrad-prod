@@ -15,15 +15,23 @@ module.exports = async function handler(req, res) {
 
     // Plan config
     const plans = {
-      foundation: {
-        name: 'CyberGrad Foundation',
-        description: '4-week cohort programme — live sessions, CV template, LinkedIn guide, community & more.',
-        amount: 100, // £1.00 TEST PRICE — change back to 12500 (£125) before real launch
+      'industry-ready': {
+        name: 'CyberGrad Industry-Ready',
+        description: '4-week cohort programme: 6 live group sessions, 1-to-1 reviews, mock interview and UK job search strategy.',
+        amount: 100, // £1.00 TEST PRICE. Change back to 12500 (£125) before real launch
+        currency: 'gbp'
+      },
+      launchpad: {
+        name: 'CyberGrad Launchpad',
+        description: '1-to-1 CV review, 1-to-1 LinkedIn review, a personal 1-1 session and a UK CV template.',
+        amount: 4000, // £40.00
         currency: 'gbp'
       }
     };
+    plans.foundation = plans['industry-ready']; // old links still work
 
-    const selectedPlan = plans[plan || 'foundation'];
+    const planKey = plans[plan] ? (plan === 'foundation' ? 'industry-ready' : plan) : 'industry-ready';
+    const selectedPlan = plans[planKey];
 
     // Create Stripe checkout session
     const stripeRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {
@@ -47,7 +55,8 @@ module.exports = async function handler(req, res) {
         'cancel_url': 'https://www.cyber-grad.co.uk/pricing.html',
         'metadata[name]': name || '',
         'metadata[university]': university || '',
-        'metadata[plan]': plan || 'foundation',
+        'metadata[plan]': planKey,
+        'metadata[email]': email || '',
         'billing_address_collection': 'auto',
         'allow_promotion_codes': 'true'
       }).toString()

@@ -1,29 +1,23 @@
-CyberGrad V4.6 — Changelog
-===========================
+CyberGrad v4.7
 
-1. DASHBOARD SIDEBAR
-   - Removed Industry-Ready link from sidebar
-   - CV Scorecard → now points to cv-checker-dashboard.html
-   - Check my CV button → now points to cv-checker-dashboard.html
+Pricing
+- Elite plan, waitlist form, waitlist JS and the Elite upgrade FAQ removed (index.html, pricing.html)
+- New Launchpad plan: £40 (£49 crossed out). Starter + 1-to-1 CV review, LinkedIn review, 1x personal 1-1 session, UK CV template
+- Industry-Ready is now the Most Popular plan, "Everything in Launchpad" + 6x live group sessions (60 mins), mock interview, job application strategy and the existing extras
+- Student count removed everywhere ("Limited students", small limited-seat cohorts): index, pricing, about, checkout
 
-2. CV CHECKER DASHBOARD VERSION (cv-checker-dashboard.html)
-   - New page for logged-in users only
-   - Auth gate — redirects to login if not logged in
-   - No "create account" blocker — full report shown immediately
-   - Nav shows "← Back to Dashboard" instead of full nav
-   - Same scoring engine as public cv-checker.html
-   - Score saved to Supabase + localStorage automatically
+Checkout
+- checkout.html is plan-aware: checkout.html?plan=launchpad or ?plan=industry-ready
+- api/create-checkout.js: launchpad = 4000 pence. industry-ready still 100 pence TEST (change to 12500 before launch)
 
-3. STRIPE TEST PRICE
-   - checkout.html → shows £1.00 (TEST)
-   - api/create-checkout.js → £1 (100 pence)
-   - Comment in code to change back to 12500 (£125) before launch
+Emails (new api/stripe-webhook.js)
+- On checkout.session.completed: welcome email to student (WhatsApp link, cohort start date, Week 1, numbered steps)
+- Admin email to cybergraduk@gmail.com: name, email, university, plan, amount, UK timestamp
+- Signature verified, duplicate sends blocked with Resend idempotency keys
 
-4. VERSION
-   - v4.6 is live
+Setup needed
+1. Stripe > Developers > Webhooks > add https://www.cyber-grad.co.uk/api/stripe-webhook, event checkout.session.completed
+2. Vercel env: STRIPE_WEBHOOK_SECRET (whsec_...), RESEND_API_KEY, COHORT_START_DATE (e.g. "Monday 12 January 2027")
+3. Before launch: amount 100 -> 12500 in api/create-checkout.js, and checkout.html test labels
 
-FILES CHANGED
-- dashboard.html
-- cv-checker-dashboard.html (NEW)
-- checkout.html
-- api/create-checkout.js
+Not done: invoice PDF on the success page.

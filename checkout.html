@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkout — Industry-Ready — CyberGrad</title>
+<title>Checkout — CyberGrad</title>
 <link rel="canonical" href="https://www.cyber-grad.co.uk/checkout.html">
 <meta name="description" content="Join the CyberGrad Industry-Ready programme. £125 one-time payment.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,11 +104,11 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
 <main>
   <!-- LEFT: PLAN SUMMARY -->
   <div class="plan-summary">
-    <div class="plan-tier">Industry-Ready Plan</div>
-    <div class="plan-name">Industry-Ready</div>
-    <div class="plan-price"><sup>£</sup>125</div>
+    <div class="plan-tier" id="p-tier">Industry-Ready Plan</div>
+    <div class="plan-name" id="p-name">Industry-Ready</div>
+    <div class="plan-price"><sup>£</sup><span id="p-price">125</span></div>
     <p class="plan-note">One-time payment · No subscription · No recurring fees</p>
-    <p class="plan-desc">Everything you need to build a solid foundation for your UK cybersecurity job search — live sessions, community, and all the resources in one programme.</p>
+    <p class="plan-desc" id="p-desc">Everything you need to build a solid foundation for your UK cybersecurity job search — live sessions, community, and all the resources in one programme.</p>
 
     <div class="pay-options">
       <div class="pay-option"><span class="pay-option-icon">💳</span> Pay in full</div>
@@ -116,18 +116,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
       <div class="pay-option"><span class="pay-option-icon">🟢</span> Clearpay — Pay in 4</div>
     </div>
 
-    <ul class="feat-list">
-      <li>4× live group sessions (45 mins each)</li>
-      <li>2× personal 1-to-1 sessions</li>
-      <li>UK Sponsorship Radar (50+ verified companies)</li>
-      <li>WhatsApp community access (4 weeks)</li>
-      <li>UK-focused CV template (editable)</li>
-      <li>LinkedIn optimisation checklist</li>
-      <li>Job search strategy guide</li>
-      <li>Q&A support for 4 weeks</li>
-      <li>Cohort peer group (10–20 students)</li>
-      <li>Be a Campus Ambassador</li>
-    </ul>
+    <ul class="feat-list" id="p-feats"></ul>
 
     <div class="trust-pills">
       <span class="trust-pill">🔒 Secure checkout</span>
@@ -230,10 +219,10 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
       <hr class="divider">
 
       <div class="order-summary">
-        <div class="order-row"><span>CyberGrad Industry-Ready Plan</span><span>£1.00 (TEST)</span></div>
-        <div class="order-row"><span>Early bird saving</span><span style="color:var(--teal)">–£14.00</span></div>
+        <div class="order-row"><span id="o-name">CyberGrad Industry-Ready Plan</span><span id="o-price">£1.00 (TEST)</span></div>
+        <div class="order-row"><span>Early bird saving</span><span style="color:var(--teal)" id="o-save">–£14.00</span></div>
         <div class="order-row"><span>VAT</span><span>£0.00</span></div>
-        <div class="order-total"><span>Total today</span><span>£1.00 (TEST)</span></div>
+        <div class="order-total"><span>Total today</span><span id="o-total">£1.00 (TEST)</span></div>
       </div>
 
       <div class="pay-methods">
@@ -257,6 +246,33 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
 </main>
 
 <script>
+// Plan details shown on this page. The price actually charged is set server-side in api/create-checkout.js.
+const PLANS = {
+  'industry-ready': {
+    tier: 'Industry-Ready Plan', name: 'Industry-Ready', price: '125',
+    desc: 'Everything in Launchpad plus a structured 4-week programme with live sessions and personal guidance.',
+    order: 'CyberGrad Industry-Ready Plan', orderPrice: '£1.00 (TEST)', save: '–£14.00', total: '£1.00 (TEST)',
+    feats: ['Everything in Launchpad','Personalised 1-1 Roadmap','6× live group sessions (60 mins each)','Mock interview (recorded)','Job application strategy','2× personal 1-to-1 sessions','UK Sponsorship Radar (50+ verified companies)','LinkedIn optimisation checklist','Job search strategy guide','Q&A support for 4 weeks','Limited-seat cohort peer group','WhatsApp community access','Campus Ambassador access','1× UK Industry Speaker Session']
+  },
+  'launchpad': {
+    tier: 'Launchpad Plan', name: 'Launchpad', price: '40',
+    desc: 'Personal 1-to-1 reviews of your CV and LinkedIn profile, plus a UK CV template.',
+    order: 'CyberGrad Launchpad Plan', orderPrice: '£40.00', save: '–£9.00', total: '£40.00',
+    feats: ['Everything in Starter','1-to-1 CV review','1-to-1 LinkedIn review','1× personal 1-1 session','UK CV template (editable)']
+  }
+};
+const _q = new URLSearchParams(location.search).get('plan');
+const PLAN_KEY = PLANS[_q] ? _q : 'industry-ready';
+(function(){
+  const p = PLANS[PLAN_KEY];
+  const set = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+  set('p-tier', p.tier); set('p-name', p.name); set('p-price', p.price); set('p-desc', p.desc);
+  set('o-name', p.order); set('o-price', p.orderPrice); set('o-save', p.save); set('o-total', p.total);
+  document.title = 'Checkout · CyberGrad ' + p.name;
+  const ul = document.getElementById('p-feats');
+  p.feats.forEach(f => { const li = document.createElement('li'); li.textContent = f; ul.appendChild(li); });
+})();
+
 async function handleCheckout(e) {
   e.preventDefault();
   const fname = document.getElementById('co-fname').value.trim();
@@ -278,7 +294,7 @@ async function handleCheckout(e) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email, name: fname + ' ' + lname,
-        university: uni, plan: 'foundation'
+        university: uni, plan: PLAN_KEY
       })
     });
 

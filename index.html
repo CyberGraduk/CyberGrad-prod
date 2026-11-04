@@ -229,7 +229,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:48px 5% 24px}
     <div class="stats-bar">
       <div class="stat"><div class="stat-num">7,000+</div><div class="stat-lbl">UK cyber grads yearly</div></div>
       <div class="stat"><div class="stat-num">Free</div><div class="stat-lbl">CV check — no card</div></div>
-      <div class="stat"><div class="stat-num">20</div><div class="stat-lbl">Students per cohort</div></div>
+      <div class="stat"><div class="stat-num">Limited</div><div class="stat-lbl">Students per cohort</div></div>
       <div class="stat"><div class="stat-num">4 weeks</div><div class="stat-lbl">Structured programme</div></div>
     </div>
   </div>
@@ -347,7 +347,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:48px 5% 24px}
       <div class="step fade-up">
         <div class="step-num">03</div>
         <h3>Join the cohort</h3>
-        <p>20 students max. 4 weeks. Fully structured.</p>
+        <p>Limited students. 4 weeks. Fully structured.</p>
       </div>
       <div class="step fade-up">
         <div class="step-num">04</div>
@@ -384,56 +384,55 @@ footer{background:#fff;border-top:1px solid var(--border);padding:48px 5% 24px}
         <a href="signup.html" class="pc-btn outline">Create free account</a>
       </div>
 
+      <!-- LAUNCHPAD -->
+      <div class="price-card fade-up">
+        <div class="pc-tier">Early bird · One-time</div>
+        <div class="pc-name">Launchpad</div>
+        <div class="pc-price"><sup>£</sup>40 <s>£49</s></div>
+        <p class="pc-desc">Everything in Starter plus personal 1-to-1 reviews of your CV and LinkedIn profile.</p>
+        <ul class="pc-features">
+          <li>Everything in Starter</li>
+          <li>1-to-1 CV review</li>
+          <li>1-to-1 LinkedIn review</li>
+          <li>1× personal 1-1 session</li>
+          <li>UK CV template (editable)</li>
+        </ul>
+        <a href="checkout.html?plan=launchpad" class="pc-btn outline">Get Launchpad — £40</a>
+      </div>
+
       <!-- INDUSTRY READY -->
       <div class="price-card featured fade-up">
         <div class="featured-badge">MOST POPULAR</div>
         <div class="pc-tier">Early bird · One-time</div>
         <div class="pc-name">Industry-Ready</div>
         <div class="pc-price"><sup>£</sup>125 <s>£139</s></div>
-        <p class="pc-desc">Everything in Starter plus a structured 4-week programme and personal guidance.</p>
+        <p class="pc-desc">Everything in Launchpad plus a structured 4-week programme with live sessions and personal guidance.</p>
         <ul class="pc-features" id="found-short">
-          <li>Everything in Starter</li>
+          <li>Everything in Launchpad</li>
           <li>Personalised 1-1 Roadmap</li>
-          <li>4× live group sessions (45 mins)</li>
+          <li>6× live group sessions (60 mins)</li>
+          <li>Mock interview (recorded)</li>
+          <li>Job application strategy</li>
           <li>2× personal 1-to-1 sessions</li>
         </ul>
         <ul class="pc-features" id="found-full" style="display:none">
-          <li>Everything in Starter</li>
+          <li>Everything in Launchpad</li>
           <li>Personalised 1-1 Roadmap</li>
-          <li>4× live group sessions (45 mins)</li>
+          <li>6× live group sessions (60 mins)</li>
+          <li>Mock interview (recorded)</li>
+          <li>Job application strategy</li>
           <li>2× personal 1-to-1 sessions</li>
-          <li>UK Sponsorship Radar (50+ companies)</li>
-          <li>UK CV template (editable)</li>
+          <li>UK Sponsorship Radar (50+ verified companies)</li>
           <li>LinkedIn optimisation checklist</li>
           <li>Job search strategy guide</li>
           <li>Q&amp;A support for 4 weeks</li>
-          <li>Cohort peer group (max 20)</li>
+          <li>Limited-seat cohort peer group</li>
           <li>Campus Ambassador access</li>
           <li>1× UK Industry Speaker Session</li>
           <li>And much more.</li>
         </ul>
         <button class="view-more-btn" onclick="toggleFound()">View all features ↓</button>
-        <a href="checkout.html" class="pc-btn solid">Get started — £125</a>
-      </div>
-
-      <!-- ELITE -->
-      <div class="price-card fade-up">
-        <div class="pc-tier" style="display:flex;align-items:center;justify-content:space-between"><span>Coming soon</span><span style="background:var(--blue-light);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;border:1px solid var(--blue-border)">WAITLIST</span></div>
-        <div class="pc-name">Elite</div>
-        <div class="pc-price" style="font-size:24px;color:var(--text-3)">Coming Soon.</div>
-        <p class="pc-desc">Full hands-on support including personalised reviews, mock interview, and real UK pentesting content.</p>
-        <ul class="pc-features">
-          <li>Everything in Industry-Ready</li>
-          <li>1-to-1 CV review</li>
-          <li>1-to-1 LinkedIn review</li>
-          <li>Mock interview (recorded)</li>
-          <li>Job application strategy</li>
-        </ul>
-        <a href="#" onclick="document.getElementById('elite-form').style.display='block';return false" class="pc-btn outline">Join waitlist</a>
-        <div id="elite-form" style="display:none;margin-top:12px">
-          <input type="email" id="elite-email" placeholder="your@email.com" style="width:100%;padding:10px 12px;border:1px solid var(--border-2);border-radius:var(--radius);font-family:var(--font);font-size:13px;color:var(--text);background:#fff;margin-bottom:8px">
-          <button onclick="joinWaitlist()" style="width:100%;background:var(--blue);color:#fff;border:none;padding:10px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">Notify me</button>
-        </div>
+        <a href="checkout.html?plan=industry-ready" class="pc-btn solid">Get started — £125</a>
       </div>
 
     </div>
@@ -491,7 +490,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:48px 5% 24px}
       <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">I am still studying. Can I join?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>Yes, and honestly the earlier the better. The free CV Scorecard is available to everyone immediately. Students in their final year get the most value from starting early.</p></div></div>
       <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">What happens in the 4 weeks?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>A structured 4-week agenda covering CV, LinkedIn, job search strategy, interview preparation, and UK industry insights. Full agenda shared after joining.</p></div></div>
       <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">What happens after the 4 weeks?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>The programme ends, the community does not. One payment, permanent access. Keep asking questions, support others, stay connected.</p></div></div>
-      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">How many students are in a cohort?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>20 students maximum per cohort. Quality over volume. Once 20 is full, it is full. Next cohort opens shortly after.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">How many students are in a cohort?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>Each cohort is kept small on purpose, with a limited number of seats. Quality over volume. Once a cohort is full, it is full. The next cohort opens shortly after.</p></div></div>
       <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">Want to talk before joining?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>Book a free 10 min call. No pressure, no pitch — just an honest conversation about your situation.</p><a href="https://topmate.io/rakeshelamaran/2176589?coupon_code=UKCyb3r" target="_blank" style="display:inline-flex;align-items:center;gap:7px;margin-top:12px;background:var(--blue);color:#fff;padding:10px 18px;border-radius:7px;font-weight:700;font-size:13px">Free 10 min call →</a></div></div>
       <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)">Is there a refund policy?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-body"><p>If you have a genuine concern after joining, email cybergraduk@gmail.com directly and we will talk.</p></div></div>
     </div>
@@ -541,7 +540,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:48px 5% 24px}
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 CyberGrad · cyber-grad.co.uk · v4.6 is live</span>
+    <span>© 2026 CyberGrad · cyber-grad.co.uk · v4.7 is live</span>
     <span style="font-style:italic">"Guidance, not guarantees."</span>
     <span><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a> &nbsp;·&nbsp; <a href="mailto:cybergraduk@gmail.com">cybergraduk@gmail.com</a></span>
   </div>
@@ -574,14 +573,6 @@ function toggleFound(){
   b.textContent=open?'View all features ↓':'Show less ↑';
 }
 
-// Waitlist
-async function joinWaitlist(){
-  const email=document.getElementById('elite-email').value.trim();
-  if(!email){return;}
-  const sb=supabase.createClient('https://oglsolxcvchgmjcprrwa.supabase.co','sb_publishable_db574zB3xRVXfKQEMHW2RA_Q7v8RWfE');
-  await sb.from('waitlist').insert({email,plan:'elite'});
-  document.getElementById('elite-form').innerHTML='<p style="font-size:13px;color:#1E40AF;font-weight:600;text-align:center;padding:8px 0">You are on the waitlist. We will be in touch.</p>';
-}
 
 // Fade in animation
 const obs=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('vis')}),{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
