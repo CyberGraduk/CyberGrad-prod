@@ -1,3 +1,8 @@
+CyberGrad v4.7.3 (same as 4.7.2, version tag only)
+- Includes: Node 26.x fix, testimonials, Launchpad card-only
+
+- package.json: Node engine set to 26.x (my earlier zips still had 20.x, which overwrote your fix and broke the Vercel build)
+
 CyberGrad v4.7.1
 - index.html: testimonials section (3 placeholder cards, name and message) above the FAQ
 - Launchpad checkout is card only (no Klarna or Clearpay)
