@@ -18,6 +18,7 @@ module.exports = async function handler(req, res) {
       'industry-ready': {
         name: 'CyberGrad Industry-Ready',
         description: '4-week cohort programme: 6 live group sessions, 1-to-1 reviews, mock interview and UK job search strategy.',
+        methods: ['card', 'klarna', 'afterpay_clearpay'],
         amount: 100, // £1.00 TEST PRICE. Change back to 12500 (£125) before real launch
         currency: 'gbp'
       },
@@ -25,6 +26,7 @@ module.exports = async function handler(req, res) {
         name: 'CyberGrad Launchpad',
         description: '1-to-1 CV review, 1-to-1 LinkedIn review, a personal 1-1 session and a UK CV template.',
         amount: 4000, // £40.00
+        methods: ['card'], // one-time card payment only, no Klarna or Clearpay split payments
         currency: 'gbp'
       }
     };
@@ -48,9 +50,6 @@ module.exports = async function handler(req, res) {
         'line_items[0][price_data][product_data][description]': selectedPlan.description,
         'line_items[0][price_data][unit_amount]': selectedPlan.amount,
         'line_items[0][quantity]': '1',
-        'payment_method_types[0]': 'card',
-        'payment_method_types[1]': 'klarna',
-        'payment_method_types[2]': 'afterpay_clearpay',
         'success_url': 'https://www.cyber-grad.co.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
         'cancel_url': 'https://www.cyber-grad.co.uk/pricing.html',
         'metadata[name]': name || '',
@@ -59,7 +58,7 @@ module.exports = async function handler(req, res) {
         'metadata[email]': email || '',
         'billing_address_collection': 'auto',
         'allow_promotion_codes': 'true'
-      }).toString()
+      }).toString() + selectedPlan.methods.map((m, i) => `&payment_method_types[${i}]=${m}`).join('')
     });
 
     const session = await stripeRes.json();

@@ -1,4 +1,8 @@
-CyberGrad v4.7
+CyberGrad v4.7.1
+- index.html: testimonials section (3 placeholder cards, name and message) above the FAQ
+- Launchpad checkout is card only (no Klarna or Clearpay)
+
+v4.7 notes follow:
 
 Pricing
 - Elite plan, waitlist form, waitlist JS and the Elite upgrade FAQ removed (index.html, pricing.html)

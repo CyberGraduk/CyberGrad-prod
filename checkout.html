@@ -110,7 +110,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
     <p class="plan-note">One-time payment · No subscription · No recurring fees</p>
     <p class="plan-desc" id="p-desc">Everything you need to build a solid foundation for your UK cybersecurity job search — live sessions, community, and all the resources in one programme.</p>
 
-    <div class="pay-options">
+    <div class="pay-options" id="pay-options">
       <div class="pay-option"><span class="pay-option-icon">💳</span> Pay in full</div>
       <div class="pay-option"><span class="pay-option-icon">🟣</span> Klarna — Pay in 3</div>
       <div class="pay-option"><span class="pay-option-icon">🟢</span> Clearpay — Pay in 4</div>
@@ -225,7 +225,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
         <div class="order-total"><span>Total today</span><span id="o-total">£1.00 (TEST)</span></div>
       </div>
 
-      <div class="pay-methods">
+      <div class="pay-methods" id="pay-methods">
         <span class="pay-badge">Visa / Mastercard</span>
         <span class="pay-badge klarna">Klarna Pay in 3</span>
         <span class="pay-badge clearpay">Clearpay Pay in 4</span>
@@ -268,6 +268,9 @@ const PLAN_KEY = PLANS[_q] ? _q : 'industry-ready';
   const set = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
   set('p-tier', p.tier); set('p-name', p.name); set('p-price', p.price); set('p-desc', p.desc);
   set('o-name', p.order); set('o-price', p.orderPrice); set('o-save', p.save); set('o-total', p.total);
+  if (PLAN_KEY === 'launchpad') {
+    ['pay-options','pay-methods'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+  }
   document.title = 'Checkout · CyberGrad ' + p.name;
   const ul = document.getElementById('p-feats');
   p.feats.forEach(f => { const li = document.createElement('li'); li.textContent = f; ul.appendChild(li); });
