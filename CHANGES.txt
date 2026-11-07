@@ -1,3 +1,9 @@
+CyberGrad v4.7.3.1
+- checkout.html: "Other UK university" shows a text box for the university name (required, sent to Stripe and the emails)
+- Launchpad shows "Duration: 1 week" (index, pricing, checkout)
+- checkout.html: top nav is white (was dark)
+- dashboard.html: removed the G / Student block from the left pane, only Log out remains
+
 CyberGrad v4.7.3 (same as 4.7.2, version tag only)
 - Includes: Node 26.x fix, testimonials, Launchpad card-only
 

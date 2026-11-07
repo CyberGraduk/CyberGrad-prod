@@ -136,13 +136,6 @@ aside{width:240px;flex-shrink:0;border-right:1px solid var(--border);background:
       </div>
     </div>
     <div class="aside-bottom">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;background:var(--bg);border-radius:var(--radius)">
-        <div class="nav-av" style="width:32px;height:32px;font-size:13px" id="sidebar-av">G</div>
-        <div style="min-width:0">
-          <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="user-name">Student</div>
-          <div style="font-size:11px;color:var(--text-3)" id="user-email"></div>
-        </div>
-      </div>
       <button class="btn-logout" onclick="logout()">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         Log out
@@ -354,11 +347,8 @@ async function loadUser(user) {
   if (!firstName) showNameBanner(user.email);
 
   document.getElementById('topbar-name').textContent = firstName || 'Grad';
-  document.getElementById('user-name').textContent = fullName || 'Student';
-  document.getElementById('user-email').textContent = user.email;
   const initials = (firstName || 'G')[0].toUpperCase();
   document.getElementById('user-av').textContent = initials;
-  document.getElementById('sidebar-av').textContent = initials;
 
   // Admin access via direct URL only
   // admin.html
@@ -406,9 +396,7 @@ async function saveName(email) {
   await sb.auth.updateUser({data:{first_name:fname, last_name:lname}});
   localStorage.setItem('cg_user', JSON.stringify({firstName:fname, name:(fname+' '+lname).trim(), email}));
   document.getElementById('topbar-name').textContent = fname;
-  document.getElementById('user-name').textContent = (fname+' '+lname).trim();
   document.getElementById('user-av').textContent = fname[0].toUpperCase();
-  document.getElementById('sidebar-av').textContent = fname[0].toUpperCase();
   document.getElementById('name-banner')?.remove();
 }
 

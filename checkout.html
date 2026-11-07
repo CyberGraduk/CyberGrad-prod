@@ -19,7 +19,7 @@
   --font-h:'Inter',-apple-system,sans-serif;--font-b:'Inter',-apple-system,sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;min-height:100vh;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(6,11,22,0.93);;border-bottom:1px solid var(--border)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:#FFFFFF;border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .nav-lm{width:32px;height:32px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff}
 .nav-lt{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
@@ -107,7 +107,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
     <div class="plan-tier" id="p-tier">Industry-Ready Plan</div>
     <div class="plan-name" id="p-name">Industry-Ready</div>
     <div class="plan-price"><sup>£</sup><span id="p-price">125</span></div>
-    <p class="plan-note">One-time payment · No subscription · No recurring fees</p>
+    <p class="plan-note" id="p-note">One-time payment · No subscription · No recurring fees</p>
     <p class="plan-desc" id="p-desc">Everything you need to build a solid foundation for your UK cybersecurity job search — live sessions, community, and all the resources in one programme.</p>
 
     <div class="pay-options" id="pay-options">
@@ -214,6 +214,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
             </optgroup>
             <option>Other UK university</option>
           </select>
+        <input type="text" class="fi" id="co-uni-other" placeholder="Enter your university name" style="display:none;margin-top:10px">
       </div>
 
       <hr class="divider">
@@ -246,6 +247,17 @@ label{display:block;font-size:12px;font-weight:600;color:var(--text-2);letter-sp
 </main>
 
 <script>
+// Show a text box when the student picks "Other UK university"
+document.addEventListener('DOMContentLoaded', function(){
+  const sel = document.getElementById('co-uni'), box = document.getElementById('co-uni-other');
+  sel.addEventListener('change', function(){
+    const other = sel.value === 'Other UK university';
+    box.style.display = other ? 'block' : 'none';
+    box.required = other;
+    if (other) box.focus();
+  });
+});
+
 // Plan details shown on this page. The price actually charged is set server-side in api/create-checkout.js.
 const PLANS = {
   'industry-ready': {
@@ -258,7 +270,7 @@ const PLANS = {
     tier: 'Launchpad Plan', name: 'Launchpad', price: '40',
     desc: 'Personal 1-to-1 reviews of your CV and LinkedIn profile, plus a UK CV template.',
     order: 'CyberGrad Launchpad Plan', orderPrice: '£40.00', save: '–£9.00', total: '£40.00',
-    feats: ['Everything in Starter','1-to-1 CV review','1-to-1 LinkedIn review','1× personal 1-1 session','UK CV template (editable)']
+    feats: ['Everything in Starter','1-to-1 CV review','1-to-1 LinkedIn review','1× personal 1-1 session','UK CV template (editable)','Duration: 1 week']
   }
 };
 const _q = new URLSearchParams(location.search).get('plan');
@@ -267,6 +279,7 @@ const PLAN_KEY = PLANS[_q] ? _q : 'industry-ready';
   const p = PLANS[PLAN_KEY];
   const set = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
   set('p-tier', p.tier); set('p-name', p.name); set('p-price', p.price); set('p-desc', p.desc);
+  if (PLAN_KEY === 'launchpad') set('p-note', 'Duration: 1 week · One-time payment · No subscription');
   set('o-name', p.order); set('o-price', p.orderPrice); set('o-save', p.save); set('o-total', p.total);
   if (PLAN_KEY === 'launchpad') {
     ['pay-options','pay-methods'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
@@ -281,7 +294,11 @@ async function handleCheckout(e) {
   const fname = document.getElementById('co-fname').value.trim();
   const lname = document.getElementById('co-lname').value.trim();
   const email = document.getElementById('co-email').value.trim();
-  const uni   = document.getElementById('co-uni').value;
+  let uni   = document.getElementById('co-uni').value;
+  if (uni === 'Other UK university') {
+    uni = document.getElementById('co-uni-other').value.trim();
+    if (!uni) { document.getElementById('co-uni-other').focus(); return; }
+  }
   if (!fname || !lname || !email || !uni) return;
 
   const btn  = document.getElementById('pay-btn');
